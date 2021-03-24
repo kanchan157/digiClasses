@@ -1,4 +1,4 @@
-import { Grid, Typography } from '@material-ui/core'
+import { Card, Grid, Typography } from '@material-ui/core'
 import React, { useState } from 'react'
 import CustomInput from '../../../../Components/CustomInput'
 import CustomSelect from '../../../../Components/CustomSelect';
@@ -7,30 +7,32 @@ import Header from './header';
 function ReferenceQuestionnaire() {
 
     const data = {
-        coachingAssignment:'',
-        observationAchievement:'',
-        effectiveness:'',
-        coachName:'',
-        otherComments:''
+        coachingAssignment: '',
+        observationAchievement: '',
+        effectiveness: '',
+        coachName: '',
+        otherComments: ''
     }
 
-    const [userData,setUserData] = useState(data);
+    const [userData, setUserData] = useState(data);
 
     const setInputState = (inputStateValue: any, inputId: any) => {
-        setUserData({...userData, [inputId] : inputStateValue})
+        setUserData({ ...userData, [inputId]: inputStateValue })
     }
     const onSubmit = () => {
         console.log(userData)
     }
     return (
         <div>
-           <Header isSkip={true} parentcall={onSubmit} />
+            <Header isSkip={true} parentcall={onSubmit} />
 
-            <Grid container direction="row" alignItems="center" style={{ padding: 30,marginBottom:30 }}>
-                <Grid item xs={6}>
+            <Grid container direction="row" alignItems="center" style={{ padding: 30, marginBottom: 30 }}>
+                <Grid item xs={8}>
                     <Grid item xs={12} style={{ marginBottom: 30 }}>
-                        <Typography variant="h5" style={{ marginBottom: 5 }}>How long was your coaching assignment?</Typography>
-                        <CustomInput id="coachingAssignment" placeholder="Free Text" parentcall={setInputState} />
+                        <Card variant="outlined" style={{ padding: 10, borderLeft: '5px solid #3B86FF', }} >
+                            <Typography variant="h5" style={{ marginBottom: 5 }}>Business Experience*</Typography>
+                            <CustomInput id="businessExp" placeholder="Free Text" parentcall={setInputState} />
+                        </Card>
                     </Grid>
                     <Grid item xs={12} style={{ marginBottom: 30 }}>
                         <Typography variant="h5" style={{ marginBottom: 5 }}>What were your observation as to her/his contribution to the achievement of your objectives?</Typography>
@@ -42,7 +44,7 @@ function ReferenceQuestionnaire() {
                     </Grid>
                     <Grid item xs={12} style={{ marginBottom: 30 }}>
                         <Typography variant="h5" style={{ marginBottom: 5 }}>Was 'coach:name' supportive and challenging?</Typography>
-                        <CustomSelect id="coachName" displayEmpty variant="outlined" itemArr={['1', '2']}  selectedValue={userData.coachName}/>
+                        <CustomSelect id="coachName" displayEmpty variant="outlined" itemArr={['1', '2']} selectedValue={userData.coachName} />
                     </Grid>
                     <Grid item xs={12} style={{ marginBottom: 30 }}>
                         <Typography variant="h5" style={{ marginBottom: 5 }}>Any other comments</Typography>

@@ -1,10 +1,13 @@
 import React from 'react'
+import PDFViewer from 'pdf-viewer-reactjs'
 
 function NDA() {
     return (
-        <div>
-            NDA
-        </div>
+        <PDFViewer
+            document={{
+                url: '../../../assets/sample.pdf',
+            }}
+        />
     )
 }
 

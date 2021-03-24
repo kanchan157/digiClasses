@@ -3,49 +3,57 @@ import React, { useState } from 'react'
 import CustomDatePicker from '../../../../Components/CustomDatePicker';
 import CustomInput from '../../../../Components/CustomInput';
 import CustomSelect from '../../../../Components/CustomSelect'
+import AdminPartnerClient from '../../../../Service/Admin/partner_services';
 import Header from './header';
 
 function OtherQuestions() {
 
     const data = {
-        coachingRate:'1',
-        faciliationRate:'2',
-        assesmentRate:'3',
-        travelExpenses:'',
-        psychoCost:'',
-        localTX:'',
-        deliveryMethod:'',
-        nextAvaiDate:'',
-        considerLevel:'',
-        internalComments:''
+        
+        partner_profile_id:'',
+        assessor_currency_type:'',
+        assessor_hour_rate:'',
+        available_date:'',
+        coaching_hour_rate:'',
+        coach_currency_type:'',
+        facilitator_currency_type:'',
+        facilitator_day_rate:'',
+        local_tx_areas:'',
+        psychometric_costs:'',
+        travel_expenses:'',
+        delivery_methods:'',
+        considered_levels:'',
     }
+    const setInputState = (inputStateValue: any, inputId: any) => {
+        setUserData({ ...userData, [inputId]: inputStateValue })
+    }
+    const onChangeItem = (selectedItemValue: any, inputId: any ) => {
+        setUserData({ ...userData, [inputId]: selectedItemValue.value })
+    };
     const [userData,setUserData] = useState(data);
 
-    const onChangeItem = (selectedItemValue: any) => {
-        console.log(selectedItemValue)
-    };
     const onChangeDate = (selectedItemValue: any) => {
         console.log(selectedItemValue)
     };
-    const setInputState = (inputStateValue: any, inputId: any) => {
-        setUserData({...userData, [inputId] : inputStateValue})
-    }
     const onSubmit = () => {
-        console.log(userData)
+        AdminPartnerClient.OtherQuestions(userData).then((response: any) => {
+            console.log(response)
+        });
+        // console.log(userData)
     }
     return (
         <div>
                        <Header isSkip={true} parentcall={onSubmit} />
 
             <Grid container direction="row" alignItems="center" style={{ padding: 30 }}>
-                <Grid item xs={6}>
+                <Grid item xs={8}>
                 
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
                         <Grid item xs={4}>
                             <InputLabel>Coaching hourly rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="coachingRate" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
+                            <CustomInput id="coaching_hour_rate" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -53,7 +61,7 @@ function OtherQuestions() {
                             <InputLabel>Facilitation day rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="faciliationRate" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
+                            <CustomInput id="facilitator_day_rate" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -61,7 +69,7 @@ function OtherQuestions() {
                             <InputLabel>Assessment hourly rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="assesmentRate" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
+                            <CustomInput id="assessor_hour_rate" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -69,7 +77,7 @@ function OtherQuestions() {
                             <InputLabel>Travel expenses</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="travelExpenses" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="travel_expenses" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -77,7 +85,7 @@ function OtherQuestions() {
                             <InputLabel>Psychometric costs</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="psychoCost" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
+                            <CustomInput id="psychometric_costs" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -85,7 +93,7 @@ function OtherQuestions() {
                             <InputLabel>Local TX areas</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="localTX" variant="outlined" placeholder="Mr"  parentcall={setInputState}/>
+                            <CustomInput id="local_tx_areas" variant="outlined" placeholder="Mr"  parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -93,7 +101,7 @@ function OtherQuestions() {
                             <InputLabel>Delivery method</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="deliveryMethod" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
+                            <CustomInput id="delivery_methods" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -101,7 +109,7 @@ function OtherQuestions() {
                             <InputLabel>Next Available Date</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="nextAvaiDate" displayEmpty variant="outlined" itemArr={['1', '2']} selectedValue={userData.nextAvaiDate} />
+                            <CustomSelect id="available_date" displayEmpty variant="outlined" itemArr={['1', '2']} parentcall={onChangeItem} selectedValue={userData.available_date} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -109,7 +117,7 @@ function OtherQuestions() {
                             <InputLabel>Considered Levels</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="considerLevel" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
+                            <CustomInput id="considered_levels" variant="outlined" placeholder="Mr" parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{marginBottom:30}}>
@@ -117,7 +125,7 @@ function OtherQuestions() {
                             <InputLabel>Internal Comments</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="internalComments" variant="outlined" placeholder="Mr"  parentcall={setInputState}/>
+                            <CustomInput id="assessor_currency_type" variant="outlined" placeholder="Mr"  parentcall={setInputState}/>
                         </Grid>
                     </Grid>
 
