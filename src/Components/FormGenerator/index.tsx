@@ -1,3 +1,4 @@
+import { DatePicker } from "@material-ui/pickers";
 import React, { Component } from "react";
 // import {
 //   Form,
@@ -9,7 +10,10 @@ import React, { Component } from "react";
 // } from "semantic-ui-react";
 import InputComponent from "./input_component";
 import SelectComponent from "./select_component";
-import UploadButtonComponent from "./uploadButton_component";
+import UploadFilesComponent from "./uploadButton_component";
+import DatePickerSelectComponent from "./select_with_datepicker_component";
+import InputWithDropdownComponent from "./input_with_dropdown";
+import MultipleSelect from "./multi_select_component";
 
 export default function FormComponent(props: any) {
 
@@ -25,10 +29,14 @@ export default function FormComponent(props: any) {
         return <InputComponent key={index} componentObject={componentObject} />;
       case "select":
         return <SelectComponent key={index} componentObject={componentObject} />;
+      case "MultipleSelect":
+        return <MultipleSelect key={index} componentObject={componentObject} />;
       case "selectWithDatePicker":
-        return <SelectComponent key={index} componentObject={componentObject} />;
-      case "uploadButton":
-        return <UploadButtonComponent key={index} componentObject={componentObject} />;
+        return <DatePickerSelectComponent key={index} componentObject={componentObject} />;
+      case "uploadFiles":
+        return <UploadFilesComponent key={index} componentObject={componentObject} />;
+      case 'inputWithDropdown':
+          return <InputWithDropdownComponent key={index} componentObject={componentObject} />;
       // case 'textArea':
       //     return <TextAreaComponent key={index} componentObject={componentObject} />;
       // case 'fullNameInput':

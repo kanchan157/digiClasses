@@ -69,7 +69,7 @@ export const Input = (props: any) => {
       FormHelperTextProps={{}}
       fullWidth
       value={value}
-      onChange={(e) => handleChange(e, index)}
+      onChange={(e) => handleChange(e.target.value, index)}
     />
   );
 };

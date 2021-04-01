@@ -1,7 +1,7 @@
 import React from 'react'
 import PDFViewer from 'pdf-viewer-reactjs'
 
-function WorkingWithAcuity() {
+function WorkingWithAcuity(props:any) {
     return (
         <PDFViewer
             document={{

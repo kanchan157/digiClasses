@@ -6,7 +6,7 @@ import CustomSelect from '../../../../Components/CustomSelect'
 import AdminPartnerClient from '../../../../Service/Admin/partner_services';
 import Header from './header';
 
-function OtherQuestions() {
+function OtherQuestions(props:any) {
 
     const data = {
         

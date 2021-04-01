@@ -2,11 +2,11 @@ import { AppBar, Avatar, Grid, Link, makeStyles, MenuItem, Menu, MenuList, Selec
 import React, { useState } from 'react'
 import CustomSelect from './CustomSelect'
 import Icon from '@material-ui/core/Icon';
-import { Search, LocationSearching, Business, Label, SupervisorAccount, Add, AddCircleOutline, AddCircleOutlined, ExpandMore, People } from '@material-ui/icons';
+import { Search, LocationSearching, Business, Label, SupervisorAccount, Add, AddCircleOutline, AddCircleOutlined, ExpandMore } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 import InboxIcon from '@material-ui/icons/Inbox';
 // import Image from 'material-ui-image'
-// import Icon from '@material-ui/core/Icon';
+
 
 const HeaderMenu = () => {
     const [menu, setMenu] = useState('');
@@ -51,16 +51,15 @@ const HeaderMenu = () => {
                                 {menu == 'organization' && <Card className={classes.menuOption}>
                                     <List component="nav" aria-label="main mailbox folders" >
                                         {
-                                        [{ name: "Organization", subTitle: "Search by ID, Name", },
+                                        [{ name: "Organization", subTitle: "Search by ID, Name" },
                                         { name: "Coach", subTitle: "Search by ID, Name or Email" },
                                         { name: "Employee", subTitle: "Search by Id or Email" },
                                         { name: "Program", subTitle: "Search by or Email" },
                                         { name: "Assignment", subTitle: "Search by Id or Email" }]
                                             .map((e: any) => (
                                                 <ListItem className={menuType == e.name ? classes.active : classes.inActive} style={{ paddingBottom: 0, paddingTop: 0, }} onClick={() => setMenuType(e.name)}>
-                                                    <ListItemIcon style={{ minWidth: 0, }}><Icon>{e.icon}</Icon>
+                                                    <ListItemIcon style={{ minWidth: 0, }}>
                                                         <Business />
-                                                        {/* <People /> */}
                                                     </ListItemIcon>
                                                     <InputLabel style={{ marginLeft: 20, minWidth: 100, }}><h4>{e.name}</h4></InputLabel>
                                                     <InputLabel style={{ marginLeft: 20, }} ><h5>{e.subTitle}</h5></InputLabel>

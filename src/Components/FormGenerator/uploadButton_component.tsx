@@ -9,6 +9,9 @@ const useStyles = makeStyles((theme: Theme) =>
     formControl: {
       width: "100%",
     },
+    input: {
+      display: 'none',
+    },
     gridRoot: {
       flexGrow: 1,
       marginBottom: "20px",
@@ -25,22 +28,53 @@ const useStyles = makeStyles((theme: Theme) =>
 export function FileUpload(props: any) {
   const classes = useStyles();
 
+  const {handleChange, index} = props.componentObject;
+
   return (
     <div>
+      <input
+        // accept="image/*"
+        className={classes.input}
+        id="contained-button-file"
+        multiple
+        type="file"
+        onChange={(e: any) => handleChange(e, index)}
+      />
+      <label htmlFor="contained-button-file">
+        <Button 
+        size="small"
+        variant="contained"
+        color="default"
+        className={classes.button}
+        startIcon={<CloudUploadIcon />}
+         component="span">
+          Upload
+        </Button>
+      </label>
+      {/* <input
+        accept="image/*"
+        className={classes.input}
+        id="contained-button-file"
+        multiple
+        type="file"
+      />
+      <label htmlFor="contained-button-file">
       <Button
         size="small"
         variant="contained"
         color="default"
         className={classes.button}
         startIcon={<CloudUploadIcon />}
+        onChange={(e) => handleChange(e, index)}
       >
         Upload
       </Button>
+      </label> */}
     </div>
   );
 }
 
-export default function UploadButtonComponent(props: any) {
+export default function UploadFilesComponent(props: any) {
     const classes = useStyles();
     const { label, componentType } = props.componentObject;
   

@@ -8,18 +8,24 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Grid, FormControlLabel, Checkbox, StepConnector, withStyles } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import CustomInput from '../../../../Components/CustomInput';
+import OrganisationDetails from '../Organisation/Create/OrganisationDetails';
+import PreContract from '../Organisation/Create/PreContract';
 
+import BasicInfo from './BasicInfo';
+import NDA from './NDA';
+import Share_Login_Credentials from './Share_Login_Credentials';
+import DueDiligenceCall from './DueDiligenceCall';
+import Questionnaire from './Questionnaire';
+import ReferenceQuestionnaire from './ReferenceQuestionnaire';
+import WorkingWithAcuity from './WorkingWithAcuity';
+import ContractDocumentation from './ContractDocumentation';
+import OtherQuestions from './OtherQuestions';
+import Ranking from './Ranking';
+import Review from './Review';
 import clsx from 'clsx';
 import { Check } from '@material-ui/icons';
-import BasicInfo from './BasicInfo';
-// import NDA from '../Partner/NDA';
-import DueDiligence from './DueDiligence';
-import Questionnaire from './Questionnaire';
-import WorkingWithAcuity from './WorkingWithAcuity';
-import HeaderMenu from '../../../Components/HeaderMenu';
-import ContractDocumentition from './ContractDocumentition';
-import OtherQue from './OtherQuestions';
-// import OtherQuestions from '../Partner/OtherQuestions';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -92,6 +98,7 @@ const useQontoStepIconStyles = makeStyles({
     },
 });
 function QontoStepIcon(props: any) {
+    debugger
     const classes = useQontoStepIconStyles();
     const { active, completed } = props;
     return (
@@ -115,10 +122,10 @@ function QontoStepIcon(props: any) {
 
 
 function getSteps() {
-    return ['Basic Info', 'NDA', 'Due Diligence call', 'Questionnaire', 'Working with acuity', 'Contract Documentation', 'Other Questions'];
+    return ['Basic Info', 'Share login credentials', 'NDA', 'Due Diligence call', 'Questionnaire', 'Reference Questionnaire', 'Working with acuity', 'Contract Documentation', 'Other Questions', 'Ranking', 'Review'];
 }
 
-function OnboardingPartner() {
+function OnboardingPartnerPartner() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
     const steps = getSteps();
@@ -131,22 +138,31 @@ function OnboardingPartner() {
         setAcuityProfileID(acuityProfileID)
     }
 
+
     function getStepContent(step: any) {
         switch (step) {
             case 0:
                 return <BasicInfo parentSetProfileId={updateProfileId}/>;
             case 1:
-                return <WorkingWithAcuity />;
+                return <Share_Login_Credentials profileId={profileID} />;
             case 2:
-                return <DueDiligence profileId={profileID}/>;
+                return <NDA profileId={profileID}/>;
             case 3:
-                return <Questionnaire />;
+                return <DueDiligenceCall profileId={profileID} />;
             case 4:
-                return <WorkingWithAcuity />;
+                return <Questionnaire profileId={profileID} />;
             case 5:
-                return <ContractDocumentition profileId={profileID} acuityProfileID={acuityProfileID}/>;
+                return <ReferenceQuestionnaire profileId={profileID} />;
             case 6:
-                return <OtherQue profileId={profileID}/>;
+                return <WorkingWithAcuity profileId={profileID} />;
+            case 7:
+                return <ContractDocumentation profileId={profileID} />;
+            case 8:
+                return <OtherQuestions profileId={profileID} />;
+            case 9:
+                return <Ranking profileId={profileID} />;
+            case 10:
+                return <Review profileId={profileID} />;
             default:
                 return "Not available"
         }
@@ -172,14 +188,9 @@ function OnboardingPartner() {
         <div className={classes.root}>
             <Grid direction="row" >
                 <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
-                    <HeaderMenu />
-                </Grid>
-            </Grid>
-            {/* <Grid direction="row" >
-                <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
                     <div style={{ height: 60 }}></div>
                 </Grid>
-            </Grid> */}
+            </Grid>
             <Grid container direction="row" justify="center" alignItems="center">
                 <Grid item xs={4} style={{ paddingTop: 30, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 60px)" }}>
                     <Typography variant="h4" style={{ textAlign: "center" }}>Partner Onboarding</Typography>
@@ -211,4 +222,4 @@ function OnboardingPartner() {
 
 
 
-export default OnboardingPartner
+export default OnboardingPartnerPartner

@@ -9,7 +9,7 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { green } from '@material-ui/core/colors';
 import { useHistory } from 'react-router'
-import AuthClient from  "../../Service/auth_services";
+import AuthClient from "../../Service/auth_services";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -34,17 +34,24 @@ export default function ForgotPassword() {
 
     const [username, setUserName] = useState("")
     const [open, setOpen] = React.useState(false);
+    const [submitClickFlag, setSubmitClickFlag] = React.useState(false);
 
     const setInputState = (inputStateValue: any, inputId: any) => {
         inputId === 'Username' && setUserName(inputStateValue);
     }
     const forgotPasswordLogic = () => {
-        setOpen(true);
-        // Post_API({ email: username,redirect_url:"http://localhost:3000/auth/ChangePassword" }, api_url.password, forgotPasswordLogicSuccess,true)
-        AuthClient.requestReset({ email: username,redirect_url:"http://localhost:3000/auth/ChangePassword" })
+        if (username != "") {
+            setSubmitClickFlag(false)
+            AuthClient.requestReset({ email: username, redirect_url: "http://localhost:3000/auth/ChangePassword" }).then((response: any) => {
+                forgotPasswordLogicSuccess(response)
+            }).catch(error => alert(error.errors[0]));
+        } else {
+            setSubmitClickFlag(true)
+        }
     }
     const forgotPasswordLogicSuccess = (response: any) => {
-        console.log(response)
+        setOpen(true);
+
     }
     const handleOpen = () => {
         setOpen(true);
@@ -65,7 +72,7 @@ export default function ForgotPassword() {
                     <Typography variant="h3" style={{ marginTop: 20 }}>Enter your email to receive the password reset link.</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="Username" placeholder="Username" parentcall={setInputState} />
+                    <CustomInput id="Username" placeholder="Username" helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag} parentcall={setInputState} />
                 </Grid>
 
 

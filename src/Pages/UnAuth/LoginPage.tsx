@@ -72,7 +72,7 @@ function LoginPage() {
             alert("Something went wrong, please try again !!!")
         } else {
             setOpen(true);
-            setRoleArr(roleArr.concat(response.data.data.attributes.role))
+            setRoleArr(roleArr.concat(response.data.role))
         }
     }
 

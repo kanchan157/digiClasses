@@ -1,7 +1,28 @@
 import request from "./api_client";
 
 const dataUrl = {
+    //  ORGANISATION CREATE - ORGANISATION DETAILS
      ownerships: '/ownerships',
+     type_of_organisation: '/type_of_organisations',
+     type_of_services: '/type_of_services',
+     internal_status: '/internal_status',
+     territories: '/territories',
+     industry_sectors: '/industry_sectors',
+     source_referral1: '/source_referral1',
+     source_referral2: '/source_referral2',
+     services_offered: '/services_offered',
+    //  ORGANISATION CREATE - PROFILE
+     currencies: '/currencies',
+     employee_list: '/employee_list',
+     countries: '/countries',
+    //  ORGANISATION - CONTACT
+    parent_organisations: '/parent_organisations',
+    business_units: '/business_units',
+    offices: '/offices',
+    departments: '/departments',
+    functions: '/functions',
+    // ORGANISATION - PRECONTRACT
+    document_types: '/document_types'
 }
 
 export function getData(params, section) {

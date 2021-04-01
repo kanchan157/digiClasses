@@ -16,7 +16,7 @@ function CustomDatePicker(props: any) {
     const classes = useStyles();
     const handleChange = (event: any) => {
         console.log(event.target.value)
-        props.parentcall(event.target.value,props.id)
+        props.parentcall(event.target.value)
     };
     return (
         <>

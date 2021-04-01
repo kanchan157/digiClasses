@@ -4,7 +4,7 @@ import CustomInput from '../../../../Components/CustomInput'
 import CustomSelect from '../../../../Components/CustomSelect';
 import Header from './header';
 
-function ReferenceQuestionnaire() {
+function ReferenceQuestionnaire(props:any) {
 
     const data = {
         coachingAssignment: '',

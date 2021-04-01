@@ -22,13 +22,21 @@ const Register = () => {
     const [email, setEmail] = useState("")
     const [role, setRole] = useState("")
     const [orgName, setOrgName] = useState("")
+    const [submitClickFlag, setSubmitClickFlag] = React.useState(false);
 
     const roleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setRole(event.target.value as string);
     };
     const register = () => {
-        // Post_API({ name: username, email: email, role_id: role, organisation_name: orgName }, api_url.submit_registration_request, registerSuccess, true)
-        AuthClient.signUp({ name: username, email: email, role_id: role, organisation_name: orgName });
+        if (username != "" && email != "" && orgName != "")  {
+            setSubmitClickFlag(false)
+            AuthClient.signUp({ name: username, email: email, role_id: role, organisation_name: orgName }).then((response: any) => {
+                registerSuccess(response)
+            }).catch(error => alert(error.errors[0]));
+        } else {
+            setSubmitClickFlag(true)
+        }
+      
     }
     const registerSuccess = (response: any) => {
         console.log(response)
@@ -46,10 +54,10 @@ const Register = () => {
                     <img src="../../../assets/images/logo.png" alt="dsd" />
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="username" placeholder="Username" parentcall={setInputState} />
+                    <CustomInput id="username" placeholder="Username" parentcall={setInputState} helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag}/>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="email" placeholder="Email" parentcall={setInputState} />
+                    <CustomInput id="email" placeholder="Email" parentcall={setInputState} helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag}/>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
 
@@ -69,7 +77,7 @@ const Register = () => {
                 </Grid>
 
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="orgName" placeholder="Organization Name" parentcall={setInputState} />
+                    <CustomInput id="orgName" placeholder="Organization Name" parentcall={setInputState} helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag}/>
                 </Grid>
 
 

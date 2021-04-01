@@ -5,37 +5,88 @@ import CustomDatePicker from '../../../Components/CustomDatePicker';
 import CustomInput from '../../../Components/CustomInput';
 import CustomRadioButton from '../../../Components/CustomRadioButton';
 import CustomSelect from '../../../Components/CustomSelect';
+import AdminPartnerClient from '../../../Service/Admin/partner_services';
 import Header from './header';
 
 
-function BasicInfo() {
+function BasicInfo(props:any) {
 
     const data = {
-        title: 'Mr',
-        firstName: '1',
-        middleName: '2',
-        lastName: '3',
-        email: '4',
-        phone: '5',
-        orgName: '6',
-        addrLine1: '7',
-        addrLine2: '8',
-        city: '9',
-        country: '99',
-        countryText: '999',
-        zipCode: '9999',
+        // id: '',
+        // first_name: '',
+        // middle_name: '',
+        // last_name: '',
+        // associate_coach: '',
+        // associate_role: '',
+        // associate_bio: '',
+        // contact_location: '',
+        // phone: '',
+        // email: '',
+        // initial_contact_date: '',
+        // referred_by: '',
+        // resume: '',
+        // acuity_people_profile_id: '',
+        // nda_status: '',
+        // wwa_status: '',
+        // sourced_for: '',
+        // partner_roles_attributes: '',
+        // partner_resumes_attributes: '',
+        // address_line1: '',
+        // address_line2: '',
+        // zipcode: '',
+        // dob: '',
+        // facebook: '',
+        // gender: '',
+        // linkedin: '',
+        // organisation_id: '',
+        // secondary_email: '',
+        // skype: '',
+        // suffix: '',
+        // title: '',
+        // twitter: '',
+        // visa_status: '',
+        // work_info: '',
+        // city: '',
+        // country_list_id: '',
+        // county: '',
+        // nationality_list_id: '',
+        // website: [],
+        role: "admin",
+        first_name: '',
+        middle_name: '',
+        last_name: '',
+        title: '',
+
+        phone: '',
+        email: '',
+        initial_contact_date: '',
+        organisation_id: '',
+        secondary_email: '',
+        contact_locationtest: '',
+        referred_bySelf: '',
+        sourced_fortrue: '',
+        associate_coachtrue: '',
+        associate_roletest: '',
+        associate_biotest: '',
+        partner_roles_attributes: {role:[2]},
+        partner_resumes_att:[2]
+
     }
     const [userData, setUserData] = useState(data);
-    const onSubmit = () => {
-        console.log(userData)
-    }
-
     const setInputState = (inputStateValue: any, inputId: any) => {
         setUserData({ ...userData, [inputId]: inputStateValue })
     }
-    const onChangeItem = (selectedItemValue: any) => {
-        console.log(selectedItemValue)
+    const onChangeItem = (selectedItemValue: any, inputId: any) => {
+        setUserData({ ...userData, [inputId]: selectedItemValue.value })
     };
+
+    const onSubmit = () => {
+        AdminPartnerClient.BasicInfo(userData).then((response: any) => {
+            props.parentSetProfileId(response.data.id,response.data.attributes.acuity_people_profile_id)
+        });
+    }
+
+
     const onChangeDate = (selectedItemValue: any) => {
         console.log(selectedItemValue)
     };
@@ -55,7 +106,7 @@ function BasicInfo() {
                             <InputLabel>Title*</InputLabel>
                         </Grid>
                         <Grid item xs={4}>
-                            <CustomSelect id="role" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.title} />
+                            <CustomSelect id="title" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.title} />
                         </Grid>
 
                     </Grid>
@@ -66,16 +117,16 @@ function BasicInfo() {
                         <Grid item xs={8} >
                             <Grid container direction="row" alignItems="center" >
                                 <Grid item xs={12} >
-                                    <CustomInput id="firstName" variant="outlined" placeholder="First Name" parentcall={setInputState} />
+                                    <CustomInput id="first_name" variant="outlined" placeholder="First Name" parentcall={setInputState} />
                                 </Grid>
                             </Grid>
 
                             <Grid container direction="row" alignItems="center" >
                                 <Grid item xs={4} >
-                                    <CustomInput id="middleName" variant="outlined" placeholder="Middle Name" parentcall={setInputState} />
+                                    <CustomInput id="middle_name" variant="outlined" placeholder="Middle Name" parentcall={setInputState} />
                                 </Grid>
                                 <Grid item xs={8} style={{ padding: 10, paddingRight: 0 }}>
-                                    <CustomInput id="lastName" variant="outlined" placeholder="Last Name" parentcall={setInputState} />
+                                    <CustomInput id="last_name" variant="outlined" placeholder="Last Name" parentcall={setInputState} />
                                 </Grid>
                             </Grid>
 
@@ -103,7 +154,7 @@ function BasicInfo() {
                             <InputLabel>Organization Name</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="orgName" variant="outlined" placeholder="Name" parentcall={setInputState} />
+                            <CustomInput id="organisation_id" variant="outlined" placeholder="Name" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 30 }}>
@@ -113,13 +164,13 @@ function BasicInfo() {
                         <Grid item xs={8} >
                             <Grid container direction="row" alignItems="center" style={{ marginBottom: 10 }}>
                                 <Grid item xs={12} >
-                                    <CustomInput id="addrLine1" variant="outlined" placeholder="Address Line 1" parentcall={setInputState} />
+                                    <CustomInput id="" variant="outlined" placeholder="Address Line 1" parentcall={setInputState} />
                                 </Grid>
                             </Grid>
 
                             <Grid container direction="row" alignItems="center" style={{ marginBottom: 10 }} >
                                 <Grid item xs={12} >
-                                    <CustomInput id="addrLine2" variant="outlined" placeholder="Address Line 2" parentcall={setInputState} />
+                                    <CustomInput id="" variant="outlined" placeholder="Address Line 2" parentcall={setInputState} />
                                 </Grid>
                             </Grid>
                             <Grid container direction="row" alignItems="center" >
@@ -158,8 +209,8 @@ function BasicInfo() {
                         <Grid item xs={8} >
 
                             <Grid container direction="row" alignItems="center">
-                               {[1,2].map(() =>  <Grid item xs={5} >
-                                    <div style={{ marginRight: 15,  height: 100, backgroundColor: "#ddd", marginBlock: 10, borderRadius: 5 }}>
+                                {[1, 2].map(() => <Grid item xs={5} >
+                                    <div style={{ marginRight: 15, height: 100, backgroundColor: "#ddd", marginBlock: 10, borderRadius: 5 }}>
                                         <div style={{ position: "relative", flex: .5, padding: 10 }}>
                                             <Cancel style={{ marginRight: 10, position: "absolute", top: -9, right: -18, fontSize: 16 }} />
                                             <Typography variant="h5" style={{ color: "#3B86FF", fontSize: 12, }}>26 Jan 2018</Typography>
@@ -167,10 +218,10 @@ function BasicInfo() {
                                         </div>
                                     </div>
                                 </Grid>)}
-                               
+
                             </Grid>
 
-                            
+
 
                         </Grid>
                     </Grid>

@@ -20,9 +20,8 @@ function CustomSelect(props: any) {
     const [selectedValue, setSelectedValue] = React.useState('');
 
     const handleChange = (event: any) => {
-        // debugger
         setSelectedValue(event.target.value)
-        props.parentcall({ index: event.target.value, value: props.itemArr[event.target.value - 1] },props.id)
+        props.parentcall({ index: event.target.value, value: props.itemArr[event.target.value - 1] })
     };
 
     return (

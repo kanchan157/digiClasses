@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 
 
 const Header = (props:any) => {
-debugger
     const[isSkip,setIsSkip] = useState(props.isSkip || false)
 
     return (

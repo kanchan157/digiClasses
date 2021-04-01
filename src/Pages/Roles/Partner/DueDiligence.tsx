@@ -4,26 +4,33 @@ import React, { useState } from 'react'
 import CustomDatePicker from '../../../Components/CustomDatePicker'
 import CustomInput from '../../../Components/CustomInput'
 import CustomSelect from '../../../Components/CustomSelect'
+import AdminPartnerClient from '../../../Service/Admin/partner_services'
 import Header from './header'
 
-function DueDiligence() {
+function DueDiligence(props:any) {
 
     const data = {
-        assignee:'q',
-        scheduleCallDate:'q',
-        internalNote:'q',
-        actions:'q'
+        assignee_id: '',
+        due_diligence_available_slots_attributes: [],
+        internal_notes: '',
+        partner_notes: '',
+        actions: '',
+        partner_profile_id: props.profileId,
+       
     }
     const [userData,setUserData] = useState(data);
     const classes = useStyles();
 
 
     const setInputState = (inputStateValue: any, inputId: any) => {
-        setUserData({...userData, [inputId] : inputStateValue})
+        setUserData({ ...userData, [inputId]: inputStateValue })
     }
+    
    
     const onSubmit = () => {
-        console.log(userData)
+        AdminPartnerClient.DueDiligenceCall(userData).then((response: any) => {
+            console.log(response)
+        });
     }
     return (
         
@@ -41,7 +48,7 @@ function DueDiligence() {
                         <Grid item xs={8}>
                             <Grid container direction="row" alignItems="center">
                                 <Grid item xs={12} >
-                                    <CustomInput id="businessExp" placeholder="February 1st 2019" parentcall={setInputState} />
+                                    <CustomInput id="due_diligence_av" placeholder="February 1st 2019" parentcall={setInputState} />
                                 </Grid>
                                 <Grid item  sm={2} style={{marginRight:5,}} >
                                     <Grid container direction="row" justify="center" alignItems="center" 
@@ -154,7 +161,7 @@ function DueDiligence() {
                             <InputLabel style={{marginTop:20,}} >Additional notes*</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                        <CustomInput id="internalNote" variant="outlined" placeholder="Free Text" multiline={true} rows={4} parentcall={setInputState}/>
+                        <CustomInput id="internal_notes" variant="outlined" placeholder="Free Text" multiline={true} rows={4} parentcall={setInputState}/>
                         </Grid>
                     </Grid>
                 </Grid>

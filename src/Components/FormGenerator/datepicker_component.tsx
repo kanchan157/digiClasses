@@ -43,15 +43,14 @@ const theme = createMuiTheme({
 });
 
 export const DatePicker = (props: any) => {
-    const { label, id } = props.componentObject;
-    // The first commit of Material-UI
-    const [selectedDate, setSelectedDate] = React.useState<Date | null>(
-      new Date('2014-08-18T21:11:54'),
-    );
-  
-    const handleDateChange = (date: Date | null) => {
-      setSelectedDate(date);
-    };
+    const { 
+      label,
+       id,
+       index,
+       value,
+       handleChange
+       } = props.componentObject;
+
   
     return (
         <ThemeProvider theme={theme}>
@@ -64,8 +63,8 @@ export const DatePicker = (props: any) => {
             // id={id}
             // label={label}
             format="MM/dd/yyyy"
-            value={selectedDate}
-            onChange={handleDateChange}
+            value={value}
+            onChange={(value) => handleChange(value, index)}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}

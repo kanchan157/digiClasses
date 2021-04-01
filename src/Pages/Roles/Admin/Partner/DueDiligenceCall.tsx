@@ -7,7 +7,7 @@ import Header from './header';
 import AdminPartnerClient from '../../../../Service/Admin/partner_services';
 
 
-function DueDiligenceCall() {
+function DueDiligenceCall(props:any) {
 
     const data = {
         

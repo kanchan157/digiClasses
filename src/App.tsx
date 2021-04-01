@@ -16,6 +16,7 @@ import OrganisationCreate from './Pages/Roles/Admin/Organisation/Create';
 import ComponentList from './Components/ComponentList';
 import CustomUploadFiles from './Components/CustomUploadFiles';
 import ContractDocumentition from './Pages/Roles/Partner/ContractDocumentition';
+import CoachSearch from './Pages/CoachSearch/CoachSearch';
 
 export const App = () => {
   const global_data = useSelector((state: any) => state.commonReducer);
@@ -39,6 +40,7 @@ export const App = () => {
         <Route exact path="/admin"><OnboardingPartnerAdmin /></Route>
         <Route exact path="/partner"><OnboardingPartner /></Route>
         <Route exact path="/custom"><CustomUploadFiles /></Route>
+        <Route exact path="/coachSearch"><CoachSearch /></Route>
 
 
         {/* <Route exact path="/login"><LoginPage /></Route>

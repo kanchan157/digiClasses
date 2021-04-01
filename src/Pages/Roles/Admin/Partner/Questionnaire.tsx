@@ -5,7 +5,7 @@ import CustomInput from '../../../../Components/CustomInput';
 import CustomSelect from '../../../../Components/CustomSelect'
 import Header from './header';
 
-function Questionnaire() {
+function Questionnaire(props:any) {
 
     const data = {
         businessExp: '',

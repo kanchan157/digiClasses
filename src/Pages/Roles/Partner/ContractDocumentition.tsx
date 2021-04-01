@@ -2,16 +2,21 @@ import { Button, Grid, InputLabel, Typography } from '@material-ui/core'
 import { Cancel, CloseSharp, CloudUpload } from '@material-ui/icons'
 import React, { useState } from 'react'
 import Header from './header';
+import AdminPartnerClient from '../../../Service/Admin/partner_services'
 
 
-function ContractDocumentition() {
+
+function ContractDocumentition(props:any) {
     const data = {
-        businessExp: '1',
-
+        partner_profile_id:props.profileId,
+        acuity_people_profile_id:props.acuityProfileID,
+        document:'https://acuityapi.digiryte.co.uk/',
     }
     const [userData, setUserData] = useState(data);
     const onSubmit = () => {
-        console.log(userData)
+        AdminPartnerClient.ContractDocumentition(userData).then((response: any) => {
+            console.log(response)
+        });
     }
     return (
         <div>

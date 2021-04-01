@@ -1,7 +1,14 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import PDFViewer from 'pdf-viewer-reactjs'
+import AdminPartnerClient from '../../../../Service/Admin/partner_services';
 
-function NDA() {
+function NDA(props: any) {
+    useEffect(() => {
+        AdminPartnerClient.Nda({ partner_profile_id: props.profileId }).then((response: any) => {
+            console.log(response)
+        });
+    }, [])
+
     return (
         <PDFViewer
             document={{

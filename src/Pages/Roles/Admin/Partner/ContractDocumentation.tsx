@@ -3,7 +3,7 @@ import { Cancel, CloseSharp, CloudUpload } from '@material-ui/icons'
 import React, { useState } from 'react'
 import Header from './header';
 
-function ContractDocumentation() {
+function ContractDocumentation(props:any) {
     const data = {
         businessExp: '1',
 

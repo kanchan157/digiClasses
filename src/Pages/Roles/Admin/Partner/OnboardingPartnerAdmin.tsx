@@ -3,18 +3,10 @@ import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import Stepper from '@material-ui/core/Stepper';
 import Step from '@material-ui/core/Step';
 import StepLabel from '@material-ui/core/StepLabel';
-import StepContent from '@material-ui/core/StepContent';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import { Grid, FormControlLabel, Checkbox, StepConnector, withStyles } from '@material-ui/core';
-import { Link } from 'react-router-dom';
-import CustomInput from '../../../../Components/CustomInput';
-import Contact from '../Organisation/Create/contact';
-import General from '../Organisation/Create/general';
-import OrganisationDetails from '../Organisation/Create/organisation_details';
-import PreContract from '../Organisation/Create/pre_contract';
-import Profile from '../Organisation/Create/profile';
+import { Grid, StepConnector, withStyles } from '@material-ui/core';
 import BasicInfo from './BasicInfo';
 import NDA from './NDA';
 import Share_Login_Credentials from './Share_Login_Credentials';
@@ -130,33 +122,37 @@ function getSteps() {
 function OnboardingPartnerAdmin() {
     const classes = useStyles();
     const [activeStep, setActiveStep] = React.useState(0);
+    const [profileID, setProfileID] = React.useState(0);
     const steps = getSteps();
 
+    const updateProfileId = (value: any) => {
+        setProfileID(value)
+    }
 
     function getStepContent(step: any) {
         switch (step) {
             case 0:
-                return <BasicInfo />;
+                return <BasicInfo parentSetProfileId={updateProfileId} />;
             case 1:
-                return <Share_Login_Credentials />;
+                return <Share_Login_Credentials profileId={profileID} />;
             case 2:
-                return <NDA />;
+                return <NDA profileId={profileID} />;
             case 3:
-                return <DueDiligenceCall />;
+                return <DueDiligenceCall profileId={profileID} />;
             case 4:
-                return <Questionnaire />;
+                return <Questionnaire profileId={profileID} />;
             case 5:
-                return <ReferenceQuestionnaire />;
+                return <ReferenceQuestionnaire profileId={profileID} />;
             case 6:
-                return <WorkingWithAcuity />;
+                return <WorkingWithAcuity profileId={profileID} />;
             case 7:
-                return <ContractDocumentation />;
+                return <ContractDocumentation profileId={profileID} />;
             case 8:
-                return <OtherQuestions />;
+                return <OtherQuestions profileId={profileID} />;
             case 9:
-                return <Ranking />;
+                return <Ranking profileId={profileID} />;
             case 10:
-                return <Review />;
+                return <Review profileId={profileID} />;
             default:
                 return "Not available"
         }
@@ -166,9 +162,6 @@ function OnboardingPartnerAdmin() {
         setActiveStep(index);
     };
 
-    const handleBack = () => {
-        setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    };
 
     const handleReset = () => {
         setActiveStep(0);
@@ -182,7 +175,7 @@ function OnboardingPartnerAdmin() {
         <div className={classes.root}>
             <Grid direction="row" >
                 <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
-                    <HeaderMenu/>
+                    <HeaderMenu />
                 </Grid>
             </Grid>
             {/* <Grid direction="row" >

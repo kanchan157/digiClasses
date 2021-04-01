@@ -3,33 +3,47 @@ import React, { useState } from 'react'
 import CustomDatePicker from '../../../Components/CustomDatePicker';
 import CustomInput from '../../../Components/CustomInput';
 import CustomSelect from '../../../Components/CustomSelect'
+import AdminPartnerClient from '../../../Service/Admin/partner_services';
 import Header from './header';
 
-function OtherQue() {
+function OtherQuestions(props:any) {
 
     const data = {
-        coachingHourRate: '1',
-        faciliationRate: '2',
-        assesmentRate: '3',
-        travelExpenses: 'a',
-        psychoCost: 'b',
-        localTX: 'c',
-        deliveryMethod: 'd',
-        nextAvaiDate: 'e',
-        considerLevel: 'f',
+        partner_profile_id:props.profileId,
+        assessor_currency_type:'',
+        assessor_hour_rate:'',
+        available_date:'',
+        coaching_hour_rate:'',
+        coach_currency_type:'',
+        facilitator_currency_type:'',
+        facilitator_day_rate:'',
+        local_tx_areas:'',
+        psychometric_costs:'',
+        travel_expenses:'',
+        delivery_methods:'',
+        considered_levels:'',
+
+        
     }
     const [userData, setUserData] = useState(data);
-    const onSubmit = () => {
-        console.log(userData)
-    }
-    const onChangeItem = (selectedItemValue: any) => {
-        console.log(selectedItemValue)
-    };
-    const onChangeDate = (selectedItemValue: any) => {
-        console.log(selectedItemValue)
-    };
+    
     const setInputState = (inputStateValue: any, inputId: any) => {
         setUserData({ ...userData, [inputId]: inputStateValue })
+    }
+    const onChangeItem = (selectedItemValue: any, inputId: any) => {
+        // debugger
+        setUserData({ ...userData, [inputId]: selectedItemValue.value })
+    };
+    const onChangeDate = (selectedItemValue: any, inputId: any) => {
+        // debugger
+        setUserData({ ...userData, [inputId]: selectedItemValue })
+        // console.log(selectedItemValue)
+    };
+    const onSubmit = () => {
+        AdminPartnerClient.OtherQuestions(userData).then((response: any) => {
+            console.log(response)
+            // props.parentSetProfileId(response.id)
+        });
     }
 
     return (
@@ -44,7 +58,7 @@ function OtherQue() {
                             <InputLabel>Coaching hourly rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                        <CustomSelect id="role" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} />
+                        <CustomSelect id="coaching_hour_rate" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.coaching_hour_rate}/>
                             {/* <CustomInput id="coachingHourRate" variant="outlined" placeholder="Mr" parentcall={setInputState} /> */}
                         </Grid>
                     </Grid>
@@ -53,7 +67,7 @@ function OtherQue() {
                             <InputLabel>Facilitation day rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="faciliationRate" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="facilitator_day_rate" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -61,7 +75,7 @@ function OtherQue() {
                             <InputLabel>Assessment hourly rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="assesmentRate" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="assessor_hour_rate" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -69,7 +83,7 @@ function OtherQue() {
                             <InputLabel>Travel expenses</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="travelExpenses" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="travel_expenses" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -77,7 +91,7 @@ function OtherQue() {
                             <InputLabel>Psychometric costs</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="psychoCost" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="psychometric_costs" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -85,7 +99,7 @@ function OtherQue() {
                             <InputLabel>Local TX areas</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="localTX" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="local_tx_areas" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -93,7 +107,7 @@ function OtherQue() {
                             <InputLabel>Delivery method</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="deliveryMethod" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="delivery_methods" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -101,7 +115,7 @@ function OtherQue() {
                             <InputLabel>Next Available Date</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomDatePicker id="nextAvaiDate" variant="outlined" parentcall={setInputState} />
+                            <CustomDatePicker id="available_date" variant="outlined" parentcall={onChangeItem} selectedValue={userData.available_date} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -109,7 +123,7 @@ function OtherQue() {
                             <InputLabel>Considered Levels</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="considerLevel" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="considered_levels" variant="outlined" placeholder="Mr" parentcall={setInputState} />
                         </Grid>
                     </Grid>
 
@@ -123,4 +137,4 @@ function OtherQue() {
     )
 }
 
-export default OtherQue
+export default OtherQuestions

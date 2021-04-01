@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-export const SimpleSelect = (props: any) => {
+export const DatePickerSelect = (props: any) => {
     const classes = useStyles();
     const {
       label,
@@ -51,28 +51,15 @@ export const SimpleSelect = (props: any) => {
       index
     } = props.componentObject;
 
-    // const [selectedValue, setSelectedValue] = useState("");
-    const [listOptions, setListoptions] = useState([]);
-
-    useEffect(() => {
-      apiVariable &&
-      DataService.getData(params ? params : "",apiVariable).then((res) => { 
-        console.log(res.data.attributes.drop_down_values, 'test');
-        setListoptions(res.data.attributes.drop_down_values);
-      });
-    },[apiVariable])
-
-
-
     return(
         <FormControl
         size="small"
         variant={"outlined"}
         className={classes.formControl}
       >
-        <Select name={name} style={{color: !value ? '#a9a9a9' : '' }} displayEmpty value={value} onChange={(e) => handleChange(e.target.value, index)}>
+        <Select name={name} style={{color: !value ? '#a9a9a9' : '' }} displayEmpty value={value}>
           <MenuItem>{placeholder}</MenuItem>
-          {(selectOptions || listOptions).map((option: any, index: any) => {
+          {selectOptions.map((option: any, index: any) => {
             return <MenuItem key={option.id} value={option.value}>{option.name}</MenuItem>;
           })}
         </Select>
@@ -81,7 +68,7 @@ export const SimpleSelect = (props: any) => {
     );
 };
 
-export default function SelectComponent(props: any) {
+export default function DatePickerSelectComponent(props: any) {
   const classes = useStyles();
   const { label, componentType } = props.componentObject;
 
@@ -91,21 +78,15 @@ export default function SelectComponent(props: any) {
           {label}
         </Grid>
         {
-        componentType === "select" &&
-        <Grid xs={12} md={7}>
-         <SimpleSelect componentObject={props.componentObject} />
-        </Grid>
-        }
-        {
         componentType === "selectWithDatePicker" &&
         <Grid xs={12} md={4}>
-         <SimpleSelect componentObject={props.componentObject} />
+         <DatePickerSelect componentObject={props.componentObject} />
         </Grid>
         }
         {
             componentType === "selectWithDatePicker" && 
         <Grid xs={12} md={3}>
-        <DatePicker componentObject={props.componentObject} />
+        <DatePicker disabled={props.componentObject.value} componentObject={props.componentObject} />
        </Grid>
         }
       </Grid>

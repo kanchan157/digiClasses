@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Share_Login_Credentials() {
+function Share_Login_Credentials(props:any) {
     return (
         <div>
             Share_Login_Credentials

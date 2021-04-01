@@ -10,7 +10,7 @@ import AdminPartnerClient from '../../../../Service/Admin/partner_services'
 
 
 
-function BasicInfo() {
+function BasicInfo(props:any) {
 
     const data = {
 
@@ -75,6 +75,7 @@ function BasicInfo() {
     const onSubmit = () => {
         AdminPartnerClient.BasicInfo(userData).then((response: any) => {
             console.log(response)
+            // props.parentSetProfileId(response.id)
         });
     }
     return (
