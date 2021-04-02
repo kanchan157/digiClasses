@@ -27,6 +27,15 @@ const useStyles = makeStyles(() =>
     gridRoot: {
       flexGrow: 1,
       marginBottom: "20px"
+    },
+    inputLabel: {
+      paddingLeft: '14px', 
+      marginTop: '-8px', 
+      color: '#a9a9a9'
+    },
+    placeholder: {
+      paddingLeft: '10px', 
+      color: 'gray'
     }
   })
 );
@@ -112,12 +121,14 @@ export const MultipleSelect = ({componentObject}) => {
     <div>
       <FormControl
         size="small"
-        // className={clsx(classes.formControl, classes.noLabel)}
+        className={clsx(classes.formControl, classes.noLabel)}
       >
-        <Select
+          {((value === undefined) || (value && value.length === 0)) && <InputLabel shrink={false} className={classes.inputLabel} id="demo-simple-select-outlined-label">{placeholder}</InputLabel>}
+        <Select 
+          labelId="demo-simple-select-outlined-label"
           variant={"outlined"}
           multiple
-          displayEmpty
+          // displayEmpty
           value={value ? value : []}
           onChange={(e) => handleChange(e.target.value, index)}
         //   input={<Input />}
@@ -131,9 +142,8 @@ export const MultipleSelect = ({componentObject}) => {
           MenuProps={MenuProps}
         //   inputProps={{ "aria-label": "Without label" }}
         >
-          <MenuItem>
-            {placeholder}
-          </MenuItem>
+          
+          <span className={classes.placeholder}>{placeholder}</span>
           {(selectOptions || listOptions).map((option) => (
             <MenuItem
             key={option.id} 

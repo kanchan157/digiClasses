@@ -80,7 +80,7 @@ export default function PreContract(props) {
   }, []);
 
   const loopAllValues = async () => {
-    await DataService.getData("", "document_types")
+    await DataService.getData("", "org_profile_document_types")
       .then((res) => {
         res.data.attributes.drop_down_values.forEach((item, index) => {
           formArray.unshift({
@@ -103,7 +103,7 @@ export default function PreContract(props) {
           children={formInput}
           submitURL={api_url.organisation}
           handleNext={props.handleNext}
-          nextIndex={2}
+          nextIndex={4}
           setId={props.setId}
         />
       )}

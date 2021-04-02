@@ -52,6 +52,7 @@ function LoginPage() {
     const [open, setOpen] = React.useState(false);
     const [role, setRole] = React.useState("");
     const [roleArr, setRoleArr] = React.useState([]);
+    const [submitClickFlag, setSubmitClickFlag] = React.useState(false);
 
     const handleChange = (event: any) => {
         setRemember(event.target.checked);
@@ -61,10 +62,26 @@ function LoginPage() {
         inputId === 'Password' && setPassword(inputStateValue);
     }
     const login = () => {
+        var flag = true;
+        if (username == "") {
+            flag = false;
+        }
+        else if (password == "") {
+            flag = false;
+        }
+
+
+
+        if (flag) {
+            setSubmitClickFlag(false)
+            AuthClient.login({ email: username, password: password }).then((response: any) => {
+                loginSuccess(response)
+            }).catch(error => alert(error.errors[0]));
+        } else {
+            setSubmitClickFlag(true)
+        }
         // Post_API({ email: username, password: password }, api_url.login, loginSuccess, true);
-        AuthClient.login({ email: username, password: password }).then((response: any) => {
-            loginSuccess(response)
-        });
+
     }
     const loginSuccess = (response: any) => {
         console.log(response)
@@ -79,7 +96,9 @@ function LoginPage() {
     const handleClose = () => {
         setOpen(false);
         dispatch({ type: GLOBAL_DATA, payload: { role: role } });
-        history.push('/' + role)
+        sessionStorage.setItem("role", role);
+        role=='admin' && history.push('/admin/partner/onboarding')
+        role=='partner' && history.push('/partner/onboarding')
 
     };
     const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -92,11 +111,12 @@ function LoginPage() {
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <img src="../../../assets/images/logo.png" alt="dsd" />
                 </Grid>
-                <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="Username" placeholder="Username" parentcall={setInputState} />
+                <Grid item xs={12} style={{ marginTop: 30,marginBottom:20 }}>
+                    <CustomInput id="Username" placeholder="Username"
+                     helperText={submitClickFlag ? "Please enter username." : ""} error={submitClickFlag} parentcall={setInputState} />
                 </Grid>
-                <Grid item xs={12}>
-                    <CustomInput id="Password" placeholder="Password" parentcall={setInputState} />
+                <Grid item xs={12} style={{marginBottom:20}}>
+                    <CustomInput id="Password" placeholder="Password" helperText={submitClickFlag ? "Please enter password." : ""} error={submitClickFlag} parentcall={setInputState} />
                 </Grid>
                 <Grid item xs={12} sm={8}  >
                     <FormControlLabel
@@ -116,12 +136,12 @@ function LoginPage() {
                         label="Remember me"
                     />
                 </Grid>
-                <Grid item xs={12} sm={4} >
+                <Grid item xs={12} sm={4} style={{marginTop:10}}>
                     <Typography variant="h6" style={{ textAlign: "right" }}>
                         <Link
                             className="anchorLink"
                             to={{
-                                pathname: "/auth/rgotPassword",
+                                pathname: "/auth/forgotPassword",
                                 state: { subPage: "forgotPassword" }
                             }}> Forgot Password </Link>
                     </Typography>
@@ -135,7 +155,7 @@ function LoginPage() {
                             className="anchorLink primary"
 
                             to={{
-                                pathname: "/auth/gister",
+                                pathname: "/auth/register",
                                 state: { subPage: "register" }
                             }}> New User? Create new account</Link>
                     </Typography>

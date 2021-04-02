@@ -1,5 +1,5 @@
 
-export const BASE_API_URL = 'http://staging-acuityapi.digiryte.co.uk';
+export const BASE_API_URL = 'https://staging-acuityapi.digiryte.co.uk';
 
 export const api_url = {
     login: 'auth/sign_in',

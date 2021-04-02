@@ -2,7 +2,7 @@ import { makeStyles, Theme, createStyles, Grid, Paper, TextField, Checkbox, Form
 import React, { useState } from "react";
 // import { Post_API } from "../../Service/service";
 import { api_url } from "../../constants";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import CustomInput from "../../Components/CustomInput";
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import AuthClient from  "../../Service/auth_services";
@@ -23,6 +23,7 @@ const Register = () => {
     const [role, setRole] = useState("")
     const [orgName, setOrgName] = useState("")
     const [submitClickFlag, setSubmitClickFlag] = React.useState(false);
+    const history = useHistory();
 
     const roleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         setRole(event.target.value as string);
@@ -32,14 +33,14 @@ const Register = () => {
             setSubmitClickFlag(false)
             AuthClient.signUp({ name: username, email: email, role_id: role, organisation_name: orgName }).then((response: any) => {
                 registerSuccess(response)
-            }).catch(error => alert(error.errors[0]));
+            }).catch(error => error && alert(error.errors[0]));
         } else {
             setSubmitClickFlag(true)
         }
       
     }
     const registerSuccess = (response: any) => {
-        console.log(response)
+        history.push('/auth/login')
     }
     const setInputState = (inputStateValue: any, inputId: any) => {
         inputId === 'username' && setUserName(inputStateValue);

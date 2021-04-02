@@ -4,6 +4,7 @@ import { ObjectToFormdata } from "../../../../../../Common/Utils/common_utils";
 // ORGANISATION CREATE -> DETAILS - CONSTANTS
 export const SET_ORGANISATION_GENERAL = "SET_ORGANISATION_GENERAL";
 export const UPDATE_ORGANISATION_GENERAL = "UPDATE_ORGANISATION_GENERAL";
+export const UPDATE_ORGANISATION_ID_GENERAL = "UPDATE_ORGANISATION_ID_GENERAL";
 
 export const SetOrganisationGeneral = (item) => {
   return {
@@ -27,6 +28,13 @@ export const CreateOrganisationGeneral = (data) => {
 export function UpdateOrganisationGeneral(item) {
   return {
     type: UPDATE_ORGANISATION_GENERAL,
+    payload: item,
+  };
+}
+
+export function UpdateOrganisationIdGeneral(item) {
+  return {
+    type: UPDATE_ORGANISATION_ID_GENERAL,
     payload: item,
   };
 }

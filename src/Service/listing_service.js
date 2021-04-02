@@ -22,12 +22,12 @@ const dataUrl = {
     departments: '/departments',
     functions: '/functions',
     // ORGANISATION - PRECONTRACT
-    document_types: '/document_types'
+    org_profile_document_types: '/org_profile_document_types'
 }
 
-export function getData(params, section) {
+export function getData(params, section, url) {
     return request({
-        url: dataUrl[section],
+        url: url || dataUrl[section],
         method: 'GET',
         params: params,
         paramsSerializer: (params) => {

@@ -13,9 +13,16 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     marginBottom: "20px",
   },
+  helperText: {
+    color: "red"
+  }
 }));
 
+
 export const Input = (props: any) => {
+
+  const classes = useStyles();
+  
   const {
     // label,
     type,
@@ -48,13 +55,16 @@ export const Input = (props: any) => {
       variant="outlined"
       required={required ? required : false}
       disabled={disabled}
-      error={error ? error : false}
+      error={helperText ? true : false}
       type={type}
       size="small"
       defaultValue={defaultValue}
       helperText={helperText}
       InputLabelProps={{
         shrink: true,
+      }}
+      FormHelperTextProps={{
+        className: classes.helperText
       }}
       InputProps={{
         readOnly: readOnly ? readOnly : false,
@@ -66,7 +76,6 @@ export const Input = (props: any) => {
       //   onChange={() => handleChange()}
       rowsMax={rowsMax}
       color={color}
-      FormHelperTextProps={{}}
       fullWidth
       value={value}
       onChange={(e) => handleChange(e.target.value, index)}

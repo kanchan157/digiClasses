@@ -7,20 +7,21 @@ import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import { Grid, StepConnector, withStyles } from '@material-ui/core';
-import BasicInfo from './BasicInfo';
-import NDA from './NDA';
-import Share_Login_Credentials from './Share_Login_Credentials';
-import DueDiligenceCall from './DueDiligenceCall';
-import Questionnaire from './Questionnaire';
-import ReferenceQuestionnaire from './ReferenceQuestionnaire';
-import WorkingWithAcuity from './WorkingWithAcuity';
-import ContractDocumentation from './ContractDocumentation';
-import OtherQuestions from './OtherQuestions';
-import Ranking from './Ranking';
-import Review from './Review';
+import BasicInfo from '../../StepperComponent/BasicInfo';
+import NDA from '../../StepperComponent/NDA';
+import Share_Login_Credentials from '../../StepperComponent/Share_Login_Credentials';
+import DueDiligenceCall from '../../StepperComponent/DueDiligence';
+import Questionnaire from '../../StepperComponent/Questionnaire';
+import ReferenceQuestionnaire from '../../StepperComponent/ReferenceQuestionnaire';
+import WorkingWithAcuity from '../../StepperComponent/WorkingWithAcuity';
+import ContractDocumentation from '../../StepperComponent/ContractDocumentition';
+import Ranking from '../../StepperComponent/Ranking';
+import Review from '../../StepperComponent/Review';
 import HeaderMenu from '../../../../Components/HeaderMenu';
 import clsx from 'clsx';
 import { Check } from '@material-ui/icons';
+import OtherQuestions from '../../StepperComponent/OtherQuestions';
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -132,27 +133,27 @@ function OnboardingPartnerAdmin() {
     function getStepContent(step: any) {
         switch (step) {
             case 0:
-                return <BasicInfo parentSetProfileId={updateProfileId} />;
+                return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step}/>;
             case 1:
-                return <Share_Login_Credentials profileId={profileID} />;
+                return <Share_Login_Credentials profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 2:
-                return <NDA profileId={profileID} />;
+                return <NDA profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 3:
-                return <DueDiligenceCall profileId={profileID} />;
+                return <DueDiligenceCall profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 4:
-                return <Questionnaire profileId={profileID} />;
+                return <Questionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 5:
-                return <ReferenceQuestionnaire profileId={profileID} />;
+                return <ReferenceQuestionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 6:
-                return <WorkingWithAcuity profileId={profileID} />;
+                return <WorkingWithAcuity profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 7:
-                return <ContractDocumentation profileId={profileID} />;
+                return <ContractDocumentation profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 8:
-                return <OtherQuestions profileId={profileID} />;
+                return <OtherQuestions profileId={profileID} parentHandleNext={handleNext } activeIndex={step}/>;
             case 9:
-                return <Ranking profileId={profileID} />;
+                return <Ranking profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 10:
-                return <Review profileId={profileID} />;
+                return <Review profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             default:
                 return "Not available"
         }
@@ -184,18 +185,19 @@ function OnboardingPartnerAdmin() {
                 </Grid>
             </Grid> */}
             <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={4} style={{ paddingTop: 30, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 60px)" }}>
-                    <Typography variant="h4" style={{ textAlign: "center" }}>Partner Onboarding</Typography>
-                    <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE" }}>
+                <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE",height: "calc(100vh - 64px)"   }}>
+                <Typography  style={{ paddingBlock:25,textAlign: "center",alignSelf:"center",fontSize:26,color:"#4A4A4A",fontWeight:"bold" }}>        
+                    <ArrowBackIosIcon style={{fontSize:16,color:"#4A4A4A"}}/> Partner Onboarding</Typography>
+                    <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE",paddingLeft:55 }}>
                         {steps.map((label, index) => (
                             <Step key={label}>
-                                <StepLabel StepIconComponent={QontoStepIcon} onClick={() => { handleNext(index) }}>{label}</StepLabel>
+                                <StepLabel style={{cursor:"pointer"}} StepIconComponent={QontoStepIcon} onClick={() => { handleNext(index) }}>{label}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
 
                 </Grid>
-                <Grid item xs={8} style={{ height: "calc(100vh - 60px)" }}>
+                <Grid item xs={9} style={{ height: "calc(100vh - 64px)",overflow:"auto" }}>
                     {getStepContent(activeStep)}
                     {activeStep === steps.length && (
                         <Paper square elevation={0} className={classes.resetContainer}>

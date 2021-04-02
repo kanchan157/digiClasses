@@ -48,7 +48,8 @@ export const DatePickerSelect = (props: any) => {
       apiVariable,
       params,
       handleChange,
-      index
+      index,
+      // selectValue
     } = props.componentObject;
 
     return(
@@ -57,8 +58,9 @@ export const DatePickerSelect = (props: any) => {
         variant={"outlined"}
         className={classes.formControl}
       >
-        <Select name={name} style={{color: !value ? '#a9a9a9' : '' }} displayEmpty value={value}>
-          <MenuItem>{placeholder}</MenuItem>
+        {console.log(props.selectValue, 'valueee')}
+        <Select name={name} style={{color: props.selectValue === 'No' ? '#a9a9a9' : '' }} displayEmpty value={props.selectValue} onChange={(e) => props.setSelectValue(e.target.value)}>
+        <span style={{paddingLeft: '10px', color: 'gray'}}>{placeholder}</span>
           {selectOptions.map((option: any, index: any) => {
             return <MenuItem key={option.id} value={option.value}>{option.name}</MenuItem>;
           })}
@@ -71,6 +73,12 @@ export const DatePickerSelect = (props: any) => {
 export default function DatePickerSelectComponent(props: any) {
   const classes = useStyles();
   const { label, componentType } = props.componentObject;
+  const [selectValue, setSelectValue] = useState('No');
+
+  const handleInputChange = (value: any) => {
+    console.log(value);
+    setSelectValue(value);
+  }
 
   return (
       <Grid container className={classes.gridRoot}>
@@ -79,14 +87,14 @@ export default function DatePickerSelectComponent(props: any) {
         </Grid>
         {
         componentType === "selectWithDatePicker" &&
-        <Grid xs={12} md={4}>
-         <DatePickerSelect componentObject={props.componentObject} />
+        <Grid xs={12} md={selectValue === 'Yes' ? 4 : 7}>
+         <DatePickerSelect componentObject={props.componentObject} setSelectValue={setSelectValue} selectValue={selectValue} />
         </Grid>
         }
         {
             componentType === "selectWithDatePicker" && 
         <Grid xs={12} md={3}>
-        <DatePicker disabled={props.componentObject.value} componentObject={props.componentObject} />
+        { selectValue === 'Yes' ? <DatePicker componentObject={props.componentObject} /> : null }
        </Grid>
         }
       </Grid>

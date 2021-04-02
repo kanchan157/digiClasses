@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles, Theme, createStyles, Grid, Paper } from "@material-ui/core";
-import LoginPage from "./LoginPage";
+import LoginPage from "./Login";
+
 import ForgotPassword from "./ForgotPassword";
 import ChangePassword from "./ChangePassword";
 import Register from "./Register";
@@ -22,7 +23,8 @@ const useStyles = makeStyles((theme: Theme) =>
 function CommonUnAuth(props: any) {
     let location: any = useLocation();
     const classes = useStyles();
-    
+    console.log(location)
+
     return (
         <div className={classes.root}>
 
@@ -37,14 +39,12 @@ function CommonUnAuth(props: any) {
                         <Grid item xs={12} sm={8}>
 
                             {
-                                location.state === undefined ? <LoginPage />
-                                    : (
-                                        location.state.subPage === "forgotPassword" ? <ForgotPassword />
-                                            : location.state.subPage === "login" ? <LoginPage />
-                                            : location.state.subPage === "register" ? <Register />
-                                            : location.state.subPage === "resetPassword" ? <ChangePassword />
-                                             : null
-                                    )
+
+                                location.pathname == "/auth/forgotPassword" ? <ForgotPassword />
+                                    : location.pathname === "/auth/login" ? <LoginPage />
+                                        : location.pathname === "/auth/register" ? <Register />
+                                            : location.pathname === "/auth/ChangePassword" ? <ChangePassword />
+                                                : null
                             }
                         </Grid>
                     </Grid>

@@ -19,15 +19,8 @@ const useStyles = makeStyles((theme) => ({
   },
   gridRoot: {
     flexGrow: 1,
-    // marginBottom: "20px",
+    marginBottom: "20px",
   },
-//   overrides: {
-    MuiFormControl: {
-        marginNormal: {
-            margin: "0px"
-        }
-      }
-//   }
 }));
 
 const theme = createMuiTheme({
@@ -42,21 +35,26 @@ const theme = createMuiTheme({
     },
 });
 
-export const DatePicker = (props: any) => {
+export const DatePicker = (props) => {
+
+  const classes = useStyles();
     const { 
       label,
        id,
        index,
        value,
-       handleChange
+       handleChange,
+       helperText
        } = props.componentObject;
 
   
     return (
         <ThemeProvider theme={theme}>
+          <Grid container className={classes.gridRoot}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         {/* <Grid container> */}
           <KeyboardDatePicker
+          fullWidth
           inputVariant="outlined"
           size="small"
             margin="normal"
@@ -64,33 +62,31 @@ export const DatePicker = (props: any) => {
             // label={label}
             format="MM/dd/yyyy"
             value={value}
-            onChange={(value) => handleChange(value, index)}
+            error={helperText ? true : false}
+            helperText={helperText}
+            // InputProps={{ error: helperText ? true : false, helperText: 'helperText' }}
+            onChange={(val) => handleChange(val, index)}
             KeyboardButtonProps={{
               'aria-label': 'change date',
             }}
           />
         {/* </Grid> */}
       </MuiPickersUtilsProvider>
+      </Grid>
       </ThemeProvider>
     );
   }
 
-export default function DateComponent(props: any) {
-  const classes = useStyles();
+export default function DateComponent(props) {
   const { label } = props.componentObject;
 
   return (
-    // <form style={{ display: "flex", marginBottom: '20px' }} noValidate autoComplete="off">
-    <Grid container className={classes.gridRoot}>
-      {/* <div style={{ width: "25%" }}>{label}</div> */}
+    <Grid container >
       <Grid item xs={12} md={4}>
         {label}
       </Grid>
-      {/* <div style={{ width: "70%" }}> */}
       <Grid item xs={12} md={7}>
-      
         <DatePicker componentObject={props.componentObject} />
-    
       </Grid>
     </Grid>
     // </form>

@@ -12,14 +12,15 @@ import store from './Redux/store';
 import { ThemeProvider } from '@material-ui/core';
 import { commonTheme } from './commonTheme';
 const persistedStore = persistStore(store);
+// Commenting the persist logic as it fails to clear data on browser refresh or session break
 
 ReactDOM.render(
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistedStore}>
+    {/* <PersistGate loading={null} persistor={persistedStore}> */}
       <ThemeProvider theme={commonTheme}>
         <App />
       </ThemeProvider>
-    </PersistGate>
+    {/* </PersistGate> */}
   </Provider>,
   document.getElementById('root')
 );

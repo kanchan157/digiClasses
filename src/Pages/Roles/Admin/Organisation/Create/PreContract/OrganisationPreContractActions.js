@@ -4,6 +4,7 @@ import { ObjectToFormdata } from "../../../../../../Common/Utils/common_utils";
 // ORGANISATION CREATE -> PROFILE - CONSTANTS
 export const SET_ORGANISATION_PRECONTRACT = "SET_ORGANISATION_PRECONTRACT";
 export const UPDATE_ORGANISATION_PRECONTRACT = "UPDATE_ORGANISATION_PRECONTRACT";
+export const UPDATE_ORGANISATION_ID_PRECONTRACT = "UPDATE_ORGANISATION_ID_PRECONTRACT";
 
 export const SetOrganisationPreContract = (item) => {
   return {
@@ -29,4 +30,11 @@ export function UpdateOrganisationPreContract(item) {
     type: UPDATE_ORGANISATION_PRECONTRACT,
     payload: item,
   };
+}
+
+export function UpdateOrganisationIdPreContract(data) {
+  return {
+    type: UPDATE_ORGANISATION_ID_PRECONTRACT,
+    payload: data
+  }
 }

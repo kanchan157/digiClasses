@@ -86,12 +86,15 @@ export default function General(props) {
     {
       componentType: "select",
       label: "Record Owner",
+      name: "record_owner",
       placeholder: "Record Owner",
-      selectOptions: dropDownValues
+      selectOptions: [{id: 0, value: 'KB', name: 'KB'},{id: 1, value: 'SJ', name: 'SJ'},{id: 2, value: 'LD', name: 'LD'},{id: 3, value: 'CP', name:'CP'},{id: 4, value: 'AS', name: 'AS'},{id: 5, value: 'SC', name: 'SC'}],
+      handleChange: handleInputChange
     },
     {
       componentType: "select",
       label: "Admin Access",
+      name: "has_admin_access",
       placeholder: "Name",
       apiVariable: "has_admin_access_values",
       handleChange: handleInputChange
@@ -104,9 +107,8 @@ export default function General(props) {
     <ThemeProvider theme={theme}>
       <FormGenerator
         children={formInput}
-        submitURL={api_url.organisation}
         handleNext={props.handleNext}
-        nextIndex={2}
+        nextIndex={7}
         setId={props.setId}
       />
     </ThemeProvider>

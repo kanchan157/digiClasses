@@ -1,29 +1,11 @@
-import React, { useState} from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { api_url } from "../../../../../../constants";
 import FormGenerator from "../../../../../../Components/FormGenerator";
-import { SetOrganisationProfile } from "./OrganisationProfileActions";
-
-// const useStyles = makeStyles((theme) => ({
-//   root: {
-//     "& > *": {
-//       margin: theme.spacing(1),
-//       //   width: "70%",
-//     },
-//   },
-//   container: {
-//     display: "flex",
-//     flexWrap: "wrap",
-//   },
-//   textField: {
-//     marginLeft: theme.spacing(1),
-//     marginRight: theme.spacing(1),
-//     width: 200,
-//   },
-// }));
+import { SetOrganisationProfile, UpdateOrganisationProfileError } from "./OrganisationProfileActions";
 
 const theme = createMuiTheme({
   overrides: {
@@ -36,9 +18,29 @@ const theme = createMuiTheme({
 });
 
 export default function Profile(props) {
+
+  const dispatch = useDispatch();
+
+  const {
+    account_director,
+    market_cap,
+    market_cap_currency,
+    company_registration_number,
+    key_stakeholders,
+    delivery_locations,
+    number_of_employees,
+    revenue,
+    revenue_currency,
+    general_documents,
+    accounts_documents,
+    account_telephone,
+    account_contact,
+    internal_notes
+  } = useSelector((state) => state.organisationProfileReducer.data);
+
+  const errors = useSelector(state => state.organisationProfileReducer.errors);
   
   const userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
-  const dispatch = useDispatch();
 
   const handleInputChange = (value, index, type) => {
     const updatedForm = formInput;
@@ -57,17 +59,19 @@ export default function Profile(props) {
         dispatch(SetOrganisationProfile(formData));
       }
     });
+    dispatch(UpdateOrganisationProfileError(updatedForm[index].name));
   }
 
   const formArray = [
     {
       componentType: "input",
       type: "text",
-      label: "Account Director",
-      required: true,
+      label: "Account Director*",
+      helperText: errors.account_director && "*Please enter account director name",
       name: "account_director",
       placeholder: "Name",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: account_director
     },
     {
       componentType: "inputWithDropdown",
@@ -78,7 +82,9 @@ export default function Profile(props) {
       selectPlaceholder: "USD",
       apiVariable: "currencies",
       handleInputChange: handleInputChange,
-      handleSelectChange: handleInputChange
+      handleSelectChange: handleInputChange,
+      inputValue: market_cap,
+      selectValue: market_cap_currency
     },
     {
       componentType: "input",
@@ -87,7 +93,8 @@ export default function Profile(props) {
       name: "company_registration_number",
       required: true,
       placeholder: "Registration Number",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: company_registration_number
     },
     // {
     //   componentType: "MultipleSelect",
@@ -104,7 +111,8 @@ export default function Profile(props) {
       placeholder: "Multi select Dropdown",
       apiVariable: "employee_list",
       params: {organisation_id: userDetails.data.id},
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: key_stakeholders,
     },
     {
       componentType: "MultipleSelect",
@@ -113,14 +121,17 @@ export default function Profile(props) {
       placeholder: "Countries",
       apiVariable: "countries",
       params: {organisation_id: userDetails.data.id},
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: delivery_locations,
     },
     {
       componentType: "select",
       label: "Number of Employees",
+      name: "number_of_employees",
       placeholder: "Employees",
-      selectOptions: [{id: 0, name: '0-50', value: '0-50' }, {id: 1, name: '50-100', value: '50-100'},{id: 2, name: '100-500', value: '100-500'},{id: 3, name: '500-1000', value: '500-1000'},{id: 4, name: '1000-5000', value: '1000-5000'},{id: 5, name: '5000-10000', value: '5000-10000'},{id: 6, name: '10000+', value: '10000+'}],
-      handleChange: handleInputChange
+      selectOptions: [{id: 0, name: '0-50', value: 'Range 0-50' }, {id: 1, name: 'Range 50-100', value: 'Range 50-100'},{id: 2, name: '100-500', value: 'Range 100-500'},{id: 3, name: '500-1000', value: 'Range 500-1000'},{id: 4, name: '1000-5000', value: 'Range 1000-5000'},{id: 5, name: '5000-10000', value: 'Range 5000-10000'},{id: 6, name: '10000+', value: 'Range 10000+'}],
+      handleChange: handleInputChange,
+      value: number_of_employees
     },
     {
       componentType: "inputWithDropdown",
@@ -131,19 +142,23 @@ export default function Profile(props) {
       selectPlaceholder: "USD",
       apiVariable: "currencies",
       handleInputChange: handleInputChange,
-      handleSelectChange: handleInputChange
+      handleSelectChange: handleInputChange,
+      inputValue: revenue,
+      selectValue: revenue_currency
     },
     {
       componentType: "uploadFiles",
       name: "general_documents",
       label: "General Documentation",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: general_documents
     },
     {
       componentType: "uploadFiles",
       name: "accounts_documents",
       label: "Accounts Documentation",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: accounts_documents
     },
     {
       componentType: "input",
@@ -152,16 +167,19 @@ export default function Profile(props) {
       name: "account_telephone",
       required: true,
       placeholder: "Accounts telephone number",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: account_telephone
     },
     {
       componentType: "input",
       type: "text",
-      label: "Account Contact",
+      label: "Account Contact*",
       name: "account_contact",
+      helperText: errors.account_contact && "*Please enter account contact",
       required: true,
       placeholder: "Accounts Contact",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: account_contact
     },
     {
       componentType: "input",
@@ -171,11 +189,16 @@ export default function Profile(props) {
       required: true,
       name: "internal_notes",
       placeholder: "Notes",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      value: internal_notes,
     }
   ];
 
   const [formInput, setFormInput] = useState(formArray);
+
+  useEffect(() => {
+    setFormInput(formArray)
+  })
 
   return (
     <ThemeProvider theme={theme}>

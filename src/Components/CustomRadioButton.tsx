@@ -52,7 +52,7 @@ function CustomRadioButton(props: any) {
     const changeRadioStaus = (e: any) => {
         console.log(e.target.innerText)
         setRadioDefaultValue(e.target.innerText);
-        props.parentcall(e.target.innerText)
+        props.parentcall(e.target.innerText,props.id)
     }
     return (
         <div style={{ flexDirection: "row", flex: 1, display: "flex", maxWidth: "150px", textAlign: "center" }}>

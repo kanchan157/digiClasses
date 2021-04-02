@@ -56,8 +56,7 @@ export const SimpleSelect = (props: any) => {
 
     useEffect(() => {
       apiVariable &&
-      DataService.getData(params ? params : "",apiVariable).then((res) => { 
-        console.log(res.data.attributes.drop_down_values, 'test');
+      DataService.getData(params ? params : "",apiVariable).then((res) => {
         setListoptions(res.data.attributes.drop_down_values);
       });
     },[apiVariable])
@@ -69,14 +68,21 @@ export const SimpleSelect = (props: any) => {
         size="small"
         variant={"outlined"}
         className={classes.formControl}
+        error={helperText ? true : false}
       >
-        <Select name={name} style={{color: !value ? '#a9a9a9' : '' }} displayEmpty value={value} onChange={(e) => handleChange(e.target.value, index)}>
-          <MenuItem>{placeholder}</MenuItem>
+        <Select 
+        name={name} 
+        style={{color: !value ? '#a9a9a9' : '' }} 
+        displayEmpty 
+        value={value} 
+        onChange={(e) => handleChange(e.target.value, index)}
+        >
+          <span style={{paddingLeft: '10px', color: 'gray'}}>{placeholder}</span>
           {(selectOptions || listOptions).map((option: any, index: any) => {
             return <MenuItem key={option.id} value={option.value}>{option.name}</MenuItem>;
           })}
         </Select>
-        {helperText && <FormHelperText>{helperText}</FormHelperText>}
+        <FormHelperText>{helperText}</FormHelperText>
       </FormControl>
     );
 };

@@ -38,7 +38,7 @@ export function FileUpload(props: any) {
         id="contained-button-file"
         multiple
         type="file"
-        onChange={(e: any) => handleChange(e, index)}
+        onChange={(e: any) => handleChange(e.target.files[0], index)}
       />
       <label htmlFor="contained-button-file">
         <Button 

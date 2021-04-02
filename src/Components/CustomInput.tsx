@@ -3,6 +3,7 @@ import React from 'react'
 import { Typography } from '@material-ui/core';
 
 function CustomInput(props: any) {
+    console.log(props)
     return <>
 
         <TextField
@@ -13,12 +14,14 @@ function CustomInput(props: any) {
             }}
             className="h5"
             {...props}
-            style={{ marginBlock: 10 }}
             fullWidth
             margin="8px"
-            
 
-            onChange={(e: any) => { props.parentcall(e.target.value, props.id) }}
+            onChange={(e: any) => {
+                var  dataIndex= props.dataIndex == undefined ? 0 : props.dataIndex
+
+                props.parentcall(e.target.value, props.id, dataIndex)
+            }}
         />
     </>
 }

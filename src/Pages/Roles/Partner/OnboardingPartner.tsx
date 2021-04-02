@@ -11,16 +11,17 @@ import { Grid, FormControlLabel, Checkbox, StepConnector, withStyles } from '@ma
 
 import clsx from 'clsx';
 import { Check } from '@material-ui/icons';
-import BasicInfo from './BasicInfo';
+import BasicInfo from '../StepperComponent/BasicInfo';
 // import NDA from '../Partner/NDA';
-import DueDiligence from './DueDiligence';
-import Questionnaire from './Questionnaire';
-import WorkingWithAcuity from './WorkingWithAcuity';
+import DueDiligence from '../StepperComponent/DueDiligence';
+import Questionnaire from '../StepperComponent/Questionnaire';
+import WorkingWithAcuity from '../StepperComponent/WorkingWithAcuity';
 import HeaderMenu from '../../../Components/HeaderMenu';
-import ContractDocumentition from './ContractDocumentition';
-import OtherQue from './OtherQuestions';
+import ContractDocumentition from '../StepperComponent/ContractDocumentition';
+import OtherQue from '../StepperComponent/OtherQuestions';
+import NDA from '../StepperComponent/NDA';
 // import OtherQuestions from '../Partner/OtherQuestions';
-
+import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -126,7 +127,7 @@ function OnboardingPartner() {
     const [profileID, setProfileID] = React.useState(0);
     const [acuityProfileID, setAcuityProfileID] = useState(0);
 
-    const updateProfileId = (profileID: any,acuityProfileID:any) => {
+    const updateProfileId = (profileID: any, acuityProfileID: any) => {
         setProfileID(profileID);
         setAcuityProfileID(acuityProfileID)
     }
@@ -134,19 +135,19 @@ function OnboardingPartner() {
     function getStepContent(step: any) {
         switch (step) {
             case 0:
-                return <BasicInfo parentSetProfileId={updateProfileId}/>;
+                return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step} />;
             case 1:
-                return <WorkingWithAcuity />;
+                return <NDA profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 2:
-                return <DueDiligence profileId={profileID}/>;
+                return <DueDiligence profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 3:
-                return <Questionnaire />;
+                return <Questionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 4:
-                return <WorkingWithAcuity />;
+                return <WorkingWithAcuity profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 5:
-                return <ContractDocumentition profileId={profileID} acuityProfileID={acuityProfileID}/>;
+                return <ContractDocumentition profileId={profileID} acuityProfileID={acuityProfileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 6:
-                return <OtherQue profileId={profileID}/>;
+                return <OtherQue profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             default:
                 return "Not available"
         }
@@ -167,8 +168,6 @@ function OnboardingPartner() {
 
     return (
 
-
-
         <div className={classes.root}>
             <Grid direction="row" >
                 <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
@@ -176,23 +175,24 @@ function OnboardingPartner() {
                 </Grid>
             </Grid>
             {/* <Grid direction="row" >
-                <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
-                    <div style={{ height: 60 }}></div>
-                </Grid>
-            </Grid> */}
+            <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
+                <div style={{ height: 60 }}></div>
+            </Grid>
+        </Grid> */}
             <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={4} style={{ paddingTop: 30, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 60px)" }}>
-                    <Typography variant="h4" style={{ textAlign: "center" }}>Partner Onboarding</Typography>
-                    <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE" }}>
+                <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 64px)" }}>
+                    <Typography style={{ paddingBlock: 25, textAlign: "center", alignSelf: "center", fontSize: 26, color: "#4A4A4A", fontWeight: "bold" }}>
+                        <ArrowBackIosIcon style={{ fontSize: 16, color: "#4A4A4A" }} /> Partner Onboarding</Typography>
+                    <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE", paddingLeft: 55 }}>
                         {steps.map((label, index) => (
                             <Step key={label}>
-                                <StepLabel StepIconComponent={QontoStepIcon} onClick={() => { handleNext(index) }}>{label}</StepLabel>
+                                <StepLabel style={{ cursor: "pointer" }} StepIconComponent={QontoStepIcon} onClick={() => { handleNext(index) }}>{label}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
 
                 </Grid>
-                <Grid item xs={8} style={{ height: "calc(100vh - 60px)" }}>
+                <Grid item xs={9} style={{ height: "calc(100vh - 64px)", overflow: "auto" }}>
                     {getStepContent(activeStep)}
                     {activeStep === steps.length && (
                         <Paper square elevation={0} className={classes.resetContainer}>

@@ -38,8 +38,8 @@ export const commonTheme = createMuiTheme({
 
     },
     h6: {
-      fontSize: "12px",
-      lineHeight: "20px",
+      fontSize: "14px",
+      lineHeight: "18px",
 
     },
     body1:{

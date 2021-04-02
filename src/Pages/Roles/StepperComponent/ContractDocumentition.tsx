@@ -1,14 +1,17 @@
 import { Button, Grid, InputLabel, Typography } from '@material-ui/core'
 import { Cancel, CloseSharp, CloudUpload } from '@material-ui/icons'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux';
 import Header from './header';
 import AdminPartnerClient from '../../../Service/Admin/partner_services'
 
 
 
 function ContractDocumentition(props:any) {
+    const global_data = useSelector((state: any) => state.stepperReducer);
+
     const data = {
-        partner_profile_id:props.profileId,
+        partner_profile_id:global_data.partner_profile,
         acuity_people_profile_id:props.acuityProfileID,
         document:'https://acuityapi.digiryte.co.uk/',
     }
@@ -16,14 +19,25 @@ function ContractDocumentition(props:any) {
     const onSubmit = () => {
         AdminPartnerClient.ContractDocumentition(userData).then((response: any) => {
             console.log(response)
+            
         });
+        props.parentHandleNext(props.activeIndex + 1)
+    }
+    useEffect(() => {
+        if (global_data.partner_profile != "") {
+            AdminPartnerClient.ContractDocumentition_get({ id: global_data.partner_profile }).then((response: any) => {
+            }).catch(error => alert(JSON.stringify(error.errors)));
+        }
+    }, [])
+    const onBack = () => {
+        props.parentHandleNext(props.activeIndex - 1)
     }
     return (
         <div>
-            <Header isBack={true} parentcall={onSubmit} />
+            <Header isBack={true} saveBtnTitle={'Save & Proceed'} parentcall={onSubmit}  parentBackCall={onBack} />
 
             <Grid container direction="row" alignItems="center" style={{ padding: 30, marginBottom: 30 }}>
-                <Grid item xs={12}>
+                <Grid item xs={10}>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 30 }}>
                         <Grid item xs={4}>
                             <InputLabel>Contract Documents</InputLabel>
@@ -77,6 +91,7 @@ function ContractDocumentition(props:any) {
 
                 </Grid>
             </Grid>
+            <Header isBack={true} saveBtnTitle={'Save & Proceed'} parentcall={onSubmit}  parentBackCall={onBack} />
         </div>
     )
 }

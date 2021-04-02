@@ -1,7 +1,9 @@
 import { Button, Divider, FormControl, FormHelperText, Grid, IconButton, InputBase, InputLabel, makeStyles, NativeSelect, Paper, Select, TextField } from '@material-ui/core'
 import { Search } from '@material-ui/icons'
-import React from 'react'
+import React, { useState } from 'react'
+import CustomMultiSelectAutoComplete from '../../Components/CustomMultiSelectAutoComplete';
 import CustomSelect from '../../Components/CustomSelect'
+import SearchResult from './SearchResult';
 
 function CoachSearch() {
 
@@ -10,6 +12,8 @@ function CoachSearch() {
         age: '',
         name: 'hai',
     });
+    const [partnerRolesArr, setPartnerRolesArr] = useState([]);
+
 
     const handleChange = (event: any) => {
         const name = event.target.name;
@@ -18,12 +22,18 @@ function CoachSearch() {
             [name]: event.target.value,
         });
     };
+    const onChangeMultipleItem = (inputStateValue: any, inputId: any) => {
+        console.log(inputStateValue, inputId);
+        if (inputId == "partnerRolesArr") {
+            setPartnerRolesArr(partnerRolesArr.concat(inputStateValue))
+        }
+    }
 
 
     return (
         <div>
-            <Grid container direction="row" alignItems="center" style={{}}>
-                <Grid item xs={8} style={{ backgroundColor: 'rgba(152,27,30,0.2)', padding: 20, }}>
+            <Grid container direction="row" justify="center" alignItems="center" style={{}}>
+                <Grid item xs={8} alignItems="center" style={{ backgroundColor: 'rgba(152,27,30,0.1)', padding: 20, }}>
 
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
                         <Grid item xs={7}>
@@ -52,31 +62,85 @@ function CoachSearch() {
                         </Grid>
                     </Grid>
 
-                    <Grid container direction="row" alignItems="center" style={{ marginTop: '20', }}>
+                    <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                            <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                        </Grid>)}
+                    </Grid>
+
+                    <Grid container direction="row" alignItems="center" style={{}}>
                         <Grid item xs={12}>
-                
-                            {/* <FormControl variant="outlined" className={classes.formControl}>
-                                <InputLabel >Currently available for new assignments</InputLabel>
-                                <Select
-                                    native
-                                    value={state.age}
-                                    onChange={handleChange}
-                                    label="Age"
-                                    inputProps={{
-                                        name: 'age',
-                                        // id: 'outlined-age-native-simple',
-                                    }}
-                                >
-                                    <option aria-label="None" value="" disabled/>
-                                    <option value={10}>Ten</option>
-                                    <option value={20}>Twenty</option>
-                                    <option value={30}>Thirty</option>
-                                </Select>
-                            </FormControl> */}
+                            <label className={classes.headingTitle}>Background/corporate</label>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                </Grid>)}
+                            </Grid>
                         </Grid>
                     </Grid>
 
 
+                    <Grid container direction="row" alignItems="center" style={{}}>
+                        <Grid item xs={12}>
+                            <label className={classes.headingTitle}>Internal coach filters</label>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                {[1, 2, 3, 4,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                </Grid>)}
+                            </Grid>
+                        </Grid>
+                        <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                            </Grid>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                            </Grid>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                            </Grid>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+
+                    <Grid container direction="row" alignItems="center" style={{}}>
+                        <Grid item xs={12}>
+                            <label className={classes.headingTitle}>External coach filters</label>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                {[1, 2, 3, 4,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                </Grid>)}
+                            </Grid>
+                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                </Grid>
+                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                </Grid>
+                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                </Grid>
+                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                </Grid>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+
+
+
+                </Grid>
+
+                <Grid item xs={8} alignItems="center" style={{ padding: 20, }}>
+                    <SearchResult />
                 </Grid>
             </Grid>
 
@@ -110,6 +174,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '0',
         textTransform: 'capitalize',
         width: 100,
+        fontSize: '14px',
         '&:hover': {
             backgroundColor: 'none',
         },
@@ -121,6 +186,8 @@ const useStyles = makeStyles((theme) => ({
         marginLeft: 20,
         width: 220,
         textTransform: 'capitalize',
+        fontSize: '14px',
+
     },
     formControl: {
         margin: theme.spacing(1),
@@ -128,6 +195,15 @@ const useStyles = makeStyles((theme) => ({
     },
     selectEmpty: {
         marginTop: theme.spacing(2),
+    },
+    labelText: {
+        color: '#4D4F5C',
+        fontSize: '14px',
+        lineHeight: '18px',
+    },
+    headingTitle:{
+        fontSize: 18,
+        fontWeight:'bold',
     },
 
 }))

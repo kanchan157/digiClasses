@@ -72,7 +72,7 @@ export default function ForgotPassword() {
                     <Typography variant="h3" style={{ marginTop: 20 }}>Enter your email to receive the password reset link.</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="Username" placeholder="Username" helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag} parentcall={setInputState} />
+                    <CustomInput id="Username" placeholder="Username" helperText={submitClickFlag ? "Please enter username." : ""} error={submitClickFlag} parentcall={setInputState} />
                 </Grid>
 
 

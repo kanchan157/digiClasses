@@ -2,7 +2,7 @@ import request from "./api_client";
 
 function signUp(formData) {
     return request({
-        url: '/auth/',
+        url: '/submit_registration_request',
         method: 'POST',
         data: formData,
         handleHeaders: 2

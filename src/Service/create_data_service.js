@@ -5,7 +5,9 @@ const creationUrl = {
     organisation_profile: "/organisation_profiles",
     organisation_contact: "/organisation_contact_infos",
     organisation_pre_contract: "/organisation_pre_contracts",
-    organisation_general: "/organisation_general_details"
+    organisation_general: "/organisation_general_details",
+    organisation_contract: "/organisation_contract_phases",
+    organisation_activity: "/organisation_activity_fields",
 }
 
 function createData(formData, section) {

@@ -14,6 +14,8 @@ import UploadFilesComponent from "./uploadButton_component";
 import DatePickerSelectComponent from "./select_with_datepicker_component";
 import InputWithDropdownComponent from "./input_with_dropdown";
 import MultipleSelect from "./multi_select_component";
+import AddressComponent from "./address_component";
+import DatePickerComponent from "./datepicker_component";
 
 export default function FormComponent(props: any) {
 
@@ -31,12 +33,16 @@ export default function FormComponent(props: any) {
         return <SelectComponent key={index} componentObject={componentObject} />;
       case "MultipleSelect":
         return <MultipleSelect key={index} componentObject={componentObject} />;
+      case "datePicker":
+        return <DatePickerComponent key={index} componentObject={componentObject} />;
       case "selectWithDatePicker":
         return <DatePickerSelectComponent key={index} componentObject={componentObject} />;
       case "uploadFiles":
         return <UploadFilesComponent key={index} componentObject={componentObject} />;
       case 'inputWithDropdown':
           return <InputWithDropdownComponent key={index} componentObject={componentObject} />;
+      case 'address':
+          return <AddressComponent key={index} componentObject={componentObject} />;
       // case 'textArea':
       //     return <TextAreaComponent key={index} componentObject={componentObject} />;
       // case 'fullNameInput':

@@ -21,7 +21,8 @@ function CustomSelect(props: any) {
 
     const handleChange = (event: any) => {
         setSelectedValue(event.target.value)
-        props.parentcall({ index: event.target.value, value: props.itemArr[event.target.value - 1] })
+        var dataIndex = props.dataIndex == undefined ? 0 : props.dataIndex
+        props.parentcall({ index: event.target.value, value: props.itemArr[event.target.value - 1], id: props.id, dataIndex: dataIndex })
     };
 
     return (
