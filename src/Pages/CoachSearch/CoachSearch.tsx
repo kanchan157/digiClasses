@@ -1,8 +1,9 @@
 import { Button, Divider, FormControl, FormHelperText, Grid, IconButton, InputBase, InputLabel, makeStyles, NativeSelect, Paper, Select, TextField } from '@material-ui/core'
-import { Search } from '@material-ui/icons'
-import React, { useState } from 'react'
+import { Close, Search } from '@material-ui/icons'
+import React, { useMemo, useState } from 'react'
 import CustomMultiSelectAutoComplete from '../../Components/CustomMultiSelectAutoComplete';
 import CustomSelect from '../../Components/CustomSelect'
+import CustomMultiSelectCoach from './CustomMultiSelectCoach';
 import SearchResult from './SearchResult';
 
 function CoachSearch() {
@@ -13,8 +14,130 @@ function CoachSearch() {
         name: 'hai',
     });
     const [partnerRolesArr, setPartnerRolesArr] = useState([]);
+    const data = [
+        {
+            name: "Languages",
+            values: [
+                { title: 'English' },
+                { title: 'French' },
+                { title: 'German' },
 
+            ]
+        },
+        {
+            name: "Business Country",
+            values: [
+                { title: 'UK' },
+                { title: 'America' },
+                { title: 'India' },
 
+            ]
+        },
+        {
+            name: "Client Specifics",
+            values: [
+                { title: 'UK' },
+                { title: 'America' },
+                { title: 'India' },
+
+            ]
+        },
+        {
+            name: "Levels coach at",
+            values: [
+                { title: 'English' },
+                { title: 'French' },
+                { title: 'German' },
+
+            ]
+        },
+    ]
+    const corporateData = [
+        {
+            name: "Languages",
+            values: [
+                { title: 'English' },
+                { title: 'French' },
+                { title: 'German' },
+
+            ]
+        },
+        {
+            name: "Client Specifics areas of expertise",
+            values: [
+                { title: 'UK' },
+                { title: 'America' },
+                { title: 'India' },
+
+            ]
+        },
+        {
+            name: "Levels coach at",
+            values: [
+                { title: 'English' },
+                { title: 'French' },
+                { title: 'German' },
+
+            ]
+        },
+        {
+            name: "Business Country",
+            values: [
+                { title: 'UK' },
+                { title: 'America' },
+                { title: 'India' },
+
+            ]
+        }
+    ]
+    const internalCoachData = [
+        {
+            name: "Languages",
+            values: [
+                { title: 'English' },
+                { title: 'French' },
+                { title: 'German' },
+
+            ]
+        },
+        {
+            name: "Business Country",
+            values: [
+                { title: 'UK' },
+                { title: 'America' },
+                { title: 'India' },
+
+            ]
+        },
+    ]
+    const externalCoachData = [
+        {
+            name: "Languages",
+            values: [
+                { title: 'English' },
+                { title: 'French' },
+                { title: 'German' },
+
+            ]
+        },
+        {
+            name: "Business Country",
+            values: [
+                { title: 'UK' },
+                { title: 'America' },
+                { title: 'India' },
+
+            ]
+        },
+    ]
+
+    const [filterOption, setFilterOption] = useState(data);
+    const [corporate, setCorporate] = useState(corporateData);
+    const [internalCoach, SetinternalCoach] = useState(internalCoachData)
+    const [externalCoach, setExternalCoach] = useState(externalCoachData)
+
+    const [additionalFilter, setAdditionalFilter] = useState(false);
+    const [selectedFilter, setSelectedFilter] = useState<any>([]);
     const handleChange = (event: any) => {
         const name = event.target.name;
         setState({
@@ -23,29 +146,51 @@ function CoachSearch() {
         });
     };
     const onChangeMultipleItem = (inputStateValue: any, inputId: any) => {
-        console.log(inputStateValue, inputId);
-        if (inputId == "partnerRolesArr") {
-            setPartnerRolesArr(partnerRolesArr.concat(inputStateValue))
-        }
+        debugger
+        console.log(selectedFilter);
+
+        setSelectedFilter({ ...selectedFilter, [inputId]: inputStateValue })
     }
 
+    const filterData = useMemo(() => {
+        if (Object.keys(selectedFilter).length) {
+            return (Object.keys(selectedFilter).map((e: any) => {
+                return (
+                    <div className={classes.categoryBox}>
+                        <label className={classes.categoryTitle}>{e}</label>
+                        { selectedFilter[e].map((val: any) => {
+                            return (<>
+                                <label className={classes.categoryDetail}>{val.title} ,</label>
+                            </>
+                            )
+                        })}
+                        <Close className={classes.categoryicon} />
 
+                    </div>
+
+                )
+            }))
+        }
+
+    }, [selectedFilter]);
     return (
         <div>
             <Grid container direction="row" justify="center" alignItems="center" style={{}}>
-                <Grid item xs={8} alignItems="center" style={{ backgroundColor: 'rgba(152,27,30,0.1)', padding: 20, }}>
+                <Grid item xs={8} alignItems="center" className={classes.bgContainer} >
 
-                    <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
+                    <Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 20 }}>
                         <Grid item xs={7}>
                             <Paper className={classes.root}>
-                                <IconButton type="submit" className={classes.iconButton} aria-label="search">
-                                    <Search />
-                                </IconButton>
-                                <InputBase
-                                    className={classes.input}
-                                    placeholder="Search Coach"
-                                    inputProps={{ 'aria-label': 'search google maps' }}
-                                />
+                                <Grid container direction="row" >
+                                    <Grid item xs={1}>
+                                        <IconButton type="submit" className={classes.iconButton} aria-label="search">
+                                            <Search />
+                                        </IconButton>
+                                    </Grid>
+                                    <Grid item xs={11} >
+                                        {filterData}
+                                    </Grid>
+                                </Grid>
                             </Paper>
                         </Grid>
                         <Grid item xs={5}>
@@ -54,92 +199,97 @@ function CoachSearch() {
                                     <Button variant="contained" color="primary" className={classes.btnSearch}>
                                         Search
                                     </Button>
-                                    <Button variant="contained" color="primary" className={classes.btnAdditional}>
-                                        Show Additional Filters
+                                    <Button onClick={(e: any) => setAdditionalFilter(!additionalFilter)} variant="contained" color="primary" className={classes.btnAdditional}>
+                                        {additionalFilter ? 'Hide' : 'Show'} Additional Filters
                                     </Button>
                                 </Grid>
+                                {Object.keys(selectedFilter).length > 0  && <Grid item xs={12} style={{marginTop: 10 }}>
+                                    <label style={{ color: '#981B1E', fontSize: 12, paddingLeft:10, textDecoration:'underline' }}
+                                    onClick={() => setSelectedFilter([])}
+                                    >Clear all filters</label>
+                                </Grid>}
                             </Grid>
                         </Grid>
                     </Grid>
 
-                    <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                        {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1, 2, 3,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                            <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                    <Grid container direction="row" alignItems="center" style={{ marginTop: 10, }}>
+                        {filterOption.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                            <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
                         </Grid>)}
                     </Grid>
 
-                    <Grid container direction="row" alignItems="center" style={{}}>
-                        <Grid item xs={12}>
+                    {additionalFilter && <> <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                        <Grid item xs={12} style={{ marginBottom: 10, }}>
                             <label className={classes.headingTitle}>Background/corporate</label>
                         </Grid>
                         <Grid item xs={12}>
                             <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 1,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                {corporate.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                    <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
                                 </Grid>)}
                             </Grid>
                         </Grid>
                     </Grid>
 
 
-                    <Grid container direction="row" alignItems="center" style={{}}>
-                        <Grid item xs={12}>
-                            <label className={classes.headingTitle}>Internal coach filters</label>
+                        <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                            <Grid item xs={12} style={{ marginBottom: 10, }}>
+                                <label className={classes.headingTitle}>Internal coach filters</label>
+                            </Grid>
+                            <Grid item xs={12}>
+                                <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                    {internalCoach.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                        <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
+                                    </Grid>)}
+                                </Grid>
+                            </Grid>
+                            {/* <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                            </Grid>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                            </Grid>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                            </Grid>
+                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                            </Grid>
+                        </Grid> */}
                         </Grid>
-                        <Grid item xs={12}>
-                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                                {[1, 2, 3, 4,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                                </Grid>)}
-                            </Grid>
-                        </Grid>
-                        <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            </Grid>
-                        </Grid>
-                    </Grid>
 
 
-                    <Grid container direction="row" alignItems="center" style={{}}>
-                        <Grid item xs={12}>
-                            <label className={classes.headingTitle}>External coach filters</label>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                                {[1, 2, 3, 4,].map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                                </Grid>)}
+                        <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                            <Grid item xs={12} style={{ marginBottom: 10, }}>
+                                <label className={classes.headingTitle}>External coach filters</label>
                             </Grid>
-                            <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                            <Grid item xs={12}>
+                                <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                    {externalCoach.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                        <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
+                                    </Grid>)}
+                                </Grid>
+                                {/* <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
                                 <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                    <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
                                 </Grid>
                                 <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                    <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
                                 </Grid>
                                 <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
                                 </Grid>
                                 <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
+                                    <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
                                 </Grid>
+                            </Grid> */}
                             </Grid>
                         </Grid>
-                    </Grid>
-
+                    </>}
 
 
                 </Grid>
 
-                <Grid item xs={8} alignItems="center" style={{ padding: 20, }}>
+                <Grid item xs={8} alignItems="center" style={{ padding: 0, }}>
                     <SearchResult />
                 </Grid>
             </Grid>
@@ -151,15 +301,18 @@ function CoachSearch() {
 export default CoachSearch
 
 const useStyles = makeStyles((theme) => ({
+    bgContainer: {
+        backgroundColor: 'rgba(152,27,30,0.1)', padding: 20,
+    },
     root: {
-        padding: '2px 4px',
-        display: 'flex',
+        padding: '10px 4px',
+        // display: 'flex',
         alignItems: 'center',
         // width: 400,
         border: '1px solid #981b1e',
         boxShadow: 'none',
         borderRadius: '0',
-        height: 30,
+        // height: 100,
     },
     input: {
         marginLeft: theme.spacing(1),
@@ -168,6 +321,30 @@ const useStyles = makeStyles((theme) => ({
     iconButton: {
         padding: 10,
         color: '#981b1e',
+        // marginTop: 10,
+    },
+    categoryBox: {
+        border: '1px solid #981B1E',
+        padding: 2,
+        marginTop: 10,
+        marginRight: 10,
+        marginLeft: 10,
+        borderRadius: 2,
+        display: '-webkit-inline-box',
+    },
+    categoryTitle: {
+        color: '#981B1E',
+        fontSize: 14,
+        padding: 5,
+    },
+    categoryDetail: {
+        color: '#000000CC',
+        fontSize: 14,
+        paddingRight: 5,
+    },
+    categoryicon: {
+        fontSize: 12,
+        color: '#981B1E',
     },
     btnSearch: {
         backgroundColor: '#981b1e',
@@ -175,6 +352,7 @@ const useStyles = makeStyles((theme) => ({
         textTransform: 'capitalize',
         width: 100,
         fontSize: '14px',
+        boxShadow: 'none',
         '&:hover': {
             backgroundColor: 'none',
         },
@@ -184,10 +362,10 @@ const useStyles = makeStyles((theme) => ({
         color: '#981b1e',
         borderRadius: 0,
         marginLeft: 20,
-        width: 220,
+        width: 207,
         textTransform: 'capitalize',
         fontSize: '14px',
-
+        boxShadow: 'none',
     },
     formControl: {
         margin: theme.spacing(1),
@@ -201,9 +379,10 @@ const useStyles = makeStyles((theme) => ({
         fontSize: '14px',
         lineHeight: '18px',
     },
-    headingTitle:{
+    headingTitle: {
         fontSize: 18,
-        fontWeight:'bold',
+        fontWeight: 'bold',
+        marginBottom: 20,
     },
 
 }))

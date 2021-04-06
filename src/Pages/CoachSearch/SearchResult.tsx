@@ -1,28 +1,38 @@
-import { Avatar, Button, Card, Grid, makeStyles, Typography } from '@material-ui/core';
-import { PersonAdd } from '@material-ui/icons';
-import React from 'react';
+import { Avatar, Button, Card, Divider, Grid, InputLabel, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, makeStyles, Typography } from '@material-ui/core';
+import { AddCircleOutlined, Delete, PersonAdd, PersonPinCircleOutlined, SupervisorAccount } from '@material-ui/icons';
+import React, { useState } from 'react';
+import ModelCardSelectedCoach from './modelCardUsers';
 
 const SearchResult = () => {
     const classes = useStyles();
 
+    const [coaches, setCoaches] = useState('');
+    const [menuType, setMenuType] = useState('organization');
+    const [coachesCount, setCoachesCount] = useState(0)
+    const [coachesList, setCoachesList] = useState([{ name: 'David James' },{ name: 'David James2' }])
+    const [selectedCoachesList, setSelectedCoachesList] = useState<any>([])
     return (
         <>
-            <Grid container direction="row" justify="center" style={{ border: '0px solid red', }}>
+            <Grid container direction="row" justify="center" style={{ border: '0px solid red', marginTop: 20, }}>
                 <Grid item xs={10} alignItems="flex-start">
                     <label className={classes.headingTitle}>Search Results</label>
                 </Grid>
-                <Grid item xs={2} alignItems="flex-end" style={{ border: '0px solid red', }}>
-                    <div>
-                        <Avatar style={{ marginTop: 2, float: 'right', }} alt="" src="/static/images/avatar/1.jpg" />
+                <Grid item xs={2} alignItems="flex-end" style={{ border: '0px solid red', position: 'relative' }}>
+                    <div style={{ position: 'relative' }}>
+                        <Avatar onClick={() => (console.log('click'), coaches == 'active' ? setCoaches('') : setCoaches('active'))}
+                            style={{ marginTop: 2, float: 'right', backgroundColor: '#077F83', }} alt="" src="/static/images/avatar/1.jpg" />
+                        <div className={classes.couchCounts}>{selectedCoachesList.length}</div>
                     </div>
+
+                    {coaches == 'active' && <ModelCardSelectedCoach data={selectedCoachesList}/>}
                 </Grid>
             </Grid>
 
-            {[1,2,].map((e) => <Grid container direction="row" justify="center" style={{ border: '0px solid red', }}>
+            {coachesList.map((e) => <Grid container direction="row" justify="center" style={{ border: '0px solid red', }}>
                 <Grid item xs={12} style={{}}>
-                    <Card variant="outlined" style={{ padding: "10px", marginTop: 30, borderRadius: 0, }}>
+                    <Card variant="outlined" style={{ padding: "20px", marginTop: 30, borderRadius: 0, }}>
                         <Grid container direction="row" justify="center" className={classes.deviderLine} >
-                            <Grid item xs={1} style={{ border: '0px solid blue', }}>
+                            <Grid item xs={1} style={{ border: '0px solid blue' }}>
                                 <div>
                                     <Avatar style={{}} alt="" src="/static/images/avatar/1.jpg" />
                                 </div>
@@ -30,7 +40,7 @@ const SearchResult = () => {
                             <Grid item xs={9} style={{ border: '0px solid yellow', }}>
                                 <Grid container direction="row" justify="center" >
                                     <Grid item xs={12} >
-                                        <label className={classes.userTitle} >David James</label>
+                                        <label className={classes.userTitle} >{e.name}</label>
                                     </Grid>
                                     <Grid item xs={4} >
                                         <label className={classes.userId} style={{ textTransform: 'uppercase', }}>
@@ -57,30 +67,35 @@ const SearchResult = () => {
                             </Grid>
 
                         </Grid>
-                        <Grid container direction="row" justify="center" style={{ marginTop:10, }}>
+                        <Grid container direction="row" justify="center" style={{ marginTop: 10, }}>
                             <Grid item xs={1} style={{}}>
 
                             </Grid>
-                            <Grid item xs={8}  style={{}}>
-                                <Button variant="contained" color="primary" className={classes.btnLanguage}>
+                            <Grid item xs={8} style={{ marginTop: 10, }}>
+                                <Button variant="contained" color="primary" className={classes.btnBlue}>
                                     English
                                 </Button>
-                                <Button variant="contained" color="primary" className={classes.btnLanguage}>
+                                <Button variant="contained" color="primary" className={classes.btnBlue}>
                                     UK
                                 </Button>
-                                <Button variant="contained" color="primary" className={classes.btnLanguage} style={{backgroundColor:'#FFCC53',}}>
+                                <Button variant="contained" color="primary" className={classes.btnOrange}>
                                     Voice Dialouge
                                 </Button>
-                                <Button variant="contained" color="primary" className={classes.btnLanguage}style={{backgroundColor:'#4AD991',}}>
+                                <Button variant="contained" color="primary" className={classes.btnGreen}>
                                     Design Manager
                                 </Button>
                             </Grid>
                             <Grid item xs={3} style={{}}>
-                                <div className={classes.addCoachBtn} style={{border:'1px solid #981B1E',}}>
-                                    <PersonAdd /> 
-                                    <label style={{position: 'relative',bottom: 6,marginLeft: 10,}}>Add coach to your list</label>
-                                </div>
-                                
+                                <Button
+                                    variant="outlined"
+                                    // color="#981B1E"
+                                    size="small"
+                                    className={classes.addCoachBtn}
+                                    startIcon={<PersonAdd />}
+                                    onClick={() => (setSelectedCoachesList(selectedCoachesList.concat([e])))}
+                                >
+                                    Add coach to your list
+                                </Button>
                             </Grid>
 
                         </Grid>
@@ -88,7 +103,7 @@ const SearchResult = () => {
                 </Grid>
             </Grid>)}
 
-            
+
         </>
     )
 }
@@ -98,6 +113,7 @@ const useStyles = makeStyles((theme) => ({
     headingTitle: {
         fontSize: 18,
         fontWeight: 'bold',
+        marginLeft: 20,
     },
     userTitle: {
         fontSize: 18,
@@ -109,6 +125,20 @@ const useStyles = makeStyles((theme) => ({
         color: '#707070',
         lineHeight: 2,
 
+    },
+    couchCounts: {
+        width: 15,
+        height: 15,
+        backgroundColor: '#077F83',
+        color: '#fff',
+        position: 'absolute',
+        right: -4,
+        fontSize: 10,
+        textAlign: 'center',
+        border: '1px solid ',
+        borderColor: '#fff',
+        borderRadius: 50,
+        cursor: 'pointer'
     },
     onlineCircle: {
         width: 10,
@@ -128,6 +158,7 @@ const useStyles = makeStyles((theme) => ({
         textTransform: 'capitalize',
         // width: 100,
         fontSize: '12px',
+        boxShadow: 'none',
         float: 'right',
         '&:hover': {
             backgroundColor: 'none',
@@ -137,20 +168,44 @@ const useStyles = makeStyles((theme) => ({
         borderBottom: '1px solid #F1F1F3',
         paddingBottom: 10,
     },
-    btnLanguage:{
+    btnBlue: {
         borderRadius: 50,
         textTransform: 'capitalize',
         backgroundColor: '#40C9FC',
         fontSize: 11,
-        marginRight:20,
+        marginRight: 20,
     },
-    addCoachBtn:{
-        border: '#981B1E',
+    btnOrange: {
+        borderRadius: 50,
+        textTransform: 'capitalize',
+        backgroundColor: '#FFCC53',
+        fontSize: 11,
+        marginRight: 20,
+    },
+    btnGreen: {
+        borderRadius: 50,
+        textTransform: 'capitalize',
+        backgroundColor: '#4AD991',
+        fontSize: 11,
+        marginRight: 20,
+    },
+    addCoachBtn: {
+        border: '1px solid #981B1E',
         color: '#981B1E',
         textAlign: 'center',
-        fontSize:12,
+        fontSize: 12,
         borderRadius: 4,
         float: 'right',
-        padding: '0 5px',
+        padding: '5px 5px',
+        textTransform: 'capitalize'
     },
+    menuOption: {
+        border: '0px solid red',
+        position: 'absolute',
+        zIndex: 1,
+        // maxWidth: 360,
+        // minWidth: 330,
+        top: 52,
+    },
+
 }))
