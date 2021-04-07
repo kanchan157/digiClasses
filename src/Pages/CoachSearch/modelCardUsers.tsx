@@ -38,7 +38,7 @@ const ModelCardSelectedCoach = (props:any) => {
                                </ListItem>
                     }
 
-          {data.length > 0 && <Button variant="contained" color="primary" className={classes.btnSaveProceed} style={{ fontSize: '12px' }}
+                    {data.length > 0 && <Button variant="contained" color="primary" className={classes.btnSaveProceed} style={{ fontSize: '12px' }}
                         onClick={() => setOpen(true)}>
                         Submit your selection
                                 </Button>}

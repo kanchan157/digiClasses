@@ -146,9 +146,6 @@ function CoachSearch() {
         });
     };
     const onChangeMultipleItem = (inputStateValue: any, inputId: any) => {
-        debugger
-        console.log(selectedFilter);
-
         setSelectedFilter({ ...selectedFilter, [inputId]: inputStateValue })
     }
 
@@ -200,7 +197,7 @@ function CoachSearch() {
                                         Search
                                     </Button>
                                     <Button onClick={(e: any) => setAdditionalFilter(!additionalFilter)} variant="contained" color="primary" className={classes.btnAdditional}>
-                                        {additionalFilter ? 'Hide' : 'Show'} Additional Filters
+                                    {additionalFilter ? 'Hide' : 'Show'} Additional Filters
                                     </Button>
                                 </Grid>
                                 {Object.keys(selectedFilter).length > 0  && <Grid item xs={12} style={{marginTop: 10 }}>
@@ -243,19 +240,6 @@ function CoachSearch() {
                                     </Grid>)}
                                 </Grid>
                             </Grid>
-                            {/* <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                            </Grid>
-                            <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            </Grid>
-                        </Grid> */}
                         </Grid>
 
 
@@ -269,19 +253,7 @@ function CoachSearch() {
                                         <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
                                     </Grid>)}
                                 </Grid>
-                                {/* <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
-                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                                </Grid>
-                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                                </Grid>
-                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                </Grid>
-                                <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
-                                    <CustomMultiSelectCoach id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                                </Grid>
-                            </Grid> */}
+                               
                             </Grid>
                         </Grid>
                     </>}
@@ -305,7 +277,7 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: 'rgba(152,27,30,0.1)', padding: 20,
     },
     root: {
-        padding: '10px 4px',
+        padding: '5px 4px',
         // display: 'flex',
         alignItems: 'center',
         // width: 400,
@@ -319,16 +291,17 @@ const useStyles = makeStyles((theme) => ({
         flex: 1,
     },
     iconButton: {
-        padding: 10,
+        padding: 0,
         color: '#981b1e',
         // marginTop: 10,
     },
     categoryBox: {
         border: '1px solid #981B1E',
         padding: 2,
-        marginTop: 10,
-        marginRight: 10,
-        marginLeft: 10,
+        marginTop: 2,
+        marginBottom: 2,
+        marginRight: 5,
+        marginLeft: 5,
         borderRadius: 2,
         display: '-webkit-inline-box',
     },
