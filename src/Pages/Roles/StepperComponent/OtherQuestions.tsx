@@ -56,6 +56,14 @@ function OtherQuestions(props: any) {
         console.log(selectedItemValue, inputId)
         setUserData({ ...userData, [selectedItemValue.id]: selectedItemValue.value })
     };
+    const setInputWithDropdownState = (inputStateValue: any, inputId: any) => {
+        console.log(inputStateValue, inputId)
+        setUserData({ ...userData, [inputId]: inputStateValue })
+    }
+    // const onChangeItem = (selectedItemValue: any, inputId: any) => {
+    //     console.log(selectedItemValue, inputId)
+    //     setUserData({ ...userData, [selectedItemValue.id]: selectedItemValue.value })
+    // };
 
     const onSubmit = () => {
         // var pdata = {
@@ -85,39 +93,19 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Coaching hourly rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <Grid container direction="row" alignItems="center">
-                                <Grid item xs={10}>
-                                    <CustomInput id="coaching_hour_rate" variant="outlined" placeholder="Mr" parentcall={setInputState} 
-                                    defaultValue={userData.coaching_hour_rate} />
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <CustomSelect id="coach_currency_type" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} 
-                                    parentcall={onChangeItem} selectedValue={userData.coaching_hour_rate} />
-                                </Grid>
-                            </Grid>
-                        </Grid>
-                    </Grid>
-                    <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
-                        <Grid item xs={4}>
-                            <InputLabel className={classes.labelText} >Coaching hourly rate</InputLabel>
-                        </Grid>
-                        <Grid item xs={8}>
-                            <Grid container direction="row" alignItems="center">
-                                <Grid item xs={10}>
-                                    <InputWithDropdownComponent key={0} componentObject={{
-                                        componentType: "inputWithDropdown",
-                                        label: "",
-                                        inputName: "revenue",
-                                        selectName: "revenue_currency",
-                                        inputPlaceholder: "$00,000,000",
-                                        selectPlaceholder: "USD",
-                                        apiVariable: "currencies",
-                                        handleInputChange: setInputState,
-                                        handleSelectChange: onChangeItem,
-                                        inputValue: userData.coaching_hour_rate,
-                                        selectValue: userData.coaching_hour_rate
-                                    }} /></Grid>
-                            </Grid>
+                            <InputWithDropdownComponent key={0} componentObject={{
+                                componentType: "inputWithDropdown",
+                                label: "",
+                                inputName: "revenue",
+                                selectName: "revenue_currency",
+                                inputPlaceholder: "$00,000,000",
+                                selectPlaceholder: "USD",
+                                apiVariable: "currencies",
+                                handleInputChange: setInputState,
+                                handleSelectChange: onChangeItem,
+                                inputValue: userData.coaching_hour_rate,
+                                selectValue: userData.coach_currency_type
+                            }} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -125,15 +113,19 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Facilitation day rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <Grid container direction="row" alignItems="center">
-                                <Grid item xs={10}>
-                                    <CustomInput id="facilitator_day_rate" variant="outlined" placeholder="Mr" parentcall={setInputState} 
-                                    defaultValue={userData.facilitator_day_rate} />
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <CustomSelect id="facilitator_currency_type" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.facilitator_currency_type} />
-                                </Grid>
-                            </Grid>
+                            <InputWithDropdownComponent key={1} componentObject={{
+                                componentType: "inputWithDropdown",
+                                label: "",
+                                inputName: "revenue",
+                                selectName: "revenue_currency",
+                                inputPlaceholder: "$00,000,000",
+                                selectPlaceholder: "USD",
+                                apiVariable: "currencies",
+                                handleInputChange: setInputState,
+                                handleSelectChange: onChangeItem,
+                                inputValue: userData.facilitator_day_rate,
+                                selectValue: userData.facilitator_currency_type
+                            }} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -141,14 +133,20 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Assessment hourly rate</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <Grid container direction="row" alignItems="center">
-                                <Grid item xs={10}>
-                                    <CustomInput id="assessor_hour_rate" variant="outlined" placeholder="Mr" parentcall={setInputState} defaultValue={userData.assessor_hour_rate} />
-                                </Grid>
-                                <Grid item xs={2}>
-                                    <CustomSelect id="assessor_currency_type" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.assessor_currency_type} />
-                                </Grid>
-                            </Grid>
+                            <InputWithDropdownComponent key={1} componentObject={{
+                                componentType: "inputWithDropdown",
+                                label: "",
+                                inputName: "revenue",
+                                selectName: "revenue_currency",
+                                inputPlaceholder: "$00,000,000",
+                                selectPlaceholder: "USD",
+                                apiVariable: "currencies",
+                                handleInputChange: setInputState,
+                                handleSelectChange: onChangeItem,
+                                inputValue: userData.assessor_hour_rate,
+                                selectValue: userData.assessor_currency_type
+                            }} />
+
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -188,7 +186,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Next Available Date</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomDatePicker id="available_date" variant="outlined" parentcall={setInputState} selectedValue={userData.available_date} />
+                            <CustomDatePicker id="available_date" style={{textTransform:"uppercase!important"}} variant="outlined" parentcall={setInputState} selectedValue={userData.available_date} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>

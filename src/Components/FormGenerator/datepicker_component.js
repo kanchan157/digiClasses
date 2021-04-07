@@ -1,5 +1,5 @@
 import 'date-fns';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, createMuiTheme } from "@material-ui/core/styles";
 import { Grid } from "@material-ui/core";
 import DateFnsUtils from '@date-io/date-fns';
@@ -24,39 +24,39 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const theme = createMuiTheme({
-    overrides: {
-        MuiFormControl: {
-            marginNormal: {
-                marginTop: "0px",
-                marginBottom: "0px",
-                marginLeft: "1px"
-            }
-          }
-    },
+  overrides: {
+    MuiFormControl: {
+      marginNormal: {
+        marginTop: "0px",
+        marginBottom: "0px",
+        marginLeft: "1px"
+      }
+    }
+  },
 });
 
 export const DatePicker = (props) => {
 
   const classes = useStyles();
-    const { 
-      label,
-       id,
-       index,
-       value,
-       handleChange,
-       helperText
-       } = props.componentObject;
+  const {
+    label,
+    id,
+    index,
+    value,
+    handleChange,
+    helperText
+  } = props.componentObject;
 
-  
-    return (
-        <ThemeProvider theme={theme}>
-          <Grid container className={classes.gridRoot}>
-      <MuiPickersUtilsProvider utils={DateFnsUtils}>
-        {/* <Grid container> */}
+
+  return (
+    <ThemeProvider theme={theme}>
+      <Grid container className={classes.gridRoot}>
+        <MuiPickersUtilsProvider utils={DateFnsUtils}>
+          {/* <Grid container> */}
           <KeyboardDatePicker
-          fullWidth
-          inputVariant="outlined"
-          size="small"
+            fullWidth
+            inputVariant="outlined"
+            size="small"
             margin="normal"
             // id={id}
             // label={label}
@@ -70,22 +70,27 @@ export const DatePicker = (props) => {
               'aria-label': 'change date',
             }}
           />
-        {/* </Grid> */}
-      </MuiPickersUtilsProvider>
+          {/* </Grid> */}
+        </MuiPickersUtilsProvider>
       </Grid>
-      </ThemeProvider>
-    );
-  }
+    </ThemeProvider>
+  );
+}
 
 export default function DateComponent(props) {
+  console.log(props.componentObject)
   const { label } = props.componentObject;
-
+  useEffect(() => {
+}, [props])
   return (
     <Grid container >
-      <Grid item xs={12} md={4}>
-        {label}
-      </Grid>
-      <Grid item xs={12} md={7}>
+      {
+        label &&
+        <Grid item xs={12} md={4}>
+          {label}
+        </Grid>
+      }
+      <Grid item xs={12} md={label ? 7 : 12}>
         <DatePicker componentObject={props.componentObject} />
       </Grid>
     </Grid>

@@ -3,7 +3,7 @@ import React from 'react'
 import { Typography } from '@material-ui/core';
 
 function CustomInput(props: any) {
-    console.log(props)
+    // console.log(props)
     return <>
 
         <TextField
@@ -13,10 +13,9 @@ function CustomInput(props: any) {
                 // label:"asdasd"
             }}
             className="h5"
-            {...props}
-            fullWidth
-            margin="8px"
-
+            inputProps={{style:{padding:10,}}}
+            label="Search input"
+            
             onChange={(e: any) => {
                 var  dataIndex= props.dataIndex == undefined ? 0 : props.dataIndex
 

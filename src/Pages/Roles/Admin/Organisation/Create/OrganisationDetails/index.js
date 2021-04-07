@@ -91,21 +91,23 @@ export default function OrganisationDetails(props) {
     },
     {
       componentType: "select",
-      label: "Type of Organisation",
+      label: "Type of Organisation*",
       name: "type_of_organisation",
       value: type_of_organisation,
       placeholder: "Type of Organisation",
       apiVariable: "type_of_organisation",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      helperText: errors && errors.type_of_organisation && "*Please select the type of organisation",
     },
     {
       componentType: "select",
-      label: "Type of Service",
+      label: "Type of Service*",
       name: "type_of_service",
       value: type_of_service,
       placeholder: "Type of Service",
       apiVariable: "type_of_services",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      helperText: errors && errors.type_of_service && "*Please select the type of service",
     },
     {
       componentType: "MultipleSelect",

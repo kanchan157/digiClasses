@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 
 const Header = (props:any) => {
     const[isSkip,setIsSkip] = useState(props.isSkip || false)
-    console.log(props)
+    // console.log(props)
     return (
         <div>
             <Grid container direction="row" alignItems="center" style={{padding:10, paddingRight:25}}>

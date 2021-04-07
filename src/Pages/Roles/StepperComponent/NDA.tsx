@@ -12,7 +12,7 @@ function NDA(props: any) {
 
 
     useEffect(() => {
-        AdminPartnerClient.Nda_get({ partner_profile_id: global_data.partner_profile }).then((response: any) => {
+        AdminPartnerClient.Nda_get({ partner_profile_id: 28 }).then((response: any) => {
             setPdfData(response)
         });
     }, [])
@@ -30,7 +30,12 @@ function NDA(props: any) {
     return (
         <>
             <Header isBack={true} saveBtnTitle={'Save and Send NDA'} parentcall={onSubmit} parentBackCall={onBack} />
-            <Document file={pdfData}></Document>
+            <iframe
+   title="file"
+   style={{ width: '100%', height: '100%' }}
+   src={`/pdfjs-1.9.426-dist/web/viewer.html?file=${pdfData}`}
+/>
+            <Document file={{data:(pdfData)}}></Document>
             <Header isBack={true} saveBtnTitle={'Save and Send NDA'} parentcall={onSubmit} parentBackCall={onBack} />
         </>
     )

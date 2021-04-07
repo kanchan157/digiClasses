@@ -55,10 +55,10 @@ const Register = () => {
                     <img src="../../../assets/images/logo.png" alt="dsd" />
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="username" placeholder="Username" parentcall={setInputState} helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag}/>
+                    <CustomInput id="username" placeholder="Username" parentcall={setInputState} helperText={(submitClickFlag && username == "") ? "Please enter username." : ""} error={(submitClickFlag && username == "")?true:false}/>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="email" placeholder="Email" parentcall={setInputState} helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag}/>
+                    <CustomInput id="email" placeholder="Email" parentcall={setInputState} helperText={(submitClickFlag && email == "") ? "Please enter email." : ""} error={(submitClickFlag && email == "")?true:false}/>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
 
@@ -78,7 +78,7 @@ const Register = () => {
                 </Grid>
 
                 <Grid item xs={12} style={{ marginTop: 20 }}>
-                    <CustomInput id="orgName" placeholder="Organization Name" parentcall={setInputState} helperText={submitClickFlag ? "Incorrect entry." : ""} error={submitClickFlag}/>
+                    <CustomInput id="orgName" placeholder="Organization Name" parentcall={setInputState} helperText={(submitClickFlag && orgName == "") ? "Please enter organization name." : ""} error={(submitClickFlag && orgName == "")?true:false}/>
                 </Grid>
 
 

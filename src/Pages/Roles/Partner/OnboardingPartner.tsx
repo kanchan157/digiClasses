@@ -10,7 +10,7 @@ import Typography from '@material-ui/core/Typography';
 import { Grid, FormControlLabel, Checkbox, StepConnector, withStyles } from '@material-ui/core';
 
 import clsx from 'clsx';
-import { Check } from '@material-ui/icons';
+import { AddCircleOutlined, Check } from '@material-ui/icons';
 import BasicInfo from '../StepperComponent/BasicInfo';
 // import NDA from '../Partner/NDA';
 import DueDiligence from '../StepperComponent/DueDiligence';
@@ -22,6 +22,8 @@ import OtherQue from '../StepperComponent/OtherQuestions';
 import NDA from '../StepperComponent/NDA';
 // import OtherQuestions from '../Partner/OtherQuestions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import MaterialTable from 'material-table';
+
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
         root: {
@@ -170,16 +172,16 @@ function OnboardingPartner() {
 
         <div className={classes.root}>
             <Grid direction="row" >
-                <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
+                <Grid xs={12} style={{ textAlign: "left" }}>
                     <HeaderMenu />
                 </Grid>
             </Grid>
             {/* <Grid direction="row" >
-            <Grid xs={12} style={{ textAlign: "left", backgroundColor: "blue" }}>
-                <div style={{ height: 60 }}></div>
-            </Grid>
-        </Grid> */}
-            <Grid container direction="row" justify="center" alignItems="center">
+                <Grid xs={12} style={{ textAlign: "left" }}>
+                    <div style={{ height: 60 }}></div>
+                </Grid>
+            </Grid> */}
+             <Grid container direction="row" justify="center" alignItems="center">
                 <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 64px)" }}>
                     <Typography style={{ paddingBlock: 25, textAlign: "center", alignSelf: "center", fontSize: 26, color: "#4A4A4A", fontWeight: "bold" }}>
                         <ArrowBackIosIcon style={{ fontSize: 16, color: "#4A4A4A" }} /> Partner Onboarding</Typography>
@@ -202,6 +204,7 @@ function OnboardingPartner() {
                     )}
                 </Grid>
             </Grid>
+            
         </div>
     );
 }

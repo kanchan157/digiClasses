@@ -40,7 +40,9 @@ const OrganisationContactReducer = (state = INITIAL_STATE, action) => {
     case SET_ORGANISATION_CONTACT:
       // action.payload['id'] = state.id;
       action.payload["organisation_id"] = state.organisation_id;
-      action.payload["branches"] = state.data.branches;
+      if (!action.payload.branches){
+        action.payload["branches"] = state.data.branches;
+      }
       return { ...state, data: action.payload };
     case UPDATE_ORGANISATION_CONTACT:
       action.payload["organisation_id"] = state.organisation_id;

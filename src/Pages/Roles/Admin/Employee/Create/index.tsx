@@ -1,5 +1,5 @@
 import React from 'react';
-import OrganisationLinearStepper from '../OrganisationLinearStepper';
+import EmployeeLinearStepper from '../EmployeeLinearStepper';
 
 export default function OrganisationCreate() {
     const createOrganisationLayout = {
@@ -10,8 +10,8 @@ export default function OrganisationCreate() {
 
     return (
         <div style={createOrganisationLayout}>
-        <h1>Create Organisation Profile</h1>
-        <OrganisationLinearStepper />
+        <h1>Create Employee Profile</h1>
+        <EmployeeLinearStepper />
         </div>
     )
 };

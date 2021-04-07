@@ -39,6 +39,7 @@ export default function Profile(props) {
   } = useSelector((state) => state.organisationProfileReducer.data);
 
   const errors = useSelector(state => state.organisationProfileReducer.errors);
+  const organisation_id = useSelector(state => state.organisationProfileReducer.organisation_id);
   
   const userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
 
@@ -110,7 +111,7 @@ export default function Profile(props) {
       name: "key_stakeholders",
       placeholder: "Multi select Dropdown",
       apiVariable: "employee_list",
-      params: {organisation_id: userDetails.data.id},
+      params: {organisation_id: organisation_id},
       handleChange: handleInputChange,
       value: key_stakeholders,
     },
@@ -120,7 +121,7 @@ export default function Profile(props) {
       name: "delivery_locations",
       placeholder: "Countries",
       apiVariable: "countries",
-      params: {organisation_id: userDetails.data.id},
+      params: {organisation_id: organisation_id},
       handleChange: handleInputChange,
       value: delivery_locations,
     },
@@ -198,7 +199,8 @@ export default function Profile(props) {
 
   useEffect(() => {
     setFormInput(formArray)
-  })
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[errors]);
 
   return (
     <ThemeProvider theme={theme}>

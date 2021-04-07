@@ -1,7 +1,8 @@
 import { DELETE_STEPPER_DATA, GLOBAL_STEPPER_DATA } from '../../../Redux/actions';
 
 const intialState = {
-    partner_profile:""
+    partner_profile:"",
+    due_diligence_id:""
 };
 const stepperReducer = (state = intialState, action) => {
     switch (action.type) {

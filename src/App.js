@@ -14,13 +14,17 @@ import CommonUnAuth from './Pages/UnAuth/CommonUnAuth';
 // import LoginPage from './Pages/UnAuth/LoginPage';
 import ForgotPassword from './Pages/UnAuth/ForgotPassword';
 import OrganisationCreate from './Pages/Roles/Admin/Organisation/Create';
+import EmployeeCreate from './Pages/Roles/Admin/Employee/Create';
 import ComponentList from './Components/ComponentList';
 import CustomUploadFiles from './Components/CustomUploadFiles';
-import CoachSearch from './Pages/CoachSearch/CoachSearch';
+import ManageInfo from './Pages/Auth/ManageInfo';
+import PartnerList from './Pages/Roles/Partner/PartnerList';
+import OrganizationContent from './Pages/Roles/Admin/Organisation/OrganizationContent';
 // import ContractDocumentition from './Pages/Roles/Partner/ContractDocumentition';
 
+
 export const App = () => {
-  const global_data = useSelector((state: any) => state.commonReducer);
+  const global_data = useSelector((state) => state.commonReducer);
 
   return <div className="wrapper">
     <Snackbar />
@@ -39,10 +43,14 @@ export const App = () => {
         <Route exact path="/dashboard"><Dashboard /></Route>
         <Route exact path="/auth/:path"><CommonUnAuth /></Route>
         <Route exact path="/admin/organisation/create"><OrganisationCreate /></Route>
+        <Route exact path="/admin/organisation/employee/create"><EmployeeCreate /></Route>
+        <Route exact path="/admin/partner/list"><PartnerList /></Route>
         <Route exact path="/admin/partner/onboarding"><OnboardingPartnerAdmin /></Route>
         <Route exact path="/partner/onboarding"><OnboardingPartner /></Route>
+        <Route exact path="/partner"><PartnerList /></Route>
         <Route exact path="/custom"><CustomUploadFiles /></Route>
-        <Route exact path="/coachSearch"><CoachSearch /></Route>
+        <Route exact path="/ManageInfo"><ManageInfo /></Route>
+        <Route exact path="/organizationContent"><OrganizationContent /></Route>
 
 
         {/* <Route exact path="/login"><LoginPage /></Route>

@@ -23,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
       marginTop: theme.spacing(2),
     },
   },
+  alert: {
+    width: "400px"
+  }
 }));
 
 export default function CustomizedSnackbars() {
@@ -39,7 +42,7 @@ export default function CustomizedSnackbars() {
 
   return (
     <div className={classes.root}>
-      <Snackbar 
+      <Snackbar
       anchorOrigin={{
         vertical: 'bottom',
         horizontal: 'right',
@@ -48,7 +51,7 @@ export default function CustomizedSnackbars() {
       autoHideDuration={3000} 
       onClose={handleClose}
       >
-        <Alert severity={snackbarType}>
+        <Alert className={classes.alert} severity={snackbarType}>
           {snackbarMessage && snackbarMessage.map((item, index) => {
             return <div><span key={index}>{item}</span><br/></div>
           })}

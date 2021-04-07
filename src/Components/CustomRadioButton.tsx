@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -47,13 +48,20 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 function CustomRadioButton(props: any) {
     const classes = useStyles();
-    const [radioDefaultValue, setRadioDefaultValue] = useState(props ? props.itemArr[0] : "")
+    const global_data = useSelector((state: any) => state.stepperReducer);
 
+    const [radioDefaultValue, setRadioDefaultValue] = useState(props.itemArr[props.index])
+    // alert(props.itemArr[props.index])
     const changeRadioStaus = (e: any) => {
         console.log(e.target.innerText)
         setRadioDefaultValue(e.target.innerText);
         props.parentcall(e.target.innerText,props.id)
     }
+    useEffect(() => {
+        // console.log("props.itemArr[props.index]",props.index,props.itemArr)
+        // console.log("props.itemArr[props.index]",props.itemArr[props.index])
+        setRadioDefaultValue(props.itemArr[props.index])  
+    }, [props])
     return (
         <div style={{ flexDirection: "row", flex: 1, display: "flex", maxWidth: "150px", textAlign: "center" }}>
             {

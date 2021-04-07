@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 
-function CustomDatePicker(props: any) {
+function CustomTimePicker(props: any) {
     const classes = useStyles();
     const handleChange = (event: any) => {
         console.log(event.target.value)
@@ -23,9 +23,9 @@ function CustomDatePicker(props: any) {
         <>
             <TextField
                 {...props}
-                type="date"
-                defaultValue="24-05-2021"
-                className={`datepicker ${classes.textField}`}
+                type="time"
+                defaultValue="07:30"
+                className={`timepicker ${classes.textField}`}
                 onChange={handleChange}
 
             />
@@ -33,4 +33,4 @@ function CustomDatePicker(props: any) {
     )
 }
 
-export default CustomDatePicker
+export default CustomTimePicker

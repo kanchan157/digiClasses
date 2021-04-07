@@ -7,51 +7,51 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import OrganisationDetails from "../../Pages/Roles/Admin/Organisation/Create/OrganisationDetails";
-import Profile from "../../Pages/Roles/Admin/Organisation/Create/Profile";
-import Contact from "../../Pages/Roles/Admin/Organisation/Create/Contact";
-import PreContract from "../../Pages/Roles/Admin/Organisation/Create/PreContract";
-import Contract from "../../Pages/Roles/Admin/Organisation/Create/Contract";
-import Activity from "../../Pages/Roles/Admin/Organisation/Create/Activity";
-import General from "../../Pages/Roles/Admin/Organisation/Create/General";
+import OrganisationDetails from "../Create/OrganisationDetails";
+import Profile from "../Create/Profile";
+import Contact from "../Create/Contact";
+import PreContract from "../Create/PreContract";
+import Contract from "../Create/Contract";
+import Activity from "../Create/Activity";
+import General from "../Create/General";
 import {
   UpdateOrganisationDetails,
   SetOrganisationDetailsError,
-} from "../../Pages/Roles/Admin/Organisation/Create/OrganisationDetails/OrganisationDetailsActions";
+} from "../Create/OrganisationDetails/OrganisationDetailsActions";
 import {
   UpdateOrganisationProfile,
   UpdateOrganisationIdProfile,
   SetOrganisationProfileError,
-} from "../../Pages/Roles/Admin/Organisation/Create/Profile/OrganisationProfileActions";
+} from "../Create/Profile/OrganisationProfileActions";
 import {
   UpdateOrganisationContact,
   UpdateOrganisationIdContact,
   SetOrganisationContactError
-} from "../../Pages/Roles/Admin/Organisation/Create/Contact/OrganisationContactActions";
+} from "../Create/Contact/OrganisationContactActions";
 import {
   UpdateOrganisationPreContract,
   UpdateOrganisationIdPreContract,
-} from "../../Pages/Roles/Admin/Organisation/Create/PreContract/OrganisationPreContractActions";
+} from "../Create/PreContract/OrganisationPreContractActions";
 import {
   UpdateOrganisationContract,
   UpdateOrganisationIdContract,
   SetOrganisationContractError,
-} from "../../Pages/Roles/Admin/Organisation/Create/Contract/OrganisationContractActions";
+} from "../Create/Contract/OrganisationContractActions";
 import {
   UpdateOrganisationActivity,
   UpdateOrganisationIdActivity,
   SetOrganisationActivityError,
-} from "../../Pages/Roles/Admin/Organisation/Create/Activity/OrganisationActivityActions";
+} from "../Create/Activity/OrganisationActivityActions";
 import {
   UpdateOrganisationGeneral,
   UpdateOrganisationIdGeneral,
-} from "../../Pages/Roles/Admin/Organisation/Create/General/OrganisationGeneralActions";
+} from "../Create/General/OrganisationGeneralActions";
 import { useSelector, useDispatch } from "react-redux";
-import DataService from "../../Service";
-import { ObjectToFormdata } from "../../Common/Utils/common_utils";
-import Loader from "../Loader";
-import Snackbar from "../Snackbar";
-import { showSnackbar } from "../Snackbar/SnackbarActions";
+import DataService from "../../../../../Service";
+import { ObjectToFormdata } from "../../../../../Common/Utils/common_utils";
+import Loader from "../../../../../Components/Loader";
+import Snackbar from "../../../../../Components/Snackbar";
+import { showSnackbar } from "../../../../../Components/Snackbar/SnackbarActions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -116,7 +116,7 @@ const theme = createMuiTheme({
         color: "white !important",
       },
       text: {
-        fill: "black",
+        fill: "white",
       },
     },
     MuiButton: {
@@ -127,7 +127,7 @@ const theme = createMuiTheme({
   },
 });
 
-export default function HorizontalLinearStepper(props) {
+export default function OrganisationLinearStepper(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
@@ -140,6 +140,17 @@ export default function HorizontalLinearStepper(props) {
       "Contract",
       "Activity",
       "General",
+      // "General",
+//       "Contact Area",
+// "Employee CUrrent Work Information And History",
+// "Training and Development",
+// "Coaching Capacity",
+// "Mentoring Capacity",
+// "Coaching Profile",
+// "Mentor Profile",
+// "Facilitation",
+// "Assessment",
+// "GDPR"
     ];
   }
 
@@ -209,11 +220,10 @@ export default function HorizontalLinearStepper(props) {
     if (sectionId !== null) {
       setLoading(true);
       DataService.updateData(data, sectionId, apiVariable).then((res) => {
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
         dispatch(dispatchVariable(res.data));
         setLoading(false);
-        dispatch(showSnackbar("success","Success!"));
-        
+        dispatch(showSnackbar("success",["Success!"]));
+        setActiveStep((prevActiveStep) => prevActiveStep + 1);
       }).catch((err) => {
         dispatch(showSnackbar("error",err.errors));
       });
@@ -222,9 +232,8 @@ export default function HorizontalLinearStepper(props) {
       setLoading(true);
       DataService.createData(data, apiVariable)
         .then((res) => {
-          setActiveStep((prevActiveStep) => prevActiveStep + 1);
           setLoading(false);
-          dispatch(showSnackbar("success","Success!"));
+          dispatch(showSnackbar("success",["Success!"]));
           if (dispatchVariable === UpdateOrganisationDetails) {
             console.log("then block");
             dispatch(UpdateOrganisationIdProfile(res.data));
@@ -237,6 +246,7 @@ export default function HorizontalLinearStepper(props) {
           } else {
             dispatch(dispatchVariable(res.data));
           }
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
         .catch((err) => {
           setLoading(false);
@@ -254,6 +264,8 @@ export default function HorizontalLinearStepper(props) {
         internal_status: false,
         territory: false,
         industry_sector_list_id: false,
+        type_of_organisation: false,
+        type_of_service: false
       };
       if (
         !OrganisationDetail.data.organisation_name ||
@@ -281,6 +293,20 @@ export default function HorizontalLinearStepper(props) {
         !OrganisationDetail.data.territory.length
       ) {
         errors.territory = true;
+        valid = false;
+      }
+      if (
+        !OrganisationDetail.data.type_of_organisation ||
+        !OrganisationDetail.data.type_of_organisation.length
+      ) {
+        errors.type_of_organisation = true;
+        valid = false;
+      }
+      if (
+        !OrganisationDetail.data.type_of_service ||
+        !OrganisationDetail.data.type_of_service.length
+      ) {
+        errors.type_of_service = true;
         valid = false;
       }
       if (
@@ -363,7 +389,7 @@ export default function HorizontalLinearStepper(props) {
       }
       if (
         !OrganisationContact.data.branches[0].country_list_id ||
-        !OrganisationContact.data.branches[0].country_list_id.length
+        typeof(OrganisationContact.data.branches[0].country_list_id) !== "number"
       ) {
         errors.country_list_id = true;
         valid = false;
@@ -406,15 +432,13 @@ export default function HorizontalLinearStepper(props) {
         date_account_closed: false,
       };
       if (
-        !OrganisationContract.data.start_date_with_client ||
-        !OrganisationContract.data.start_date_with_client.length
+        !OrganisationContract.data.start_date_with_client
       ) {
         errors.start_date_with_client = true;
         valid = false;
       }
       if (
-        !OrganisationContract.data.date_account_closed ||
-        !OrganisationContract.data.date_account_closed.length
+        !OrganisationContract.data.date_account_closed
       ) {
         errors.date_account_closed = true;
         valid = false;
@@ -438,15 +462,13 @@ export default function HorizontalLinearStepper(props) {
         priority: false,
       };
       if (
-        !OrganisationActivity.data.review_date ||
-        !OrganisationActivity.data.review_date.length
+        !OrganisationActivity.data.review_date
       ) {
         errors.review_date = true;
         valid = false;
       }
       if (
-        !OrganisationActivity.data.meeting_date ||
-        !OrganisationActivity.data.meeting_date.length
+        !OrganisationActivity.data.meeting_date
       ) {
         errors.meeting_date = true;
         valid = false;

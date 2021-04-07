@@ -1,10 +1,6 @@
 import request from "../api_client";
 
 const BasicInfo = (formData) => {
-    // const formDataa = new FormData();
-    // for (const i in formData) {
-    //     formDataa.append(i, formData[i]);
-    // }
     return request({
         url: '/partner_profiles',
         method: 'POST',
@@ -138,6 +134,7 @@ const ReferenceQuestionnaire_get = (params) => {
     });
 }
 const DueDiligenceCall = (formData) => {
+    
     return request({
         url: '/partner_due_diligence_calls',
         method: 'POST',

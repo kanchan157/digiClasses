@@ -41,7 +41,7 @@ export const request = (options) => {
         // }
         if (options.handleHeaders === 0) {
             sessionStorage.clear();
-            window.location.href = '/auth/signin';
+            window.location.href = '/auth/login';
         }
         const resp = response.data;
         if (resp.hasOwnProperty("success")) {
@@ -55,7 +55,7 @@ export const request = (options) => {
     const onError = (error) => {
         if (error.response) {
             if (error.response.status === 401) {
-                window.location.href = '/auth/signin';
+                window.location.href = '/auth/login';
             }
         }
         //Check API and return response in accepted state with error data and success equals false flag to avoid catch block in all api requests.

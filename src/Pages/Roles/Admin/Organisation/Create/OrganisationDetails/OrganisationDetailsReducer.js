@@ -9,6 +9,8 @@ export const INITIAL_STATE = {
         internal_status: false,
         territory: false,
         industry_sector_list_id: false,
+        type_of_service: false,
+        type_of_organisation: false
     }
 };
 

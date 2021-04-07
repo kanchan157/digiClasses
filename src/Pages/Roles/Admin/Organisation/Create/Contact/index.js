@@ -70,6 +70,7 @@ export default function Contact(props) {
     formInput.forEach((item) => {
       if (item.value) {
         formData[item.name] = item.value;
+        console.log(formData, 'formData')
         dispatch(SetOrganisationContact(formData));
       }
     });
@@ -209,7 +210,7 @@ export default function Contact(props) {
         index: "4-country_list_id",
         handleChange: handleAddressChange,
         value: branches[0].country_list_id,
-        helperText: errors.country_list_id && "*Please select a city",
+        helperText: errors.country_list_id && "*Please select a country",
       },
       zipcode: {
         name: "zipcode",
@@ -220,7 +221,7 @@ export default function Contact(props) {
         value: branches[0].zipcode,
         helperText: errors.zipcode && "*Please enter a zipcode",
       },
-      label: "Business Address",
+      label: "Business Address*",
 
       // Address component to go here
     },

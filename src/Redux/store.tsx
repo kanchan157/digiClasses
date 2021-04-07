@@ -11,6 +11,7 @@ import organisationContractReducer from "../Pages/Roles/Admin/Organisation/Creat
 import organisationActivityReducer from "../Pages/Roles/Admin/Organisation/Create/Activity/OrganisationActivityReducer";
 import snackbarReducer from "../Components/Snackbar/SnackbarReducer";
 import stepperReducer from "../Pages/Roles/StepperComponent/stepperReducer";
+import contactAreaReducer from "../Pages/Roles/Admin/Employee/Create/ContactArea/ContactAreaReducer";
 import storage from 'redux-persist/lib/storage';
 import { persistReducer } from "redux-persist";
 
@@ -24,7 +25,8 @@ const rootReducer = combineReducers({
     organisationGeneralReducer,
     organisationContractReducer,
     organisationActivityReducer,
-    snackbarReducer
+    snackbarReducer,
+    contactAreaReducer
 });
 
 // Commenting the persist logic as it fails to clear data on browser refresh or session break
@@ -33,7 +35,7 @@ const config = {
     storage: storage
 }
 
-// const persistedReducer = persistReducer(config, rootReducer);
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
+const persistedReducer = persistReducer(config, rootReducer);
+const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 export default store

@@ -22,7 +22,9 @@ const dataUrl = {
     departments: '/departments',
     functions: '/functions',
     // ORGANISATION - PRECONTRACT
-    org_profile_document_types: '/org_profile_document_types'
+    org_profile_document_types: '/org_profile_document_types',
+    // EMPLOYEE - CONTACT AREA
+    languages: '/languages',
 }
 
 export function getData(params, section, url) {

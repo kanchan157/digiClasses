@@ -1,12 +1,16 @@
 import { Button, Card, Grid, InputLabel, makeStyles, TextField, Typography } from '@material-ui/core'
 import { Cancel, CloudUpload } from '@material-ui/icons';
+import { DatePicker } from '@material-ui/pickers';
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
+import { ObjectToFormdata } from '../../../Common/Utils/common_utils';
 import CustomDatePicker from '../../../Components/CustomDatePicker';
 import CustomInput from '../../../Components/CustomInput';
 import CustomMultiSelectAutoComplete from '../../../Components/CustomMultiSelectAutoComplete';
 import CustomRadioButton from '../../../Components/CustomRadioButton';
 import CustomSelect from '../../../Components/CustomSelect';
+import DateComponent from '../../../Components/FormGenerator/datepicker_component';
+import DatePickerSelectComponent from '../../../Components/FormGenerator/select_with_datepicker_component';
 import { GLOBAL_STEPPER_DATA } from '../../../Redux/actions';
 import AdminPartnerClient from '../../../Service/Admin/partner_services';
 import Header from './header';
@@ -26,60 +30,74 @@ function BasicInfo(props: any) {
     const global_data_common = useSelector((state: any) => state.commonReducer);
     const dispatch = useDispatch();
     const [submitClickFlag, setSubmitClickFlag] = React.useState(false);
+    const [defaultRoleArr, setDefaultRoleArr]: any = useState([]);
 
     console.log(global_data.partner_profile)
+    const partnerRoleArr = ['The Shawshank Redemption', 'The Godfather', 'The Godfather: Part II'];
     const data = {
-        role: global_data_common.role,
+        // role: global_data_common.role,
         first_name: '',
         middle_name: '',
         last_name: '',
         title: '',
-
         phone: '',
         email: '',
         initial_contact_date: '',
-        organisation_id: 1,
-        contact_location: '',
-        referred_by: '',
+        referred_by: "Self",
         sourced_for: "",
-        source: '',
-        associate_coach: '',
+        associate_coach: true,
         associate_role: '',
         associate_bio: '',
-        partner_resumes_att: [2]
+        organisation_name: "",
+        city: "",
+        country: "",
+        // partner_resumes_att: [2]
 
     }
     const [userData, setUserData] = useState(data);
-    const [partnerRolesArr, setPartnerRolesArr] = useState([]);
+    const [partnerRolesArr, setPartnerRolesArr]: any = useState([]);
 
     const setInputState = (inputStateValue: any, inputId: any) => {
         console.log(inputStateValue, inputId)
+        if (inputId == "associate_coach") {
+            inputStateValue = inputStateValue == "Yes" ? true : false
+        }
         setUserData({ ...userData, [inputId]: inputStateValue })
     }
     const onChangeItem = (selectedItemValue: any, inputId: any) => {
         console.log(selectedItemValue, inputId)
+        if (selectedItemValue.id == "sourced_for") {
+            selectedItemValue.value = selectedItemValue.value == "Yes" ? true : false
+        }
         setUserData({ ...userData, [selectedItemValue.id]: selectedItemValue.value })
     };
+    const handleDateChange = (selectedItemValue: any, inputId: any) => {
+        console.log(selectedItemValue, inputId)
+        // setUserData({ ...userData, [selectedItemValue.id]: selectedItemValue.value })
+    };
     const onChangeMultipleItem = (inputStateValue: any, inputId: any) => {
+        partnerRolesArr.length = 0
         console.log(inputStateValue, inputId);
         if (inputId == "partnerRolesArr") {
-            setPartnerRolesArr(partnerRolesArr.concat(inputStateValue))
+            setPartnerRolesArr(partnerRolesArr.concat((inputStateValue)))
         }
+        console.log(partnerRolesArr.length)
+        partnerRolesArr.length == 0 ? setSubmitClickFlag(false) : setSubmitClickFlag(true)
     }
 
     const onSubmit = () => {
         var flag = true;
-        if (userData.first_name == "") {
-            flag = false;
-        }
-        if (userData.email == "") {
+        console.log(userData.title)
+        if (userData.first_name == "" || userData.email == "" || userData.phone == "" || partnerRolesArr.length == 0) {
             flag = false;
         }
 
 
         if (flag) {
             setSubmitClickFlag(false)
-            AdminPartnerClient.BasicInfo({ partner_roles_attributes: partnerRolesArr, ...userData }).then((response: any) => {
+            var roleLocalArr = [];
+            roleLocalArr.push(partnerRolesArr)
+            AdminPartnerClient.BasicInfo(ObjectToFormdata({ ...userData })).then((response: any) => {
                 props.parentSetProfileId(response.data.id, response.data.attributes.acuity_people_profile_id);
                 props.parentHandleNext(props.activeIndex + 1)
                 dispatch({ type: GLOBAL_STEPPER_DATA, payload: { partner_profile: response.data.id } });
@@ -92,14 +110,24 @@ function BasicInfo(props: any) {
 
     useEffect(() => {
         getBasicInfo();
-        getSource();
+        // getSource();
     }, [])
 
     const getBasicInfo = () => {
         if (global_data.partner_profile != "") {
             AdminPartnerClient.BasicInfo_get('', global_data.partner_profile).then((response: any) => {
-                props.parentSetProfileId(response.data.id, response.data.attributes.acuity_people_profile_id);
+                alert("adasd")
+                // props.parentSetProfileId(response.data.id, response.data.attributes.acuity_people_profile_id);
+                // console.log(response.data.attributes)
                 setUserData(response.data.attributes)
+                if (response.data.attributes.partner_roles.length > 0) {
+                    response.data.attributes.partner_roles.map((options: any) => {
+                        console.log(options.role)
+                        setDefaultRoleArr(defaultRoleArr.push(options.role));
+                        // setPartnerRolesArr(defaultRoleArr)
+                        console.log(defaultRoleArr)
+                    })
+                }
             }).catch(error => alert(JSON.stringify(error.errors)));
         }
     }
@@ -122,7 +150,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText} style={{ marginTop: 20 }}>Title*</InputLabel>
                         </Grid>
                         <Grid item xs={4}>
-                            <CustomSelect id="title" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.title} />
+                            <CustomSelect id="title" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} helperText={(submitClickFlag && (userData.title == "" || userData.title == undefined)) ? "Please enter title" : ""} value={userData.title} />
                         </Grid>
 
                     </Grid>
@@ -133,16 +161,16 @@ function BasicInfo(props: any) {
                         <Grid item xs={8} >
                             <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
                                 <Grid item xs={12} >
-                                    <CustomInput id="first_name" variant="outlined" placeholder="First Name" helperText={submitClickFlag ? "Please enter username." : ""} error={submitClickFlag} parentcall={setInputState} defaultValue={userData.first_name} />
+                                    <CustomInput id="first_name" variant="outlined" placeholder="First Name" helperText={(submitClickFlag && userData.first_name == "") ? "Please enter username" : ""} error={(submitClickFlag && userData.first_name == "") ? true : false} parentcall={setInputState} value={userData.first_name} />
                                 </Grid>
                             </Grid>
 
                             <Grid container direction="row" alignItems="center" justify="space-between">
                                 <Grid item xs={4} >
-                                    <CustomInput id="middle_name" variant="outlined" placeholder="Middle Name" parentcall={setInputState} defaultValue={userData.middle_name} />
+                                    <CustomInput id="middle_name" variant="outlined" placeholder="Middle Name" parentcall={setInputState} value={userData.middle_name} />
                                 </Grid>
                                 <Grid item xs={7} >
-                                    <CustomInput id="last_name" variant="outlined" placeholder="Last Name" parentcall={setInputState} defaultValue={userData.last_name} />
+                                    <CustomInput id="last_name" variant="outlined" placeholder="Last Name" parentcall={setInputState} value={userData.last_name} />
                                 </Grid>
                             </Grid>
 
@@ -154,7 +182,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Email*</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="email" variant="outlined" placeholder="Email" parentcall={setInputState} defaultValue={userData.email} />
+                            <CustomInput id="email" variant="outlined" placeholder="Email" parentcall={setInputState} helperText={(submitClickFlag && userData.email == "") ? "Please enter email" : ""} error={(submitClickFlag && userData.email == "") ? true : false} value={userData.email} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -162,7 +190,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Phone*</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="phone" variant="outlined" placeholder="Phone" parentcall={setInputState} defaultValue={userData.phone} />
+                            <CustomInput id="phone" variant="outlined" placeholder="Phone" parentcall={setInputState} helperText={(submitClickFlag && userData.phone == "") ? "Please enter phone" : ""} error={(submitClickFlag && userData.phone == "") ? true : false} value={userData.phone} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -170,7 +198,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Organization Name</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="organisation_name" variant="outlined" placeholder="Name" parentcall={setInputState} defaultValue={userData.organisation_id} />
+                            <CustomInput id="organisation_name" variant="outlined" placeholder="Name" parentcall={setInputState} value={userData.organisation_name} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -178,31 +206,46 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Date of initial contact</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomDatePicker id="initial_contact_date" variant="outlined" parentcall={setInputState} selectedValue={userData.initial_contact_date} />
+                            <DateComponent key={'001'} componentObject={
+                                {
+                                    "componentType": "datePicker",
+                                    "required": true,
+                                    "label": "",
+                                    "name": "start_date_with_client",
+                                    "placeholder": "Start Date",
+                                    "helperText": false,
+                                    "indexKey": "0-0",
+                                    "index": "initial_contact_date",
+                                    handleChange: setInputState,
+                                    value: userData.initial_contact_date
+                                }
+                            }
+                            />
+                            {/* <CustomDatePicker id="initial_contact_date" placeholder="DD-MM-YYYY" variant="outlined" parentcall={setInputState} value={userData.initial_contact_date} /> */}
                         </Grid>
                     </Grid>
-                    <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
+                    {/* <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
                         <Grid item xs={4}>
                             <InputLabel className={classes.labelText}>Location of contact</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="contact_location" variant="outlined" placeholder="Name" parentcall={setInputState} defaultValue={userData.contact_location} />
+                            <CustomInput id="contact_location" variant="outlined" placeholder="Name" parentcall={setInputState} value={userData.contact_location} />
                         </Grid>
-                    </Grid>
-                    <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
+                    </Grid> */}
+                    {/* <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
                         <Grid item xs={4}>
                             <InputLabel className={classes.labelText}>Source</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="source" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.source} />
+                            <CustomSelect id="source" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} value={userData.source} />
                         </Grid>
-                    </Grid>
+                    </Grid> */}
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
                         <Grid item xs={4}>
                             <InputLabel className={classes.labelText}>Sourced for Assignment</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="sourced_for" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.sourced_for} />
+                            <CustomSelect id="sourced_for" displayEmpty variant="outlined" itemArr={["Yes", "No"]} parentcall={onChangeItem} defaultValue={userData.sourced_for} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -210,7 +253,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Associate coach</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomRadioButton id="associate_coach" itemArr={["Yes", "No"]} parentcall={setInputState} selectedValue={userData.associate_coach} />
+                            <CustomRadioButton id="associate_coach" itemArr={["Yes", "No"]} parentcall={setInputState} index={userData.associate_coach ? 0 : 1} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -218,7 +261,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Associate Role</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="associate_role" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.associate_role} />
+                            <CustomSelect id="associate_role" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} defaultValue={userData.associate_role} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -226,7 +269,7 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Associate Bio</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="associate_bio" variant="outlined" placeholder="Name" parentcall={setInputState} defaultValue={userData.associate_bio} />
+                            <CustomInput id="associate_bio" variant="outlined" placeholder="Name" parentcall={setInputState} value={userData.associate_bio} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -234,13 +277,11 @@ function BasicInfo(props: any) {
                             <InputLabel className={classes.labelText}>Role*</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomMultiSelectAutoComplete id="partnerRolesArr" parentcall={onChangeMultipleItem} />
-                            {/* <CustomSelect id="partner_roles_attributes" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.partner_roles_attributes} /> */}
+                            <CustomMultiSelectAutoComplete id="partnerRolesArr" itemArr={partnerRoleArr} helperText={(submitClickFlag && (partnerRolesArr.length == 0 || defaultRoleArr.length == 0)) ? "Please enter role" : ""} error={(submitClickFlag && partnerRolesArr.length == 0) ? true : false} parentcall={onChangeMultipleItem} defaultValue={defaultRoleArr} />
                         </Grid>
                     </Grid>
                     {
                         global_data_common.role == "admin" &&
-
                         <Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 20 }}>
                             <Grid item xs={4} >
                                 <InputLabel className={classes.labelText} style={{ marginTop: 20, }}>Address*</InputLabel>
@@ -248,7 +289,7 @@ function BasicInfo(props: any) {
                             <Grid item xs={8} >
                                 <Grid container direction="row" alignItems="center" style={{ marginBottom: 10 }}>
                                     <Grid item xs={12} >
-                                        <CustomInput id="" variant="outlined" placeholder="Address Line 1" parentcall={setInputState} defaultValue={userData.first_name} />
+                                        <CustomInput id="" variant="outlined" placeholder="Address Line 1" parentcall={setInputState} value={userData.first_name} />
                                     </Grid>
                                 </Grid>
 
@@ -259,10 +300,10 @@ function BasicInfo(props: any) {
                                 </Grid>
                                 <Grid container direction="row" alignItems="center" >
                                     <Grid item xs={6}>
-                                        <CustomSelect id="city" displayEmpty variant="outlined" itemArr={['India', 'Pakistan']} parentcall={onChangeItem} selectedValue={userData.title} />
+                                        <CustomSelect id="city" displayEmpty variant="outlined" itemArr={['India', 'Pakistan']} parentcall={onChangeItem} value={userData.city} />
                                     </Grid>
                                     <Grid item xs={6} style={{ padding: 10, paddingRight: 0 }}>
-                                        <CustomSelect id="country" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.title} />
+                                        <CustomSelect id="country" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} value={userData.country} />
                                     </Grid>
                                     <Grid item xs={6}>
                                         <CustomInput id="countryText" variant="outlined" placeholder="Country" parentcall={setInputState} />

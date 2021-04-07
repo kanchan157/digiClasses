@@ -110,7 +110,7 @@ export default function Contract(props) {
     {
       componentType: "datePicker",
       required: true,
-      label: "Date Account Closed",
+      label: "Date Account Closed*",
       name: "date_account_closed",
       value: date_account_closed,
       helperText: errors.date_account_closed && "*Please select a date",

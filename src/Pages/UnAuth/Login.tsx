@@ -8,6 +8,8 @@ import { green } from "@material-ui/core/colors";
 import { useDispatch } from "react-redux";
 import { GLOBAL_DATA } from "../../Redux/actions";
 import AuthClient from "../../Service/auth_services";
+import { showSnackbar } from "../../Components/Snackbar/SnackbarActions";
+var CryptoJS = require("crypto-js");
 
 
 
@@ -69,14 +71,14 @@ function LoginPage() {
         else if (password == "") {
             flag = false;
         }
-
-
-
         if (flag) {
             setSubmitClickFlag(false)
+            var cryptoPassword = CryptoJS.AES.encrypt(password, 'acuity').toString()
             AuthClient.login({ email: username, password: password }).then((response: any) => {
                 loginSuccess(response)
-            }).catch(error => alert(error.errors[0]));
+            }).catch(error => {
+               dispatch(showSnackbar("error", error.errors));
+            });
         } else {
             setSubmitClickFlag(true)
         }
@@ -97,9 +99,9 @@ function LoginPage() {
         setOpen(false);
         dispatch({ type: GLOBAL_DATA, payload: { role: role } });
         sessionStorage.setItem("role", role);
-        role=='admin' && history.push('/admin/partner/onboarding')
-        role=='partner' && history.push('/partner/onboarding')
-
+        // role == 'admin' && history.push('/admin/partner/onboarding')
+        // role == 'partner' && history.push('/partner/onboarding')
+        history.push('/ManageInfo')
     };
     const handleRoleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setRole((event.target as HTMLInputElement).value);
@@ -111,12 +113,12 @@ function LoginPage() {
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <img src="../../../assets/images/logo.png" alt="dsd" />
                 </Grid>
-                <Grid item xs={12} style={{ marginTop: 30,marginBottom:20 }}>
+                <Grid item xs={12} style={{ marginTop: 30, marginBottom: 20 }}>
                     <CustomInput id="Username" placeholder="Username"
-                     helperText={submitClickFlag ? "Please enter username." : ""} error={submitClickFlag} parentcall={setInputState} />
+                        helperText={(submitClickFlag && username == "") ? "Please enter username." : ""} error={(submitClickFlag && username == "") ? true : false} parentcall={setInputState} />
                 </Grid>
-                <Grid item xs={12} style={{marginBottom:20}}>
-                    <CustomInput id="Password" placeholder="Password" helperText={submitClickFlag ? "Please enter password." : ""} error={submitClickFlag} parentcall={setInputState} />
+                <Grid item xs={12} style={{ marginBottom: 20 }}>
+                    <CustomInput id="Password" placeholder="Password" helperText={(submitClickFlag && password == "") ? "Please enter password." : ""} error={(submitClickFlag && password == "") ? true : false} parentcall={setInputState} />
                 </Grid>
                 <Grid item xs={12} sm={8}  >
                     <FormControlLabel
@@ -136,7 +138,7 @@ function LoginPage() {
                         label="Remember me"
                     />
                 </Grid>
-                <Grid item xs={12} sm={4} style={{marginTop:10}}>
+                <Grid item xs={12} sm={4} style={{ marginTop: 10 }}>
                     <Typography variant="h6" style={{ textAlign: "right" }}>
                         <Link
                             className="anchorLink"
