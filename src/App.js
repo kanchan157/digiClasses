@@ -20,6 +20,8 @@ import CustomUploadFiles from './Components/CustomUploadFiles';
 import ManageInfo from './Pages/Auth/ManageInfo';
 import PartnerList from './Pages/Roles/Partner/PartnerList';
 import OrganizationContent from './Pages/Roles/Admin/Organisation/OrganizationContent';
+import Home from './Pages/AcuityOrganizationHome/Home';
+
 // import ContractDocumentition from './Pages/Roles/Partner/ContractDocumentition';
 
 
@@ -51,6 +53,8 @@ export const App = () => {
         <Route exact path="/custom"><CustomUploadFiles /></Route>
         <Route exact path="/ManageInfo"><ManageInfo /></Route>
         <Route exact path="/organizationContent"><OrganizationContent /></Route>
+        <Route exact path="/home"><Home /></Route>
+        {/* <Route exact path="/homeHeaderMenu"><HomeHeaderMenu /></Route> */}
 
 
         {/* <Route exact path="/login"><LoginPage /></Route>
