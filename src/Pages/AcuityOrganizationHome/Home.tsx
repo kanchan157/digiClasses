@@ -120,7 +120,7 @@ function Home() {
 
                         {activeMenu == 0 && existProgramme.map((data: any) => <Grid item xs={4} justify="center" style={{ padding: 10, }}>
                             <Card variant="outlined" style={{ padding: 20, position: 'relative', }}>
-                                <ModalCard data={data?.info} />
+                                {/* <ModalCard data={data?.info} /> */}
 
                                 <Grid container direction="row" alignItems="center">
                                     <Grid item xs={12} justify="center" className={classes.centerItem}>

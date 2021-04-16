@@ -23,6 +23,7 @@ import NDA from '../StepperComponent/NDA';
 // import OtherQuestions from '../Partner/OtherQuestions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
 import MaterialTable from 'material-table';
+import QualityAssurance from '../StepperComponent/QualityAssurance';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -137,7 +138,9 @@ function OnboardingPartner() {
     function getStepContent(step: any) {
         switch (step) {
             case 0:
-                return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step} />;
+               // return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step} />;
+                return <QualityAssurance/>;
+
             case 1:
                 return <NDA profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 2:
@@ -150,7 +153,8 @@ function OnboardingPartner() {
                 return <ContractDocumentition profileId={profileID} acuityProfileID={acuityProfileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 6:
                 return <OtherQue profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
-            default:
+            
+                default:
                 return "Not available"
         }
     }

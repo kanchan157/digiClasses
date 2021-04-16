@@ -21,10 +21,14 @@ import ManageInfo from './Pages/Auth/ManageInfo';
 import PartnerList from './Pages/Roles/Partner/PartnerList';
 import OrganizationContent from './Pages/Roles/Admin/Organisation/OrganizationContent';
 import Home from './Pages/AcuityOrganizationHome/Home';
-import ButtonDesign from './Pages/AcuityOrganizationHome/buttonDesign';
-import ResourceList from './Pages/AcuityOrganizationHome/ResourcesList';
-import CoachPannel from './Pages/AcuityOrganizationHome/CoachPanel';
-import ContactUs from './Pages/AcuityOrganizationHome/ContactUs';
+// import ButtonDesign from './Pages/AcuityOrganizationHome/buttonDesign';
+// import ResourceList from './Pages/AcuityOrganizationHome/ResourcesList';
+// import CoachPannel from './Pages/AcuityOrganizationHome/CoachPanel';
+// import ContactUs from './Pages/AcuityOrganizationHome/ContactUs';
+import CoachList from './Pages/AcuityOrganizationHome/CoachList';
+import QualityAssurance from './Pages/Roles/StepperComponent/QualityAssurance';
+import CoachingProfileField from './Pages/Roles/StepperComponent/CoachingProfileField';
+import CommisionInfoAdmin from './Pages/Roles/StepperComponent/CommisionInfoAdmin';
 
 // import ContractDocumentition from './Pages/Roles/Partner/ContractDocumentition';
 
@@ -58,10 +62,15 @@ export const App = () => {
         <Route exact path="/ManageInfo"><ManageInfo /></Route>
         <Route exact path="/organizationContent"><OrganizationContent /></Route>
         <Route exact path="/home"><Home /></Route>
-        <Route exact path="/buttonDesign"><ButtonDesign /></Route>
+        <Route exact path="/coachList"><CoachList /></Route>
+        <Route exact path="/qualityAssurance"><QualityAssurance /></Route>
+        <Route exact path="/coachingProfileField"><CoachingProfileField /></Route>
+        <Route exact path="/commisionInfoAdmin"><CommisionInfoAdmin /></Route>
+
+        {/* <Route exact path="/buttonDesign"><ButtonDesign /></Route>
         <Route exact path="/resourceList"><ResourceList /></Route>
         <Route exact path="/coachPannel"><CoachPannel /></Route>
-        <Route exact path="/contactUs"><ContactUs /></Route>
+        <Route exact path="/contactUs"><ContactUs /></Route> */}
 
         {/* <Route exact path="/homeHeaderMenu"><HomeHeaderMenu /></Route> */}
 

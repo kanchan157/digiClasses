@@ -22,6 +22,7 @@ import clsx from 'clsx';
 import { Check } from '@material-ui/icons';
 import OtherQuestions from '../../StepperComponent/OtherQuestions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import QualityAssurance from '../../StepperComponent/QualityAssurance';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -133,7 +134,8 @@ function OnboardingPartnerAdmin() {
     function getStepContent(step: any) {
         switch (step) {
             case 0:
-                return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step}/>;
+                // return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <QualityAssurance />;
             case 1:
                 return <Share_Login_Credentials profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
             case 2:
