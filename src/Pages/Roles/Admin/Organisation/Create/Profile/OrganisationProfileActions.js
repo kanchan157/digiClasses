@@ -7,6 +7,8 @@ export const UPDATE_ORGANISATION_PROFILE = "UPDATE_ORGANISATION_PROFILE";
 export const UPDATE_ORGANISATION_ID_PROFILE = "UPDATE_ORGANISATION_ID_PROFILE";
 export const SET_ORGANISATION_PROFILE_ERROR = "SET_ORGANISATION_PROFILE_ERROR";
 export const UPDATE_ORGANISATION_PROFILE_ERROR = "UPDATE_ORGANISATION_PROFILE_ERROR";
+export const SET_PROFILE_SECTION_AND_ORG_IDS = "SET_PROFILE_SECTION_AND_ORG_IDS";
+export const RESET_PROFILE = "RESET_PROFILE";
 
 export const SetOrganisationProfile = (item) => {
   return {
@@ -14,19 +16,6 @@ export const SetOrganisationProfile = (item) => {
     payload: item,
   };
 };
-
-// export const CreateOrganisationProfile = (data) => {
-  // const userDetails = JSON.parse(sessionStorage.getItem('user'));
-  // console.log(userDetails.data.id, 'dataaa')
-  // data.organisation_id = `${userDetails && userDetails.data.id}`
-  // DataService.createData(ObjectToFormdata(data), "organisation_profile")
-  //   .then((res) => {
-  //     return true;
-  //   })
-  //   .catch((error) => {
-  //     return true;
-  //   });
-// };
 
 export function UpdateOrganisationProfile(data) {
   return {
@@ -55,3 +44,16 @@ export function UpdateOrganisationProfileError(data){
     payload: data
   }
 }
+
+export function SetProfileSectionAndOrgIds(data) {
+  return {
+    type: SET_PROFILE_SECTION_AND_ORG_IDS,
+    payload: data,
+  };
+};
+
+export function ResetProfile() {
+  return {
+    type: RESET_PROFILE
+  }
+};

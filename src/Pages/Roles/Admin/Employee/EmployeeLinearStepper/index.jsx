@@ -7,45 +7,68 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
+// Different sections of stepper
 import ContactAreaSection from "../Create/ContactArea";
-// import Profile from "../Create/Profile";
-// import Contact from "../Create/Contact";
-// import PreContract from "../Create/PreContract";
-// import Contract from "../Create/Contract";
-// import Activity from "../Create/Activity";
-// import General from "../Create/General";
+import WorkInformationSection from "../Create/WorkInformation";
+import CoachingCapacitySection from "../Create/CoachingCapacity";
+import TrainingAndDevelopmentSection from "../Create/TrainingAndDevelopment";
+import MentoringCapacitySection from "../Create/MentoringCapacity";
+import CoachingProfileSection from "../Create/CoachingProfile";
+import MentorProfileSection from "../Create/MentorProfile";
+import FacilitationSection from "../Create/Facilitation";
+import AccessmentSection from "../Create/Accessment";
+import GdprSection from "../Create/Gdpr";
+import { ValidateEmail } from "../../../../../Common/Utils/common_utils";
+// Different actions to perform
 import {
   UpdateContactArea,
   SetContactAreaError,
 } from "../Create/ContactArea/ContactAreaActions";
-// import {
-//   UpdateOrganisationProfile,
-//   UpdateOrganisationIdProfile,
-//   SetOrganisationProfileError,
-// } from "../Create/Profile/OrganisationProfileActions";
-// import {
-//   UpdateOrganisationContact,
-//   UpdateOrganisationIdContact,
-//   SetOrganisationContactError
-// } from "../Create/Contact/OrganisationContactActions";
-// import {
-//   UpdateOrganisationPreContract,
-//   UpdateOrganisationIdPreContract,
-// } from "../Create/PreContract/OrganisationPreContractActions";
-// import {
-//   UpdateOrganisationContract,
-//   UpdateOrganisationIdContract,
-//   SetOrganisationContractError,
-// } from "../Create/Contract/OrganisationContractActions";
-// import {
-//   UpdateOrganisationActivity,
-//   UpdateOrganisationIdActivity,
-//   SetOrganisationActivityError,
-// } from "../Create/Activity/OrganisationActivityActions";
-// import {
-//   UpdateOrganisationGeneral,
-//   UpdateOrganisationIdGeneral,
-// } from "../Create/General/OrganisationGeneralActions";
+import {
+  UpdateEmployeeIdWorkInformation,
+  UpdateWorkInformation,
+  SetWorkInformationError,
+} from "../Create/WorkInformation/WorkInformationActions";
+import {
+  UpdateEmployeeIdTrainingAndDevelopment,
+  UpdateTrainingAndDevelopment,
+  SetTrainingAndDevelopmentError,
+} from "../Create/TrainingAndDevelopment/TrainingAndDevelopmentActions";
+import {
+  UpdateEmployeeIdCoachingCapacity,
+  UpdateCoachingCapacity,
+  SetCoachingCapacityError,
+} from "../Create/CoachingCapacity/CoachingCapatityActions";
+import {
+  UpdateEmployeeIdMentoringCapacity,
+  UpdateMentoringCapacity,
+  SetMentoringCapacityError,
+} from "../Create/MentoringCapacity/MentoringCapatityActions";
+import {
+  UpdateEmployeeIdCoachingProfile,
+  UpdateCoachingProfile,
+  SetCoachingProfileError,
+} from "../Create/CoachingProfile/CoachingProfileActions";
+import {
+  UpdateEmployeeIdMentorProfile,
+  UpdateMentorProfile,
+  SetMentorProfileError,
+} from "../Create/MentorProfile/MentorProfileActions";
+import {
+  UpdateEmployeeIdFacilitation,
+  UpdateFacilitation,
+  SetFacilitationError,
+} from "../Create/Facilitation/FacilitationActions";
+import {
+  UpdateEmployeeIdAccessment,
+  UpdateAccessment,
+  SetAccessmentError,
+} from "../Create/Accessment/AccessmentActions";
+import {
+  UpdateEmployeeIdGdpr,
+  UpdateGdpr,
+  SetGdprError,
+} from "../Create/Gdpr/GdprActions";
 import { useSelector, useDispatch } from "react-redux";
 import DataService from "../../../../../Service";
 import Loader from "../../../../../Components/Loader";
@@ -131,71 +154,52 @@ export default function EmployeeLinearStepper(props) {
 
   function getSteps() {
     return [
-"Contact Area",
-"Employee Current Work Information And History",
-"Training and Development",
-"Coaching Capacity",
-"Mentoring Capacity",
-"Coaching Profile",
-"Mentor Profile",
-"Facilitation",
-"Assessment",
-"GDPR"
+      "Contact Area",
+      "Employee Current Work Information And History",
+      "Training and Development",
+      "Coaching Capacity",
+      "Mentoring Capacity",
+      "Coaching Profile",
+      "Mentor Profile",
+      "Facilitation",
+      "Assessment",
+      "GDPR",
     ];
   }
 
-  const ContactArea = useSelector(
-    (state) => state.contactAreaReducer
-  );
-
-  const OrganisationProfile = useSelector(
-    (state) => state.organisationProfileReducer
-  );
-
-  const OrganisationContact = useSelector(
-    (state) => state.organisationContactReducer
-  );
-
-  const OrganisationPreContract = useSelector(
-    (state) => state.organisationPreContractReducer
-  );
-
-  const OrganisationContract = useSelector(
-    (state) => state.organisationContractReducer
-  );
-
-  const OrganisationActivity = useSelector(
-    (state) => state.organisationActivityReducer
-  );
-
-  const OrganisationGeneral = useSelector(
-    (state) => state.organisationGeneralReducer
-  );
+  const ContactArea = useSelector((state) => state.contactAreaReducer);
+  const WorkInformation = useSelector((state) => state.workInformationReducer);
+  const CoachingCapacity = useSelector((state) => state.coachingCapacityReducer);
+  const TrainingAndDevelopment = useSelector((state) => state.trainingAndDevelopmentReducer);
+  const MentoringCapacity = useSelector((state) => state.mentoringCapacityReducer);
+  const CoachingProfileCapacity = useSelector((state) => state.coachingProfileReducer);
+  const MentorProfile = useSelector((state) => state.mentorProfileReducer);
+  const Facilitation = useSelector((state) => state.facilitationReducer);
+  const Accessment = useSelector((state) => state.accessmentReducer);
+  const Gdpr = useSelector((state) => state.gdprReducer);
 
   function getStepContent(step) {
     switch (step) {
       case 0:
         return <ContactAreaSection />;
       case 1:
-        return <ContactAreaSection />;
+        return <WorkInformationSection />;
       case 2:
-        return <ContactAreaSection />;
+        return <TrainingAndDevelopmentSection />;
       case 3:
-        return <ContactAreaSection />;
+        return <CoachingCapacitySection />;
       case 4:
-        return <ContactAreaSection />;
+        return <MentoringCapacitySection />;
       case 5:
-        return <ContactAreaSection />;
+        return <CoachingProfileSection />;
       case 6:
-        return <ContactAreaSection />;
-        case 7:
-          return <ContactAreaSection />;
-          case 8:
-        return <ContactAreaSection />;
-        case 9:
-        return <ContactAreaSection />;
-        case 10:
-        return <ContactAreaSection />;
+        return <MentorProfileSection />;
+      case 7:
+        return <FacilitationSection />;
+      case 8:
+        return <AccessmentSection />;
+      case 9:
+        return <GdprSection />;
       default:
         return "Not available";
     }
@@ -215,32 +219,34 @@ export default function EmployeeLinearStepper(props) {
   };
 
   const handleSubmit = (data, apiVariable, dispatchVariable, sectionId) => {
+    console.log("handleSubmit");
     if (sectionId !== null) {
       setLoading(true);
-      DataService.updateData(data, sectionId, apiVariable).then((res) => {
-        dispatch(dispatchVariable(res.data));
-        setLoading(false);
-        dispatch(showSnackbar("success",["Success!"]));
-        setActiveStep((prevActiveStep) => prevActiveStep + 1);
-      }).catch((err) => {
-        dispatch(showSnackbar("error",err.errors));
-      });
+      DataService.updateData(data, sectionId, apiVariable)
+        .then((res) => {
+          dispatch(dispatchVariable(res.data));
+          setLoading(false);
+          dispatch(showSnackbar("success", ["Success!"]));
+          setActiveStep((prevActiveStep) => prevActiveStep + 1);
+        })
+        .catch((err) => {
+          dispatch(showSnackbar("error", err.errors));
+        });
     } else {
       // DataService.createData(ObjectToFormdata(data), apiVariable)
       setLoading(true);
       DataService.createData(data, apiVariable)
         .then((res) => {
           setLoading(false);
-          dispatch(showSnackbar("success",["Success!"]));
+          dispatch(showSnackbar("success", ["Success!"]));
           if (dispatchVariable === UpdateContactArea) {
             console.log("then block");
-            // dispatch(UpdateOrganisationIdProfile(res.data));
-            // dispatch(UpdateOrganisationIdContact(res.data));
-            // dispatch(UpdateOrganisationIdPreContract(res.data));
-            // dispatch(UpdateOrganisationIdContract(res.data));
-            // dispatch(UpdateOrganisationIdGeneral(res.data));
-            // dispatch(UpdateOrganisationIdActivity(res.data));
             dispatch(dispatchVariable(res.data));
+            dispatch(UpdateEmployeeIdWorkInformation(res.data));
+            dispatch(UpdateEmployeeIdTrainingAndDevelopment(res.data));
+            dispatch(UpdateEmployeeIdCoachingCapacity(res.data));
+            dispatch(UpdateEmployeeIdMentoringCapacity(res.data));
+            dispatch(UpdateEmployeeIdCoachingProfile(res.data));
           } else {
             dispatch(dispatchVariable(res.data));
           }
@@ -248,7 +254,7 @@ export default function EmployeeLinearStepper(props) {
         })
         .catch((err) => {
           setLoading(false);
-          dispatch(showSnackbar("error",err.errors));
+          dispatch(showSnackbar("error", err.errors));
         });
     }
   };
@@ -264,24 +270,18 @@ export default function EmployeeLinearStepper(props) {
         primary_email: false,
         authorisation_to_access_the_service: false,
         authorisation_provided_by: false,
-        nationality_id: false,
+        nationality_list_id: false,
         bame: false,
         diversity_and_inclusion: false,
         languages_list: false,
         mobile: false,
-        phone: false
+        phone: false,
       };
-      if (
-        !ContactArea.data.title ||
-        !ContactArea.data.title.length
-      ) {
+      if (!ContactArea.data.title || !ContactArea.data.title.length) {
         errors.title = true;
         valid = false;
       }
-      if (
-        !ContactArea.data.first_name ||
-        !ContactArea.data.first_name.length
-      ) {
+      if (!ContactArea.data.first_name || !ContactArea.data.first_name.length) {
         errors.first_name = true;
         valid = false;
       }
@@ -292,17 +292,18 @@ export default function EmployeeLinearStepper(props) {
         errors.middle_name = true;
         valid = false;
       }
-      if (
-        !ContactArea.data.last_name ||
-        !ContactArea.data.last_name.length
-      ) {
+      if (!ContactArea.data.last_name || !ContactArea.data.last_name.length) {
         errors.last_name = true;
         valid = false;
       }
-      if (
-        !ContactArea.data.primary_email ||
-        !ContactArea.data.primary_email.length
-      ) {
+      // if (
+      //   !ContactArea.data.primary_email ||
+      //   !ContactArea.data.primary_email.length
+      // ) {
+      //   errors.primary_email = true;
+      //   valid = false;
+      // }
+      if(ValidateEmail(ContactArea.data.primary_email)){
         errors.primary_email = true;
         valid = false;
       }
@@ -320,10 +321,7 @@ export default function EmployeeLinearStepper(props) {
         errors.authorisation_provided_by = true;
         valid = false;
       }
-      if (
-        !ContactArea.data.bame ||
-        !ContactArea.data.bame.length
-      ) {
+      if (!ContactArea.data.bame || !ContactArea.data.bame.length) {
         errors.bame = true;
         valid = false;
       }
@@ -336,27 +334,26 @@ export default function EmployeeLinearStepper(props) {
       }
       if (
         !ContactArea.data.languages_list ||
-        !ContactArea.data.languages_list.length
+        !ContactArea.data.languages_list.length || ContactArea.data.languages_list === undefined
       ) {
         errors.languages_list = true;
         valid = false;
       }
-      
-      if (
-        !ContactArea.data.phone ||
-        !ContactArea.data.phone.length
-      ) {
+      if (!ContactArea.data.mobile || !ContactArea.data.mobile.length) {
+        errors.mobile = true;
+        valid = false;
+      }
+      if (!ContactArea.data.phone || !ContactArea.data.phone.length) {
         errors.phone = true;
         valid = false;
       }
-      if (
-        !ContactArea.data.nationality_id ||
-        typeof(ContactArea.data.nationality_id) !== "number"
-        ) {
-        errors.nationality_id = true;
+      if (!ContactArea.data.nationality_list_id || !ContactArea.data.nationality_list_id.length) {
+        errors.nationality_list_id = true;
         valid = false;
       }
+
       if (!valid) {
+        console.log('errors :>> ', errors);
         dispatch(SetContactAreaError(errors));
         return;
       }
@@ -366,7 +363,547 @@ export default function EmployeeLinearStepper(props) {
         UpdateContactArea,
         ContactArea.section_id
       );
-    } 
+      console.log('ContactArea.data :>> ', ContactArea.data.languages_list);
+    } else if (activeStep === 1) {
+      let valid = true;
+      let errors = {
+        job_title: false,
+        employee_status: false,
+        current_role_history_notes: false,
+        date_follow_up_contact_made: false,
+        organisation_moved_to: false,
+        level:false,
+        line_manager_name: false,
+        line_manager_contact_details: false,
+        hr_sponsor_title: false,
+        hr_sponsor_contact_details: false,
+        department_list_id: false,
+        office_list_id: false,
+        function_list_id: false,
+        address_line1: false,
+        city: false,
+        county: false,
+        country_list_id: false,
+        zipcode: false,
+        mobile: false,
+        phone: false,
+        job_role_lists: false,
+        left_organisation_follow_up_action: false,
+        past_organisation: false  
+      };
+      if (
+        !WorkInformation.data.job_title ||
+        !WorkInformation.data.job_title.length
+      ) {
+        errors.job_title = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.employee_status ||
+        !WorkInformation.data.employee_status.length
+      ) {
+        errors.employee_status = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.current_role_history_notes || !WorkInformation.data.current_role_history_notes.length) {
+        errors.current_role_history_notes = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.date_follow_up_contact_made
+      ) {
+        errors.date_follow_up_contact_made = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.organisation_moved_to || !WorkInformation.data.organisation_moved_to.length) {
+        errors.organisation_moved_to = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.level || !WorkInformation.data.level.length) {
+        errors.level = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.line_manager_name || !WorkInformation.data.line_manager_name.length) {
+        errors.line_manager_name = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.line_manager_contact_details || !WorkInformation.data.line_manager_contact_details.length) {
+        errors.line_manager_contact_details = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.hr_sponsor_title || !WorkInformation.data.hr_sponsor_title.length) {
+        errors.hr_sponsor_title = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.hr_sponsor_name || !WorkInformation.data.hr_sponsor_name.length) {
+        errors.hr_sponsor_name = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.hr_sponsor_contact_details || !WorkInformation.data.hr_sponsor_contact_details.length) {
+        errors.hr_sponsor_contact_details = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.group || !WorkInformation.data.group.length) {
+        errors.group = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.department_list_id ||
+        typeof WorkInformation.data.department_list_id !== "number"
+      ) {
+        errors.department_list_id = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.office_list_id ||
+        typeof WorkInformation.data.office_list_id !== "number"
+      ) {
+        errors.office_list_id = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.function_list_id ||
+        typeof WorkInformation.data.function_list_id !== "number"
+      ) {
+        errors.function_list_id = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.address_line1 || !WorkInformation.data.address_line1.length) {
+        errors.address_line1 = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.city || !WorkInformation.data.city.length) {
+        errors.city = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.county || !WorkInformation.data.county.length) {
+        errors.county = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.country_list_id ||
+        typeof WorkInformation.data.country_list_id !== "number"
+      ) {
+        errors.country_list_id = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.zipcode || !WorkInformation.data.zipcode.length) {
+        errors.zipcode = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.mobile || !WorkInformation.data.mobile.length) {
+        errors.mobile = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.phone || !WorkInformation.data.phone.length) {
+        errors.phone = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.job_role_lists ||
+        typeof WorkInformation.data.job_role_lists !== "number"
+      ) {
+        errors.job_role_lists = true;
+        valid = false;
+      }
+      if (
+        !WorkInformation.data.past_organisation ||
+        typeof WorkInformation.data.past_organisation !== "number"
+      ) {
+        errors.past_organisation = true;
+        valid = false;
+      }
+      if (!WorkInformation.data.left_organisation_follow_up_action || !WorkInformation.data.left_organisation_follow_up_action.length) {
+        errors.left_organisation_follow_up_action = true;
+        valid = false;
+      }
+      if (!valid) {
+        dispatch(SetWorkInformationError(errors));
+        return;
+      }
+      handleSubmit(
+        WorkInformation.data,
+        "employee_work_information",
+        UpdateWorkInformation,
+        WorkInformation.section_id
+      );
+      console.log('WorkInformation.data.date_follow_up_contact_made :>> ', WorkInformation.data.date_follow_up_contact_made);
+    }
+    else if (activeStep === 2) {
+      let valid = true;
+      let errors = {
+      };
+      if (!valid) {
+        dispatch(SetTrainingAndDevelopmentError(errors));
+        return;
+      }
+      handleSubmit(
+        TrainingAndDevelopment.data,
+        "employee_training_and_development",
+        UpdateTrainingAndDevelopment,
+        TrainingAndDevelopment.section_id
+      );
+    }else if (activeStep === 3) {
+      let valid = true;
+      let errors = {
+        role: false,
+      };
+      if (
+        !CoachingCapacity.data.role ||
+        !CoachingCapacity.data.role.length
+      ) {
+        errors.role = true;
+        valid = false;
+      }
+      if (!valid) {
+        dispatch(SetCoachingCapacityError(errors));
+        return;
+      }
+      handleSubmit(
+        CoachingCapacity.data,
+        "employee_coaching_capacity",
+        UpdateCoachingCapacity,
+        CoachingCapacity.section_id
+      );
+    }else if (activeStep === 4) {
+      let valid = true;
+      let errors = {
+        role: false,
+      };
+      if (
+        !MentoringCapacity.data.role ||
+        !MentoringCapacity.data.role.length
+      ) {
+        errors.role = true;
+        valid = false;
+      }
+      if (!valid) {
+        dispatch(SetMentoringCapacityError(errors));
+        return;
+      }
+      handleSubmit(
+        MentoringCapacity.data,
+        "employee_mentoring_capacity",
+        UpdateMentoringCapacity,
+        MentoringCapacity.section_id
+      );
+    }else if (activeStep === 5) {
+      let valid = true;
+      let errors = {
+        role : false,
+        overview : false,
+        approach : false,
+        background : false,
+        areas_of_expertise : false,
+        client_specific_areas_of_expertise : false,
+        representatitive_clients : false,
+        education_and_qualifications : false,
+        client_testimonials : false,
+        diagnostic_tool_id : false,
+        language_list_id : false,
+        client_type_id : false,
+        picture : false,
+      };
+      if (
+        !CoachingProfileCapacity.data.role ||
+        !CoachingProfileCapacity.data.role.length
+      ) {
+        errors.role = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.overview ||
+        !CoachingProfileCapacity.data.overview.length
+      ) {
+        errors.overview = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.approach ||
+        !CoachingProfileCapacity.data.approach.length
+      ) {
+        errors.approach = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.background ||
+        !CoachingProfileCapacity.data.background.length
+      ) {
+        errors.background = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.areas_of_expertise ||
+        !CoachingProfileCapacity.data.areas_of_expertise.length
+      ) {
+        errors.areas_of_expertise = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.client_specific_areas_of_expertise ||
+        !CoachingProfileCapacity.data.client_specific_areas_of_expertise.length
+      ) {
+        errors.client_specific_areas_of_expertise = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.representatitive_clients ||
+        !CoachingProfileCapacity.data.representatitive_clients.length
+      ) {
+        errors.representatitive_clients = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.education_and_qualifications ||
+        !CoachingProfileCapacity.data.education_and_qualifications.length
+      ) {
+        errors.education_and_qualifications = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.client_testimonials ||
+        !CoachingProfileCapacity.data.client_testimonials.length
+      ) {
+        errors.client_testimonials = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.diagnostic_tool_id ||
+        typeof CoachingProfileCapacity.data.diagnostic_tool_id !== "number"
+      ) {
+        errors.diagnostic_tool_id = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.language_list_id ||
+        typeof CoachingProfileCapacity.data.language_list_id !== "number"
+      ) {
+        errors.language_list_id = true;
+        valid = false;
+      }
+      if (
+        !CoachingProfileCapacity.data.client_type_id ||
+        typeof CoachingProfileCapacity.data.client_type_id !== "number"
+      ) {
+        errors.client_type_id = true;
+        valid = false;
+      }
+      if (!valid) {
+        dispatch(SetCoachingProfileError(errors));
+        return;
+      }
+      handleSubmit(
+        CoachingProfileCapacity.data,
+        "employee_coaching_profile",
+        UpdateCoachingProfile,
+        CoachingProfileCapacity.section_id
+      );
+    }
+    else if (activeStep === 6) {
+      let valid = true;
+      let errors = {
+        role : false,
+        overview : false,
+        approach : false,
+        background : false,
+        areas_of_expertise : false,
+        client_specific_areas_of_expertise : false,
+        representatitive_clients : false,
+        education_and_qualifications : false,
+        client_testimonials : false,
+        diagnostic_tool_id : false,
+        language_list_id : false,
+        client_type_id : false,
+        picture : false,
+      };
+      if (
+        !MentorProfile.data.role ||
+        !MentorProfile.data.role.length
+      ) {
+        errors.role = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.overview ||
+        !MentorProfile.data.overview.length
+      ) {
+        errors.overview = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.approach ||
+        !MentorProfile.data.approach.length
+      ) {
+        errors.approach = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.background ||
+        !MentorProfile.data.background.length
+      ) {
+        errors.background = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.areas_of_expertise ||
+        !MentorProfile.data.areas_of_expertise.length
+      ) {
+        errors.areas_of_expertise = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.client_specific_areas_of_expertise ||
+        !MentorProfile.data.client_specific_areas_of_expertise.length
+      ) {
+        errors.client_specific_areas_of_expertise = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.representatitive_clients ||
+        !MentorProfile.data.representatitive_clients.length
+      ) {
+        errors.representatitive_clients = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.education_and_qualifications ||
+        !MentorProfile.data.education_and_qualifications.length
+      ) {
+        errors.education_and_qualifications = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.client_testimonials ||
+        !MentorProfile.data.client_testimonials.length
+      ) {
+        errors.client_testimonials = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.diagnostic_tool_id ||
+        typeof MentorProfile.data.diagnostic_tool_id !== "number"
+      ) {
+        errors.diagnostic_tool_id = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.language_list_id ||
+        typeof MentorProfile.data.language_list_id !== "number"
+      ) {
+        errors.language_list_id = true;
+        valid = false;
+      }
+      if (
+        !MentorProfile.data.client_type_id ||
+        typeof MentorProfile.data.client_type_id !== "number"
+      ) {
+        errors.client_type_id = true;
+        valid = false;
+      }
+      if (!valid) {
+        dispatch(SetMentorProfileError(errors));
+        return;
+      }
+      handleSubmit(
+        MentorProfile.data,
+        "employee_coaching_profile",
+        UpdateMentorProfile,
+        MentorProfile.section_id
+      );
+    }
+    else if (activeStep === 7) {
+      let valid = true;
+      let errors = {
+      };
+      if (!valid) {
+        dispatch(SetFacilitationError(errors));
+        return;
+      }
+      handleSubmit(
+        Facilitation.data,
+        "employee_facilitations",
+        UpdateFacilitation,
+        Facilitation.section_id
+      );
+      }
+      else if (activeStep === 8) {
+        let valid = true;
+        let errors = {
+        };
+        if (!valid) {
+          dispatch(SetAccessmentError(errors));
+          return;
+        }
+        handleSubmit(
+          Accessment.data,
+          "employee_assessments",
+          UpdateAccessment,
+          Accessment.section_id
+        );
+      }
+      else if (activeStep === 9) {
+        let valid = true;
+        let errors = {
+          consent_status : false,
+          consent_expiry_date : false,
+          consent_terms : false,
+          lawful_bias : false,
+          purposes : false,
+          contact_status : false
+        };
+        if (
+          !Gdpr.data.consent_status ||
+          !Gdpr.data.consent_status.length
+        ) {
+          errors.consent_status = true;
+          valid = false;
+        }
+        if (
+          !Gdpr.data.consent_expiry_date
+        ) {
+          errors.consent_expiry_date = true;
+          valid = false;
+        }
+        if (
+          !Gdpr.data.consent_terms ||
+          !Gdpr.data.consent_terms.length
+        ) {
+          errors.consent_terms = true;
+          valid = false;
+        }
+        if (
+          !Gdpr.data.lawful_bias ||
+          !Gdpr.data.lawful_bias.length
+        ) {
+          errors.lawful_bias = true;
+          valid = false;
+        }
+        if (
+          !Gdpr.data.purposes ||
+          typeof Gdpr.data.purposes !== "number"
+        ) {
+          errors.purposes = true;
+          valid = false;
+        }
+        if (
+          !Gdpr.data.contact_status ||
+          !Gdpr.data.contact_status.length
+        ) {
+          errors.contact_status = true;
+          valid = false;
+        }
+        
+        if (!valid) {
+          dispatch(SetGdprError(errors));
+          return;
+        }
+        handleSubmit(
+          Gdpr.data,
+          "employee_gdprs",
+          UpdateGdpr,
+          Gdpr.section_id
+        );
+      }
   };
 
   const handleBack = () => {
@@ -380,7 +917,7 @@ export default function EmployeeLinearStepper(props) {
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.root}>
-        {loading && <Loader/>}
+        {loading && <Loader />}
         {/* <Snackbar/> */}
         <Stepper activeStep={activeStep} connector={false}>
           {steps.map((label, index) => {

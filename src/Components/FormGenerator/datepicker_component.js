@@ -60,7 +60,8 @@ export const DatePicker = (props) => {
             margin="normal"
             // id={id}
             // label={label}
-            format="MM/dd/yyyy"
+            // "dd/mm/yyyy"
+            format="dd/MM/yyyy"  
             value={value}
             error={helperText ? true : false}
             helperText={helperText}

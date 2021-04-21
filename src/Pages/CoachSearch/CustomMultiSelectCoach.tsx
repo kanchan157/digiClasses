@@ -2,7 +2,7 @@ import React from 'react'
 import Autocomplete from '@material-ui/lab/Autocomplete';
 import { Chip, TextField } from '@material-ui/core';
 
-function CustomMultiSelectOrganization(props: any) {
+function CustomMultiSelectCoach(props: any) {
     const dataArr = [
         { title: 'The Shawshank Redemption' },
         { title: 'The Godfather' },
@@ -32,10 +32,10 @@ function CustomMultiSelectOrganization(props: any) {
                 ))
             }
             getOptionLabel={(option) => option.title}
-            style={{ width: "80%",}}
+            style={{ width: "100%",  }}
             renderInput={(params) =>
                 <TextField {...params} className="h5"
-                    style={{ marginBlock: 10,backgroundColor:'white',padding: '0px !important',borderRadius: 4,  }}
+                    style={{ marginBlock: 10,backgroundColor:'white', }}
                     fullWidth
                     label={props?.values.name}
                     variant="outlined"
@@ -45,4 +45,4 @@ function CustomMultiSelectOrganization(props: any) {
     )
 }
 
-export default CustomMultiSelectOrganization
+export default CustomMultiSelectCoach

@@ -8,6 +8,14 @@ import InboxIcon from '@material-ui/icons/Inbox';
 import { useHistory } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { DELETE_STEPPER_DATA, GLOBAL_STEPPER_DATA } from '../Redux/actions';
+import { ResetOrganisationDetails } from "../Pages/Roles/Admin/Organisation/Create/OrganisationDetails/OrganisationDetailsActions";
+import { ResetActivity } from "../Pages/Roles/Admin/Organisation/Create/Activity/OrganisationActivityActions";
+import { ResetContact } from "../Pages/Roles/Admin/Organisation/Create/Contact/OrganisationContactActions";
+import { ResetContract } from "../Pages/Roles/Admin/Organisation/Create/Contract/OrganisationContractActions";
+import { ResetGeneral } from "../Pages/Roles/Admin/Organisation/Create/General/OrganisationGeneralActions";
+import { ResetBusinessDevelopment } from "../Pages/Roles/Admin/Organisation/Create/OrganisationBusinessDevelopment/OrganisationBusinessDevelopmentActions";
+import { ResetPreContract } from "../Pages/Roles/Admin/Organisation/Create/PreContract/OrganisationPreContractActions";
+import { ResetProfile } from "../Pages/Roles/Admin/Organisation/Create/Profile/OrganisationProfileActions";
 // import Image from 'material-ui-image'
 
 
@@ -42,7 +50,7 @@ const HeaderMenu = () => {
                             <MenuIcon style={{ color: 'white', position: 'fixed', top: 20, bottom: 0, left: 30, right: 10, }} />
                         </IconButton>
 
-                        <img src="../../../assets/images/logo.png" className={classes.logoImg} />
+                        <img src="../../../assets/images/logo.png" alt="Acuity" className={classes.logoImg} onClick={() => {history.push('/ManageInfo')}} />
 
                     </Grid>
                     <Grid item xs={5} >
@@ -102,7 +110,7 @@ const HeaderMenu = () => {
                                 {menu == 'manage' && <Card className={classes.menuOption}>
                                     <List component="nav" aria-label="main mailbox folders">
                                         {
-                                            [{ name: "Organization", route: "/admin/organisation/create", listRoute: "/admin/partner/list" },
+                                            [{ name: "Organization", route: "/admin/organisation/create", listRoute: "/admin/organisation/list" },
                                             { name: "Partners", route: "/admin/partner/onboarding", listRoute: "/admin/partner/list" }]
                                                 .map((e: any) => (
                                                     <ListItem style={{ paddingBottom: 0, paddingTop: 0, }} >
@@ -117,7 +125,17 @@ const HeaderMenu = () => {
                                                             <InputLabel style={{ marginLeft: 20, minWidth: 100, }}><h4>{e.name}</h4></InputLabel>
                                                         </Link>
                                                         <Button variant="contained" color="primary"
-                                                            onClick={() => { history.push(e.route) }}
+                                                            onClick={() => { 
+                                                                dispatch(ResetOrganisationDetails());
+                                                                dispatch(ResetActivity());
+                                                                dispatch(ResetBusinessDevelopment());
+                                                                dispatch(ResetContact());
+                                                                dispatch(ResetContract());
+                                                                dispatch(ResetGeneral());
+                                                                dispatch(ResetPreContract());
+                                                                dispatch(ResetProfile());
+                                                                history.push(e.route)
+                                                             }}
                                                             style={{ borderRadius: 50, textTransform: 'none', }}>
                                                             <AddCircleOutlined style={{ marginRight: 10, fontSize: 15 }} />
                                                         Create
@@ -196,7 +214,7 @@ const useStyles = makeStyles((theme) => ({
         borderLeft: '3px solid #fff',
     },
     logoImg: {
-        width: 100, marginTop: 10, marginLeft: 50, borderRadius: 5,
+        width: 100, marginTop: 10, marginLeft: 50, borderRadius: 5, cursor: 'pointer'
     },
     menuOption: {
         border: '0px solid red',

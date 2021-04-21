@@ -11,7 +11,7 @@ export const INITIAL_STATE = {
         primary_email: false,
         authorisation_to_access_the_service: false,
         authorisation_provided_by: false,
-        nationality_id: false,
+        nationality_list_id: false,
         bame: false,
         diversity_and_inclusion: false,
         languages_list: false,

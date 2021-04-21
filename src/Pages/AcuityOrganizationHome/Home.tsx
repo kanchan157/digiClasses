@@ -2,6 +2,7 @@ import classes from '*.module.css';
 import { Button, Card, CardContent, CardMedia, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, Grid, makeStyles, Typography } from '@material-ui/core'
 import { ArrowForward, ContactPhoneOutlined, Label, Redo } from '@material-ui/icons';
 import React, { useState } from 'react'
+import { useHistory } from 'react-router';
 import HomeHeaderMenu from './HomeHeaderMenu';
 
 const ModalCard = (props: any) => {
@@ -16,6 +17,8 @@ const ModalCard = (props: any) => {
 }
 
 function Home() {
+    const history = useHistory();
+
     const classes = useStyles();
     const [activeMenu, setActiveMenu] = useState(0);
     const menues = [
@@ -66,16 +69,19 @@ function Home() {
     ]
     const coachPannel = [
         {
-            headingtitle: "External Coaches"
+            headingtitle: "External Coaches",
+            route: "CoachList"
         },
         {
-            headingtitle: "Internal Coaches"
+            headingtitle: "Internal Coaches",
+            route: "CoachList"
         },
         {
-            headingtitle: "Onboard Coach Request"
+            headingtitle: "Onboard Coach Request",
+            route: "CoachList"
         },
     ]
- 
+
 
     return (
         <div>
@@ -141,118 +147,118 @@ function Home() {
                         </Grid>)}
                         {activeMenu == 1 && <Grid container direction="row" alignItems="center" style={{ textAlign: 'center', }}>
 
-                                <Grid item xs={4} justify="center" style={{ padding: 10, }}>
-                                    <Card variant="outlined" style={{ padding: 20, }}>
-                                        <Grid container direction="row" alignItems="center">
-                                            <Grid item xs={12} justify="center" className={classes.centerItem}>
-                                                <Card className={classes.boxShadow}>
-                                                    <ContactPhoneOutlined style={{ fontSize: 40, }} />
-                                                </Card>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center">
-                                                <h4>Coaching Request Form (External)</h4>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center">
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
-                    </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    endIcon={<ArrowForward />}
-                                                    className={classes.btnComplete}
-                                                >
-                                                    Complete Form
-                    </Button>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    startIcon={<Redo />}
-                                                    className={classes.btnShare}
-                                                >
-                                                    Share CRF
-                    </Button>
-                                            </Grid>
+                            <Grid item xs={4} justify="center" style={{ padding: 10, }}>
+                                <Card variant="outlined" style={{ padding: 20, }}>
+                                    <Grid container direction="row" alignItems="center">
+                                        <Grid item xs={12} justify="center" className={classes.centerItem}>
+                                            <Card className={classes.boxShadow}>
+                                                <ContactPhoneOutlined style={{ fontSize: 40, }} />
+                                            </Card>
                                         </Grid>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4} justify="center" style={{ padding: 10, }}>
-                                    <Card variant="outlined" style={{ padding: 20, }}>
-                                        <Grid container direction="row" alignItems="center">
-                                            <Grid item xs={12} justify="center" className={classes.centerItem}>
-                                                <Card className={classes.boxShadow}>
-                                                    <ContactPhoneOutlined style={{ fontSize: 40, }} />
-                                                </Card>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center">
-                                                <h4>Coaching Request Form (External)</h4>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center">
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
-                    </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    endIcon={<ArrowForward />}
-                                                    className={classes.btnComplete}
-                                                >
-                                                    Complete Form
-                    </Button>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    startIcon={<Redo />}
-                                                    className={classes.btnShare}
-                                                >
-                                                    Share CRF
-                    </Button>
-                                            </Grid>
+                                        <Grid item xs={12} justify="center">
+                                            <h4>Coaching Request Form (External)</h4>
                                         </Grid>
-                                    </Card>
-                                </Grid>
-
-                                <Grid item xs={4} justify="center" style={{ padding: 10, }}>
-                                    <Card variant="outlined" style={{ padding: 20, }}>
-                                        <Grid container direction="row" alignItems="center">
-                                            <Grid item xs={12} justify="center" className={classes.centerItem}>
-                                                <Card className={classes.boxShadow}>
-                                                    <ContactPhoneOutlined style={{ fontSize: 40, }} />
-                                                </Card>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center">
-                                                <h4>Request Coachs</h4>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center">
-                                                <Typography variant="body2" color="textSecondary" component="p">
-                                                    Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
+                                        <Grid item xs={12} justify="center">
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
                     </Typography>
-                                            </Grid>
-                                            <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
-                                                <Button
-                                                    variant="contained"
-                                                    color="primary"
-                                                    endIcon={<ArrowForward />}
-                                                    className={classes.btnComplete}
-                                                >
-                                                    Request Coachs
-                    </Button>
-                                            </Grid>
-
                                         </Grid>
-                                    </Card>
-                                </Grid>
-
+                                        <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                endIcon={<ArrowForward />}
+                                                className={classes.btnComplete}
+                                            >
+                                                Complete Form
+                    </Button>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                startIcon={<Redo />}
+                                                className={classes.btnShare}
+                                            >
+                                                Share CRF
+                    </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Card>
                             </Grid>
+
+                            <Grid item xs={4} justify="center" style={{ padding: 10, }}>
+                                <Card variant="outlined" style={{ padding: 20, }}>
+                                    <Grid container direction="row" alignItems="center">
+                                        <Grid item xs={12} justify="center" className={classes.centerItem}>
+                                            <Card className={classes.boxShadow}>
+                                                <ContactPhoneOutlined style={{ fontSize: 40, }} />
+                                            </Card>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center">
+                                            <h4>Coaching Request Form (External)</h4>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center">
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
+                    </Typography>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                endIcon={<ArrowForward />}
+                                                className={classes.btnComplete}
+                                            >
+                                                Complete Form
+                    </Button>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                startIcon={<Redo />}
+                                                className={classes.btnShare}
+                                            >
+                                                Share CRF
+                    </Button>
+                                        </Grid>
+                                    </Grid>
+                                </Card>
+                            </Grid>
+
+                            <Grid item xs={4} justify="center" style={{ padding: 10, }}>
+                                <Card variant="outlined" style={{ padding: 20, }}>
+                                    <Grid container direction="row" alignItems="center">
+                                        <Grid item xs={12} justify="center" className={classes.centerItem}>
+                                            <Card className={classes.boxShadow}>
+                                                <ContactPhoneOutlined style={{ fontSize: 40, }} />
+                                            </Card>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center">
+                                            <h4>Request Coachs</h4>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center">
+                                            <Typography variant="body2" color="textSecondary" component="p">
+                                                Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
+                    </Typography>
+                                        </Grid>
+                                        <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
+                                            <Button
+                                                variant="contained"
+                                                color="primary"
+                                                endIcon={<ArrowForward />}
+                                                className={classes.btnComplete}
+                                            >
+                                                Request Coachs
+                    </Button>
+                                        </Grid>
+
+                                    </Grid>
+                                </Card>
+                            </Grid>
+
+                        </Grid>
                         }
                         {activeMenu == 2 && resourceList.map((e: any) => <Grid container direction="row" alignItems="center" style={{ textAlign: 'center', padding: 15, borderBottom: '1px solid #ece6e6' }}>
                             <Grid item xs={3} justify="center" className={classes.centerItem}>
@@ -298,6 +304,9 @@ function Home() {
                                             color="primary"
                                             endIcon={<ArrowForward />}
                                             className={classes.btnComplete}
+                                            onClick={() => {
+                                                history.push(e.route)
+                                            }}
                                         >
                                             View Panel
                                         </Button>
@@ -353,7 +362,7 @@ function Home() {
                             </Grid>
 
                         </Grid>
-}
+                        }
 
                     </Grid>
 

@@ -5,6 +5,8 @@ import { ObjectToFormdata } from "../../../../../../Common/Utils/common_utils";
 export const SET_ORGANISATION_PRECONTRACT = "SET_ORGANISATION_PRECONTRACT";
 export const UPDATE_ORGANISATION_PRECONTRACT = "UPDATE_ORGANISATION_PRECONTRACT";
 export const UPDATE_ORGANISATION_ID_PRECONTRACT = "UPDATE_ORGANISATION_ID_PRECONTRACT";
+export const SET_PRE_CONTRACT_SECTION_AND_ORG_IDS = "SET_PRE_CONTRACT_SECTION_AND_ORG_IDS";
+export const RESET_PRE_CONTRACT = "RESET_PRE_CONTRACT";
 
 export const SetOrganisationPreContract = (item) => {
   return {
@@ -18,6 +20,7 @@ export const CreateOrganisationPreContract = (data) => {
   data.organisation_id = `${userDetails && userDetails.data.id}`
   DataService.createData(ObjectToFormdata(data), "organisation_pre_contract")
     .then((res) => {
+      console.log(`res`, res)
       return true;
     })
     .catch((error) => {
@@ -38,3 +41,16 @@ export function UpdateOrganisationIdPreContract(data) {
     payload: data
   }
 }
+
+export function SetPreContractSectionAndOrgIds(data) {
+  return {
+    type: SET_PRE_CONTRACT_SECTION_AND_ORG_IDS,
+    payload: data,
+  };
+};
+
+export function ResetPreContract() {
+  return {
+    type: RESET_PRE_CONTRACT
+  }
+};

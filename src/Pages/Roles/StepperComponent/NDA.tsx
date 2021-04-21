@@ -6,13 +6,14 @@ import { Document, Page } from 'react-pdf';
 
 function NDA(props: any) {
     const global_data = useSelector((state: any) => state.stepperReducer);
-    const [pdfData, setPdfData] = useState("");
+    const [pdfData, setPdfData]: any = useState({});
     const [numPages, setNumPages] = useState(null);
     const [pageNumber] = useState(1);
 
 
     useEffect(() => {
         AdminPartnerClient.Nda_get({ partner_profile_id: 28 }).then((response: any) => {
+            console.log(response)
             setPdfData(response)
         });
     }, [])
@@ -31,11 +32,10 @@ function NDA(props: any) {
         <>
             <Header isBack={true} saveBtnTitle={'Save and Send NDA'} parentcall={onSubmit} parentBackCall={onBack} />
             <iframe
-   title="file"
-   style={{ width: '100%', height: '100%' }}
-   src={`/pdfjs-1.9.426-dist/web/viewer.html?file=${pdfData}`}
-/>
-            <Document file={{data:(pdfData)}}></Document>
+                title="file"
+                style={{ width: '100%', height: 'calc(100vh - 201px)' }}
+                src={pdfData.url}
+            />
             <Header isBack={true} saveBtnTitle={'Save and Send NDA'} parentcall={onSubmit} parentBackCall={onBack} />
         </>
     )

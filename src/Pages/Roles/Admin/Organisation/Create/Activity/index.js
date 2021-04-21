@@ -32,7 +32,7 @@ export default function Activity(props) {
     action_required,
     who,
     priority
-  } = useSelector((state) => state.organisationContractReducer.data);
+  } = useSelector((state) => state.organisationActivityReducer.data);
 
   const errors = useSelector(state => state.organisationActivityReducer.errors)
   
@@ -83,7 +83,7 @@ export default function Activity(props) {
       label: "Review Date*",
       name: "review_date",
       value: review_date,
-      placeholder: "Review Date",
+      // placeholder: "Review Date",
       helperText: errors.review_date && "*Please select a date",
       handleChange: handleInputChange
     },

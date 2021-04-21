@@ -4,12 +4,14 @@ import {
   createStyles,
   makeStyles,
   useTheme,
+  createMuiTheme,
   Theme
 } from "@material-ui/core/styles";
 import Input from "@material-ui/core/Input";
 import InputLabel from "@material-ui/core/InputLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Chip from "@material-ui/core/Chip";
+import { ThemeProvider } from '@material-ui/styles';
 import {
     Select,
     FormControl,
@@ -36,10 +38,31 @@ const useStyles = makeStyles(() =>
     placeholder: {
       paddingLeft: '10px', 
       color: 'gray'
-    }
+    },
+    // root: {
+    //   "& .MuiFormLabel-root": {
+    //     '&:hover':{
+    //     color: "a9a9a9"
+    //     } // or black
+    //   }
+    // },
+    // root: {
+    //   color: green[400],
+    //   '&$checked': {
+    //     color: green[600],
+    //   },
+    // },
   })
 );
-
+const theme = createMuiTheme({
+  overrides: {
+    MuiFormLabel: {
+      root: {
+        color: '#a9a9a9 !important'
+      }
+    }
+  }
+});
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
 const MenuProps = {
@@ -121,7 +144,9 @@ export const MultipleSelect = ({componentObject}) => {
     <div>
       <FormControl
         size="small"
-        className={clsx(classes.formControl, classes.noLabel)}
+        style={{color: '#a9a9a9' }} 
+        className={clsx(classes.formControl, classes.noLabel,classes.root)}
+        error={helperText ? true : false}
       >
           {((value === undefined) || (value && value.length === 0)) && <InputLabel shrink={false} className={classes.inputLabel} id="demo-simple-select-outlined-label">{placeholder}</InputLabel>}
         <Select 
@@ -129,6 +154,8 @@ export const MultipleSelect = ({componentObject}) => {
           variant={"outlined"}
           multiple
           // displayEmpty
+          // style={{color: '#a9a9a9' }} 
+          // className={classes.root}
           value={value ? value : []}
           onChange={(e) => handleChange(e.target.value, index)}
         //   input={<Input />}
@@ -154,6 +181,7 @@ export const MultipleSelect = ({componentObject}) => {
             </MenuItem>
           ))}
         </Select>
+        <FormHelperText>{helperText}</FormHelperText>
       </FormControl>
     </div>
   );
@@ -164,6 +192,7 @@ export default function SelectComponent(props) {
     const { label } = props.componentObject;
   
     return (
+      <ThemeProvider theme={theme}>
         <Grid container className={classes.gridRoot}>
           <Grid xs={12} md={4}>
             {label}
@@ -172,6 +201,7 @@ export default function SelectComponent(props) {
            <MultipleSelect componentObject={props.componentObject} />
           </Grid>
         </Grid>
+        </ThemeProvider>
     );
   };
   

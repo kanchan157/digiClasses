@@ -27,9 +27,9 @@ code {
 .MuiStepIcon-root{
   color: "#3B86FF";
 }
-/* .MuiOutlinedInput-input{
+.MuiOutlinedInput-input{
   padding: 12.5px 14px !important;
-} */
+}
 .datepicker .MuiInputBase-input{
   text-transform: uppercase;
 }

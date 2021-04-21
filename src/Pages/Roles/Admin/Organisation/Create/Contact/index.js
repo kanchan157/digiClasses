@@ -103,7 +103,7 @@ export default function Contact(props) {
     },
     {
       componentType: "input",
-      type: "text",
+      type: "number",
       label: "Primary Telephone",
       name: "primary_telephone",
       placeholder: "Primary Telephone",
@@ -112,7 +112,7 @@ export default function Contact(props) {
     },
     {
       componentType: "input",
-      type: "text",
+      type: "number",
       label: "Primary Fax",
       name: "primary_fax",
       placeholder: "Primary Fax",
@@ -127,7 +127,7 @@ export default function Contact(props) {
       required: true,
       placeholder: "Primary Email",
       handleChange: handleInputChange,
-      helperText: errors.primary_email && "*Please enter primary email",
+      helperText: errors.primary_email && "*Please enter a valid email",
       value: primary_email,
     },
     {
@@ -152,7 +152,7 @@ export default function Contact(props) {
       },
       businessTelephone: {
         placeholder: "Business Telephone*",
-        type: "text",
+        type: "number",
         name: "business_telephone",
         index: "4-business_telephone",
         handleChange: handleAddressChange,

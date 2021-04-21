@@ -7,6 +7,8 @@ export const UPDATE_ORGANISATION_CONTACT = "UPDATE_ORGANISATION_CONTACT";
 export const UPDATE_ORGANISATION_ID_CONTACT = "UPDATE_ORGANISATION_ID_CONTACT";
 export const SET_ORGANISATION_CONTACT_ERROR = "SET_ORGANISATION_CONTACT_ERROR";
 export const UPDATE_ORGANISATION_CONTACT_ERROR = "UPDATE_ORGANISATION_CONTACT_ERROR";
+export const SET_CONTACT_SECTION_AND_ORG_IDS = "SET_CONTACT_SECTION_AND_ORG_IDS";
+export const RESET_CONTACT = "RESET_CONTACT";
 
 export const SetOrganisationContact = (item) => {
   return {
@@ -52,3 +54,16 @@ export function UpdateOrganisationContactError(data){
     payload: data
   }
 }
+
+export function SetContactSectionAndOrgIds(data) {
+  return {
+    type: SET_CONTACT_SECTION_AND_ORG_IDS,
+    payload: data,
+  };
+};
+
+export function ResetContact() {
+  return {
+    type: RESET_CONTACT
+  }
+};

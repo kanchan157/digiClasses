@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
-import { api_url } from "../../../../../../constants";
 import FormGenerator from "../../../../../../Components/FormGenerator";
-import DataService from "../../../../../../Service";
 import { useDispatch, useSelector } from "react-redux";
 import { SetContactArea, UpdateContactAreaError } from "./ContactAreaActions";
+import {
+    useParams
+  } from "react-router-dom";
 
 const theme = createMuiTheme({
   overrides: {
@@ -31,7 +31,7 @@ export default function ContactArea(props) {
     suffix,
     gender,
     dob,
-    nationality_id,
+    nationality_list_id,
     bame,
     diversity_and_inclusion,
     languages_list,
@@ -74,7 +74,7 @@ export default function ContactArea(props) {
     {
       componentType: "select",
       label: "Title*",
-      helperText: errors && errors.title && "*Please select an individual type",
+      helperText: errors && errors.title && "*Please select a title",
       name: "title",
       value: title,
       placeholder: "Title",
@@ -131,7 +131,7 @@ export default function ContactArea(props) {
       value: authorisation_to_access_the_service,
       placeholder: "Select Yes or No",
       selectOptions: [
-        { id: 0, value: "Yes", name: "yes" },
+        { id: 0, value: "Yes", name: "Yes" },
         { id: 1, value: "No", name: "No" },
       ],
       handleChange: handleInputChange,
@@ -145,7 +145,7 @@ export default function ContactArea(props) {
       value: authorisation_provided_by,
       placeholder: "Select Yes or No",
       selectOptions: [
-        { id: 0, value: "Yes", name: "yes" },
+        { id: 0, value: "Yes", name: "Yes" },
         { id: 1, value: "No", name: "No" },
       ],
       handleChange: handleInputChange,
@@ -187,20 +187,30 @@ export default function ContactArea(props) {
     {
       componentType: "datePicker",
       required: true,
-      label: "Date of Birth*",
+      label: "Date of Birth",
       name: "dob",
       value: dob,
       handleChange: handleInputChange
     },
+    // {
+    //   componentType: "select",
+    //   label: "Nationality*",
+    //   name: "nationality_list_id",
+    //   value: nationality_list_id,
+    //   placeholder: "Select Nationality",
+    //   apiVariable: "countries",
+    //   handleChange: handleInputChange,
+    //   helperText: errors && errors.type_of_service && "*Please select a nationality",
+    // },
     {
-      componentType: "select",
+      componentType: "input",
+      type: "text",
       label: "Nationality*",
-      name: "nationality_id",
-      value: nationality_id,
-      placeholder: "Select Nationality",
-      apiVariable: "countries",
+      helperText: errors && errors.nationality_list_id && "*Please enter Nationality",
+      name: "nationality_list_id",
+      value: nationality_list_id,
+      placeholder: "Nationality",
       handleChange: handleInputChange,
-      helperText: errors && errors.type_of_service && "*Please select a nationality",
     },
     {
       componentType: "select",
@@ -211,7 +221,7 @@ export default function ContactArea(props) {
       value: bame,
       placeholder: "Select Yes or No",
       selectOptions: [
-        { id: 0, value: "Yes", name: "yes" },
+        { id: 0, value: "Yes", name: "Yes" },
         { id: 1, value: "No", name: "No" },
       ],
       handleChange: handleInputChange,
@@ -225,19 +235,21 @@ export default function ContactArea(props) {
       value: diversity_and_inclusion,
       placeholder: "Select Yes or No",
       selectOptions: [
-        { id: 0, value: "Yes", name: "yes" },
+        { id: 0, value: "Yes", name: "Yes" },
         { id: 1, value: "No", name: "No" },
       ],
       handleChange: handleInputChange,
     },
     {
       componentType: "MultipleSelect",
-      label: "Languages",
+      label: "Languages*",
       name: "languages_list",
       value: languages_list,
       placeholder: "Select Languages",
       apiVariable: "languages",
-      handleChange: handleInputChange
+      handleChange: handleInputChange,
+      helperText:
+      errors && errors.languages_list && "*Please select a language",
     },
     {
       componentType: "input",
@@ -299,29 +311,35 @@ export default function ContactArea(props) {
     {
       componentType: "input",
       type: "text",
-      label: "Primary Email",
+      label: "Primary Email*",
       name: "primary_email",
       value: primary_email,
       placeholder: "Primary Email",
       handleChange: handleInputChange,
+      helperText:
+      errors && errors.primary_email && "*Please enter a valid email",
     },
     {
       componentType: "input",
       type: "number",
-      label: "Mobile",
+      label: "Mobile*",
       name: "mobile",
       value: mobile,
       placeholder: "Mobile",
       handleChange: handleInputChange,
+      helperText:
+      errors && errors.mobile && "*Please enter a mobile number",
     },
     {
       componentType: "input",
       type: "number",
-      label: "Phone",
+      label: "Phone*",
       name: "phone",
       value: phone,
       placeholder: "Phone",
       handleChange: handleInputChange,
+      helperText:
+      errors && errors.phone && "*Please enter a Phone number",
     },
     {
       componentType: "input",

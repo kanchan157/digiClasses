@@ -1,5 +1,45 @@
 import request from "../api_client";
 
+const serviceUrl = {
+    CoachingProfileField: "partner_commission_informations"
+}
+
+const CommisionInfoAdmin = (id, formData, method) => {
+    return request({
+        url: '/partner_commission_informations/' + id,
+        method: method,
+        data: formData,
+    });
+}
+const AssessmentProfile = (id, formData, method) => {
+    return request({
+        url: '/partner_assessment_profiles/' + id,
+        method: method,
+        params: formData,
+    });
+}
+const AssociateCoaches = (id, formData, method) => {
+    return request({
+        url: '/partner_associate_coaches/' + id,
+        method: method,
+        params: formData,
+    });
+}
+const FacilitationProfile = (id, formData, method) => {
+    return request({
+        url: '/partner_facilitation_profiles/' + id,
+        method: method,
+        params: formData,
+    });
+}
+const MentoringProfile = (id, formData, method) => {
+    return request({
+        url: '/partner_mentoring_profiles/' + id,
+        method: method,
+        params: formData,
+    });
+}
+
 const BasicInfo = (formData) => {
     return request({
         url: '/partner_profiles',
@@ -14,15 +54,13 @@ const BasicInfo_get = (role, id) => {
         url: '/partner_profiles/' + id,
         method: 'Get',
         params: formDataa,
-        // paramsSerializer: (params) => {
-        //     let result = '';
-        //     Object.keys(params).forEach(key => {
-        //         if (params[key] != null) {
-        //             result += `${key}=${encodeURIComponent(params[key])}&`;
-        //         }
-        //     });
-        //     return result.substr(0, result.length - 1);
-        // }
+    });
+}
+const BasicInfo_put = (id, formDataa) => {
+    return request({
+        url: '/partner_profiles/' + id,
+        method: 'Put',
+        params: formDataa,
     });
 }
 const share_login_credentials = (formData) => {
@@ -45,17 +83,6 @@ const Nda_get = (params) => {
         url: '/partner_profile/nda_document',
         method: 'GET',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
     });
 }
 const wwa = (formData) => {
@@ -70,17 +97,6 @@ const wwa_get = (params) => {
         url: '/partner_profile/wwa_document',
         method: 'GET',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
     });
 }
 const Questionnaire = (formData) => {
@@ -90,22 +106,19 @@ const Questionnaire = (formData) => {
         data: formData,
     });
 }
-const Questionnaire_get = (params) => {
+const Questionnaire_put = (id, formData) => {
     return request({
-        url: '/partner_questionnaires',
+        url: '/partner_questionnaires/' + id,
+        method: 'PUT',
+        data: formData,
+    });
+}
+const Questionnaire_get = (id, params) => {
+    return request({
+        url: '/partner_questionnaires/' + id,
         method: 'GET',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
+
     });
 }
 const ReferenceQuestionnaire = (formData) => {
@@ -115,26 +128,94 @@ const ReferenceQuestionnaire = (formData) => {
         data: formData,
     });
 }
-const ReferenceQuestionnaire_get = (params) => {
+const ReferenceQuestionnaire_put = (id, formData) => {
     return request({
-        url: '/partner_reference_qas',
+        url: '/partner_reference_qas/' + id,
+        method: 'PUT',
+        data: formData,
+    });
+}
+const ReferenceQuestionnaire_get = (id, params) => {
+    return request({
+        url: '/partner_reference_qas/' + id,
         method: 'GET',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
+    });
+}
+const WorkInfo = (formData) => {
+
+    return request({
+        url: '/partner_work_infos',
+        method: 'POST',
+        data: formData,
+    });
+}
+const WorkInfo_get = (id, params) => {
+    return request({
+        url: '/partner_work_infos/' + id,
+        method: 'GET',
+        params: params,
+
+    });
+}
+const WorkInfo_put = (id, params) => {
+    return request({
+        url: '/partner_work_infos/' + id,
+        method: 'Put',
+        params: params,
+
+    });
+}
+const CoachingProfileField = (formData) => {
+
+    return request({
+        url: '/partner_coaching_profiles',
+        method: 'POST',
+        data: formData,
+    });
+}
+const CoachingProfileField_get = (id, params) => {
+    return request({
+        url: '/partner_coaching_profiles/' + id,
+        method: 'GET',
+        params: params,
+
+    });
+}
+const CoachingProfileField_put = (id, params) => {
+    return request({
+        url: '/partner_coaching_profiles/' + id,
+        method: 'Put',
+        params: params,
+
+    });
+}
+const QualityAssurance = (formData) => {
+
+    return request({
+        url: '/partner_quality_assurances',
+        method: 'POST',
+        data: formData,
+    });
+}
+const QualityAssurance_get = (id, params) => {
+    return request({
+        url: '/partner_quality_assurances/' + id,
+        method: 'GET',
+        params: params,
+
+    });
+}
+const QualityAssurance_put = (id, params) => {
+    return request({
+        url: '/partner_quality_assurances/' + params.id,
+        method: 'Put',
+        params: params,
+
     });
 }
 const DueDiligenceCall = (formData) => {
-    
+
     return request({
         url: '/partner_due_diligence_calls',
         method: 'POST',
@@ -146,17 +227,15 @@ const DueDiligenceCall_get = (params) => {
         url: '/partner_due_diligence_calls/' + params.id,
         method: 'GET',
         params: {},
-        // paramsSerializer: (params) => {
-        //     // Sample implementation of query string building
-        //     let result = '';
-        //     Object.keys(params).forEach(key => {
-        //         if (params[key] != null) {
-        //             result += `${key}=${encodeURIComponent(params[key])}&`;
-        //         }
-        //     });
-        //     console.log("=====", result.substr(0, result.length - 1))
-        //     return result.substr(0, result.length - 1);
-        // }
+
+    });
+}
+const DueDiligenceCall_put = (id, params) => {
+    return request({
+        url: '/partner_due_diligence_calls/' + params.id,
+        method: 'Put',
+        params: params,
+
     });
 }
 const Ranking = (formData) => {
@@ -166,22 +245,18 @@ const Ranking = (formData) => {
         data: formData,
     });
 }
-const Ranking_get = (params) => {
+const Ranking_put = (id, params) => {
     return request({
-        url: '/partner_rankings',
+        url: '/partner_rankings/' + id,
+        method: 'Put',
+        params: params,
+    });
+}
+const Ranking_get = (id, params) => {
+    return request({
+        url: '/partner_rankings/' + id,
         method: 'GET',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
     });
 }
 const OtherQuestions = (formData) => {
@@ -191,22 +266,19 @@ const OtherQuestions = (formData) => {
         data: formData,
     });
 }
-const OtherQuestions_get = (params) => {
+const OtherQuestions_put = (id, formData) => {
     return request({
-        url: '/partner_extra_questions',
+        url: '/partner_extra_questions/' + id,
+        method: 'PUT',
+        data: formData,
+    });
+}
+const OtherQuestions_get = (id, params) => {
+    return request({
+        url: '/partner_extra_questions/' + id,
         method: 'GET',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
+
     });
 }
 const Review = (formData) => {
@@ -216,21 +288,18 @@ const Review = (formData) => {
         data: formData,
     });
 }
-const Review_get = (params) => {
+const Review_put = (id, params) => {
     return request({
-        url: '/partner_reviews',
+        url: '/partner_reviews/' + id,
+        method: 'Put',
         params: params,
-        paramsSerializer: (params) => {
-            // Sample implementation of query string building
-            let result = '';
-            Object.keys(params).forEach(key => {
-                if (params[key] != null) {
-                    result += `${key}=${encodeURIComponent(params[key])}&`;
-                }
-            });
-            console.log("=====", result.substr(0, result.length - 1))
-            return result.substr(0, result.length - 1);
-        }
+    });
+}
+const Review_get = (id, params) => {
+    return request({
+        url: '/partner_reviews/' + id,
+        method: 'GET',
+        params: params,
     });
 }
 const ContractDocumentition = (formData) => {
@@ -256,9 +325,17 @@ const source_get = (formData) => {
         data: {},
     });
 }
-
+const list_search = (data) => {
+    return request({
+        url: '/partner_profiles?search=' + data,
+        method: 'GET',
+        data: {},
+    });
+}
 const AdminPartnerClient = {
-    BasicInfo, share_login_credentials, Nda, wwa, DueDiligenceCall, Questionnaire, ReferenceQuestionnaire, Ranking, OtherQuestions, Review, ContractDocumentition,
-    BasicInfo_get, Nda_get, source_get, DueDiligenceCall_get, Questionnaire_get, ReferenceQuestionnaire_get, ContractDocumentition_get, OtherQuestions_get, Review_get, Ranking_get
+    BasicInfo, share_login_credentials, Nda, wwa, WorkInfo, CoachingProfileField, FacilitationProfile,MentoringProfile, CommisionInfoAdmin, AssessmentProfile, AssociateCoaches, QualityAssurance, DueDiligenceCall, Questionnaire, ReferenceQuestionnaire, Ranking, OtherQuestions, Review, ContractDocumentition,
+    BasicInfo_get, Nda_get, wwa_get, source_get, WorkInfo_get, CoachingProfileField_get, QualityAssurance_get, DueDiligenceCall_get, Questionnaire_get, ReferenceQuestionnaire_get, ContractDocumentition_get, OtherQuestions_get, Review_get, Ranking_get,
+    BasicInfo_put, WorkInfo_put, CoachingProfileField_put, QualityAssurance_put, Questionnaire_put, ReferenceQuestionnaire_put, OtherQuestions_put, Review_put, Ranking_put, DueDiligenceCall_put,
+    list_search
 }
 export default AdminPartnerClient;

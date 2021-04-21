@@ -5,6 +5,8 @@ import { ObjectToFormdata } from "../../../../../../Common/Utils/common_utils";
 export const SET_ORGANISATION_GENERAL = "SET_ORGANISATION_GENERAL";
 export const UPDATE_ORGANISATION_GENERAL = "UPDATE_ORGANISATION_GENERAL";
 export const UPDATE_ORGANISATION_ID_GENERAL = "UPDATE_ORGANISATION_ID_GENERAL";
+export const SET_GENERAL_SECTION_AND_ORG_IDS = "SET_GENERAL_SECTION_AND_ORG_IDS";
+export const RESET_GENERAL = "RESET_GENERAL";
 
 export const SetOrganisationGeneral = (item) => {
   return {
@@ -37,4 +39,17 @@ export function UpdateOrganisationIdGeneral(item) {
     type: UPDATE_ORGANISATION_ID_GENERAL,
     payload: item,
   };
-}
+};
+
+export function SetGeneralSectionAndOrgIds(data) {
+  return {
+    type: SET_GENERAL_SECTION_AND_ORG_IDS,
+    payload: data,
+  };
+};
+
+export function ResetGeneral() {
+  return {
+    type: RESET_GENERAL
+  }
+};

@@ -2,6 +2,7 @@ import { createStyles, Grid, makeStyles } from '@material-ui/core';
 import React from 'react';
 import HeaderMenu from '../../Components/HeaderMenu';
 import PartnerList from '../Roles/Partner/PartnerList';
+import Home from '../../Pages/AcuityOrganizationHome/Home';
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -20,9 +21,9 @@ function ManageInfo() {
                 <Grid xs={12}>
                     <HeaderMenu />
                 </Grid>
-                {/* <Grid xs={12}>
-                    <PartnerList />
-                </Grid> */}
+                <Grid xs={12}>
+                    <Home />
+                </Grid>
             </Grid>
 
         </div>

@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import FormGenerator from "../../../../../../Components/FormGenerator";
+import DataService from "../../../../../../Service";
 import { SetOrganisationContract, UpdateOrganisationContractError } from "./OrganisationContractActions";
+import {
+  useParams
+} from "react-router-dom";
 
 
 const theme = createMuiTheme({
@@ -28,10 +32,35 @@ export default function Contract(props) {
     date_of_most_recent_revenue,
     lifetime_income_from_client,
     date_account_closed,
-    legal_contracts
+    legal_contracts,
+    time_from_start_date,
+    time_to_end_date,
+    total_time,
+    tenure_api
   } = useSelector((state) => state.organisationContractReducer.data);
 
   const errors = useSelector(state => state.organisationContractReducer.errors);
+
+  const [loading, setLoading] = useState(false);
+  const [apiStartData, setApiStartData] = useState('');
+  const [apiEndData, setApiEndData] = useState('');
+  const [apiTotalTimeData, setApiTotalTimeData] = useState('');
+  const [apiTenureData, setApiTenureData] = useState('');
+  let { id } = useParams();
+
+  useEffect(() => {
+     setLoading(true);
+     DataService.getDirectData(`/organisation_contract_phases/3`)
+     .then((response) => {
+       let listData=response["data"];
+       setApiStartData(listData.time_from_start_date);
+       setApiEndData(listData.time_to_end_date);  
+       setApiTotalTimeData(listData.total_time);
+       setApiTenureData(listData.tenure);
+       setLoading(false);
+     })
+     .catch((err) => {});
+  }, []);
 
   const handleInputChange = (value, index, type) => {
     const updatedForm = formInput;
@@ -122,7 +151,43 @@ export default function Contract(props) {
       label: "Legal Contracts",
       handleChange: handleInputChange,
       value: legal_contracts
-    }
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Time from Start Date",
+      name: "time_from_start_date",
+      handleChange: handleInputChange,
+      value: apiStartData,
+      disabled:true
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Time to End Date",
+      name: "time_to_end_date",
+      handleChange: handleInputChange,
+      value: apiEndData,
+      disabled:true
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Total Time",
+      name: "total_time",
+      handleChange: handleInputChange,
+      value: apiTotalTimeData,
+      disabled:true
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Tenure",
+      name: "tenure_api",
+      handleChange: handleInputChange,
+      value: apiTenureData,
+      disabled:true
+    },
   ];
 
   const [formInput, setFormInput] = useState(formArray);

@@ -3,10 +3,11 @@ import CustomDatePicker from '../../../Components/CustomDatePicker';
 import CustomInput from '../../../Components/CustomInput';
 import CustomSelect from '../../../Components/CustomSelect'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Header from './header';
 import AdminPartnerClient from '../../../Service/Admin/partner_services'
 import InputWithDropdownComponent from '../../../Components/FormGenerator/input_with_dropdown';
+import { GLOBAL_STEPPER_DATA } from '../../../Redux/actions';
 
 const useStyles = makeStyles((theme) => ({
     labelText: {
@@ -21,6 +22,7 @@ function OtherQuestions(props: any) {
     const global_data = useSelector((state: any) => state.stepperReducer);
     console.log(global_data)
     const global_data_common = useSelector((state: any) => state.commonReducer);
+    const dispatch = useDispatch();
 
     const data = {
         assessor_currency_type: '',
@@ -40,8 +42,8 @@ function OtherQuestions(props: any) {
     const [userData, setUserData] = useState(data);
 
     useEffect(() => {
-        if (global_data.partner_profile != "") {
-            AdminPartnerClient.OtherQuestions_get({ partner_profile_id: global_data.partner_profile }).then((response: any) => {
+        if (global_data.partner_extra_question_id != "") {
+            AdminPartnerClient.OtherQuestions_get(global_data.partner_extra_question_id ,{ partner_profile_id: global_data.partner_profile }).then((response: any) => {
                 setUserData(response.data.attributes)
 
             }).catch(error => alert(JSON.stringify(error.errors)));
@@ -70,12 +72,22 @@ function OtherQuestions(props: any) {
         //     partner_profile_id: global_data.partner_profile,
         //     ...userData
         // }
-        AdminPartnerClient.OtherQuestions({ partner_profile_id: global_data.partner_profile, ...userData }).then((response: any) => {
-            console.log(response)
+        if (global_data.partner_extra_question_id == "") {
 
-            // props.parentSetProfileId(response.id)
-            global_data_common.role == 'admin' && props.parentHandleNext(props.activeIndex + 1)
-        });
+            AdminPartnerClient.OtherQuestions({ partner_profile_id: global_data.partner_profile, ...userData }).then((response: any) => {
+                console.log(response)
+                dispatch({ type: GLOBAL_STEPPER_DATA, payload: { partner_extra_question_id: response.data.id } });
+    
+                // props.parentSetProfileId(response.id)
+                // global_data_common.role == 'admin' && props.parentHandleNext(props.activeIndex + 1)
+                 props.parentHandleNext(props.activeIndex + 1)
+            });
+        }else{
+            AdminPartnerClient.OtherQuestions_put(global_data.partner_extra_question_id,{ partner_profile_id: global_data.partner_profile, ...userData }).then((response: any) => {
+                 props.parentHandleNext(props.activeIndex + 1)
+            });
+
+        }
     }
     const onBack = () => {
         props.parentHandleNext(props.activeIndex - 1)
@@ -154,7 +166,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Travel expenses</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="travel_expenses" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.travel_expenses} />
+                            <CustomSelect id="travel_expenses" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} defaultValue={userData.travel_expenses} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -162,7 +174,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Psychometric costs</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomInput id="psychometric_costs" variant="outlined" placeholder="Mr" parentcall={setInputState} />
+                            <CustomInput id="psychometric_costs" variant="outlined" placeholder="Mr" parentcall={setInputState} value={userData.psychometric_costs}/>
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -170,7 +182,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Local TX areas</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="local_tx_areas" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.local_tx_areas} />
+                            <CustomSelect id="local_tx_areas" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} defaultValue={userData.local_tx_areas} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -178,7 +190,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Delivery method</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="delivery_methods" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.delivery_methods} />
+                            <CustomSelect id="delivery_methods" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} defaultValue={userData.delivery_methods} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -186,7 +198,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Next Available Date</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomDatePicker id="available_date" style={{textTransform:"uppercase!important"}} variant="outlined" parentcall={setInputState} selectedValue={userData.available_date} />
+                            <CustomDatePicker id="available_date" style={{textTransform:"uppercase!important"}} variant="outlined" parentcall={setInputState} defaultValue={userData.available_date} />
                         </Grid>
                     </Grid>
                     <Grid container direction="row" alignItems="center" style={{ marginBottom: 20 }}>
@@ -194,7 +206,7 @@ function OtherQuestions(props: any) {
                             <InputLabel className={classes.labelText} >Considered Levels</InputLabel>
                         </Grid>
                         <Grid item xs={8}>
-                            <CustomSelect id="considered_levels" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} selectedValue={userData.considered_levels} />
+                            <CustomSelect id="considered_levels" displayEmpty variant="outlined" itemArr={['Mr', 'Miss']} parentcall={onChangeItem} defaultValue={userData.considered_levels} />
                         </Grid>
                     </Grid>
 

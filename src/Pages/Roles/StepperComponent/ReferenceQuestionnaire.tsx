@@ -1,10 +1,12 @@
 import { Card, Grid, makeStyles, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import CustomInput from '../../../Components/CustomInput'
 import CustomSelect from '../../../Components/CustomSelect';
 import Header from './header';
 import AdminPartnerClient from '../../../Service/Admin/partner_services'
+import { GLOBAL_STEPPER_DATA } from '../../../Redux/actions';
+import { ObjectToFormdata } from '../../../Common/Utils/common_utils';
 const useStyles = makeStyles((theme) => ({
     labelText: {
         color: '#4D4F5C',
@@ -16,6 +18,7 @@ function ReferenceQuestionnaire(props: any) {
     const classes = useStyles();
 
     const global_data = useSelector((state: any) => state.stepperReducer);
+    const dispatch = useDispatch();
 
     const data = {
         coachingAssignment: '',
@@ -43,24 +46,45 @@ function ReferenceQuestionnaire(props: any) {
             for (var i in quesData) {
                 quesArr.push({ question_id: i, answer: quesData[i] })
             }
-            AdminPartnerClient.ReferenceQuestionnaire({
-                partner_reference_detail_id: 21,
-                partner_profile_id: global_data.partner_profile,
-                question_answers: quesArr,
-            }).then((response: any) => {
-                console.log(response)
-                props.parentHandleNext(props.activeIndex + 1)
-            });
-            props.parentHandleNext(props.activeIndex + 1)
+            if (global_data.partner_reference_ques_id == "") {
+                AdminPartnerClient.ReferenceQuestionnaire({
+                    partner_reference_detail_id: global_data.referenceDetail[0].id,
+                    partner_profile_id: global_data.partner_profile,
+                    question_answers: quesArr,
+                    access_token: global_data.referenceDetail[0].access_token
+                }).then((response: any) => {
+                    dispatch({ type: GLOBAL_STEPPER_DATA, payload: { partner_reference_ques_id: response.data[response.data.length-1].id } });
+                    props.parentHandleNext(props.activeIndex + 1)
+                });
+            } else {
+                AdminPartnerClient.BasicInfo_put(global_data.partner_reference_ques_id, ObjectToFormdata(
+                    {
+                        partner_reference_detail_id: global_data.referenceDetail[0].id,
+                        partner_profile_id: global_data.partner_profile,
+                        question_answers: quesArr,
+                        access_token: global_data.referenceDetail[0].access_token
+                    }
+                )).then((response: any) => {
+                    props.parentHandleNext(props.activeIndex + 1)
+                }).catch(error => alert(JSON.stringify(error.error)));
+            }
+            // props.parentHandleNext(props.activeIndex + 1)
         } else {
             setSubmitClickFlag(true)
         }
 
     }
     useEffect(() => {
-        if (global_data.partner_profile != "") {
-            AdminPartnerClient.ReferenceQuestionnaire_get({ partner_profile_id: global_data.partner_profile }).then((response: any) => {
-            }).catch(error => alert(JSON.stringify(error.errors)));
+        if (global_data.partner_reference_ques_id != "") {
+            AdminPartnerClient.ReferenceQuestionnaire_get(
+                global_data.partner_reference_ques_id,
+                {
+                    partner_profile_id: global_data.partner_profile,
+                    question_type: "question_and_answer"
+                })
+                .then((response: any) => {
+                    setUserData(response.data.attributes)
+                }).catch(error => alert(JSON.stringify(error.errors)));
         }
     }, [])
 

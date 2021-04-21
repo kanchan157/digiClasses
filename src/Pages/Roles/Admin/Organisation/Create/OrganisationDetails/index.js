@@ -6,8 +6,17 @@ import { api_url } from "../../../../../../constants";
 import FormGenerator from "../../../../../../Components/FormGenerator";
 import DataService from "../../../../../../Service";
 import { useDispatch, useSelector } from "react-redux";
-import { SetOrganisationDetails, UpdateOrganisationDetailsError } from "./OrganisationDetailsActions";
+import { SetOrganisationDetails, UpdateOrganisationDetailsError, UpdateOrganisationDetailsSectionId } from "./OrganisationDetailsActions";
+import { SetOrganisationActivitySectionAndOrgIds } from "../Activity/OrganisationActivityActions";
+import { SetContactSectionAndOrgIds } from "../Contact/OrganisationContactActions";
+import { SetOrganisationContractSectionAndOrgIds } from "../Contract/OrganisationContractActions";
+import { SetGeneralSectionAndOrgIds } from "../General/OrganisationGeneralActions";
+import { SetPreContractSectionAndOrgIds } from "../PreContract/OrganisationPreContractActions";
+import { SetProfileSectionAndOrgIds } from "../Profile/OrganisationProfileActions";
 
+import {
+  useParams
+} from "react-router-dom";
 
 const theme = createMuiTheme({
   overrides: {
@@ -25,7 +34,7 @@ export default function OrganisationDetails(props) {
   const dispatch = useDispatch();
 
   const {
-    id,
+    // id_1,
     organisation_id,
     organisation_name,
     ownership,
@@ -40,10 +49,32 @@ export default function OrganisationDetails(props) {
     industry_sector_list_id,
     source_referral1_id,
     source_referral2_id,
-    attended_acuity_event_date
+    source_referral3_id,
+    attended_acuity_event_date,
+    level_structure
   } = useSelector((state) => state.organisationDetailsReducer.data);
 
   const errors = useSelector(state => state.organisationDetailsReducer.errors);
+
+  const [loading, setLoading] = useState(false);
+  const [apiData, setApiData] = useState([]);
+  let { id } = useParams();
+  useEffect(() => {
+     setLoading(true);
+     DataService.getDirectData(`/organisations/${id}`)
+     .then((response) => {
+       dispatch(UpdateOrganisationDetailsSectionId(id));
+       dispatch(SetOrganisationDetails(response.data));
+       dispatch(SetContactSectionAndOrgIds({sectionId: response.organisation_contact_info_id, organisationId: id}));
+       dispatch(SetProfileSectionAndOrgIds({sectionId: response.organisation_profile_id, organisationId: id}));
+       dispatch(SetGeneralSectionAndOrgIds({sectionId: response.organisation_general_detail_id, organisationId: id}));
+       dispatch(SetPreContractSectionAndOrgIds({sectionId: response.organisation_pre_contract_id, organisationId: id}));
+       dispatch(SetOrganisationContractSectionAndOrgIds({sectionId: response.organisation_contract_phase_id, organisationId: id}));
+       dispatch(SetOrganisationActivitySectionAndOrgIds({sectionId: response.organisation_activity_field_id, organisationId: id}));
+       setLoading(false);
+     })
+     .catch((err) => {});
+  }, [errors]);
 
   const handleInputChange = (value, index) => {
     const updatedForm = formInput;
@@ -122,7 +153,7 @@ export default function OrganisationDetails(props) {
       componentType: "select",
       label: "Internal Status*",
       name: "internal_status",
-      helperText: errors && errors.individual_type && "*Please select the internal status",
+      helperText: errors && errors.internal_status && "*Please select the internal status",
       value: internal_status,
       placeholder: "Internal Status",
       apiVariable: "internal_status",
@@ -169,6 +200,15 @@ export default function OrganisationDetails(props) {
       handleChange: handleInputChange
     },
     {
+      componentType: "select",
+      label: "Source 3 Referral",
+      name: "source_referral3_id",
+      value: source_referral3_id,
+      placeholder: "Source 3 Referral",
+      apiVariable: "source_referral3",
+      handleChange: handleInputChange
+    },
+    {
       componentType: "selectWithDatePicker",
       label: "Attend Acuity Events",
       name: "attended_acuity_event_date",
@@ -183,15 +223,26 @@ export default function OrganisationDetails(props) {
       name: "picture",
       handleChange: handleInputChange
     },
-    // {
-    //     componentType: "imageUpload",
-    //     label: "Organisation Logo",
-    //     name: 'picture',
-    // },
+    {
+      componentType: "select",
+      label: "Level Structure*",
+      helperText:
+        errors && errors.level_structure && "*Please enter Level Structure",
+      name: "level_structure",
+      value: level_structure,
+      placeholder: "Select Level Structure",
+      selectOptions: [
+        { id: 0, value: "Level", name: "Level" },
+        { id: 1, value: "Grade", name: "Grade" },
+        { id: 1, value: "Band", name: "Band" },
+      ],
+      handleChange: handleInputChange,
+    },
   ];
 
 
   const [formInput, setFormInput] = useState(formArray);
+
   
   useEffect(() => {
     setFormInput(formArray);

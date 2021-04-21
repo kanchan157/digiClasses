@@ -16,14 +16,13 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 function CustomSelect(props: any) {
-    console.log(props.defaultValue)
+    console.log(props)
     const classes = useStyles();
     const [selectedValue, setSelectedValue] = React.useState("");
 
     const handleChange = (event: any) => {
         setSelectedValue(event.target.value)
         var dataIndex = props.dataIndex == undefined ? 0 : props.dataIndex
-        // debugger
         props.parentcall({value: event.target.value, id: props.id, dataIndex: dataIndex })
     };
     useEffect(() => {

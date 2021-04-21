@@ -77,6 +77,7 @@ export default function Profile(props) {
     {
       componentType: "inputWithDropdown",
       label: "Market Cap",
+      type: "number",
       inputName: "market_cap",
       selectName: "market_cap_currency",
       inputPlaceholder: "$00,000,000",
@@ -137,6 +138,7 @@ export default function Profile(props) {
     {
       componentType: "inputWithDropdown",
       label: "Revenue",
+      type: "number",
       inputName: "revenue",
       selectName: "revenue_currency",
       inputPlaceholder: "$00,000,000",
@@ -163,7 +165,7 @@ export default function Profile(props) {
     },
     {
       componentType: "input",
-      type: "text",
+      type: "number",
       label: "Account Telephone",
       name: "account_telephone",
       required: true,

@@ -1,4 +1,4 @@
-import { SET_ORGANISATION_PRECONTRACT, UPDATE_ORGANISATION_PRECONTRACT, UPDATE_ORGANISATION_ID_PRECONTRACT } from "./OrganisationPreContractActions"
+import { SET_ORGANISATION_PRECONTRACT,SET_PRE_CONTRACT_SECTION_AND_ORG_IDS, UPDATE_ORGANISATION_PRECONTRACT, UPDATE_ORGANISATION_ID_PRECONTRACT, RESET_PRE_CONTRACT } from "./OrganisationPreContractActions"
 
 export const INITIAL_STATE = {
     section_id: null,
@@ -17,6 +17,10 @@ const OrganisationPreContractReducer = (state = INITIAL_STATE, action) => {
             return {...state, section_id: action.payload.id, data: action.payload};
         case UPDATE_ORGANISATION_ID_PRECONTRACT:
             return {...state, organisation_id: action.payload.id};
+        case SET_PRE_CONTRACT_SECTION_AND_ORG_IDS:
+            return {...state, section_id: action.payload.sectionId, organisation_id: action.payload.organisationId};
+        case RESET_PRE_CONTRACT:
+            return INITIAL_STATE;
     }
     return state;
 };

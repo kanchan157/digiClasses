@@ -4,6 +4,8 @@ import {
   UPDATE_ORGANISATION_ID_CONTRACT,
   SET_ORGANISATION_CONTRACT_ERROR,
   UPDATE_ORGANISATION_CONTRACT_ERROR,
+  SET_CONTRACT_SECTION_AND_ORG_IDS,
+  RESET_CONTRACT
 } from "./OrganisationContractActions";
 
 export const INITIAL_STATE = {
@@ -31,6 +33,10 @@ const OrganisationContractReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
     case UPDATE_ORGANISATION_CONTRACT_ERROR:
       return { ...state, errors: { ...state.errors, [action.payload]: false } };
+    case SET_CONTRACT_SECTION_AND_ORG_IDS:
+      return {...state, section_id: action.payload.sectionId, organisation_id: action.payload.organisationId};
+    case RESET_CONTRACT:
+      return INITIAL_STATE;
   }
   return state;
 };

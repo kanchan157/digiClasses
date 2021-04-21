@@ -14,9 +14,20 @@ import PreContract from "../Create/PreContract";
 import Contract from "../Create/Contract";
 import Activity from "../Create/Activity";
 import General from "../Create/General";
+import OrganisationBusinessDevelopment from "../Create/OrganisationBusinessDevelopment";
+import { ValidateEmail } from "../../../../../Common/Utils/common_utils";
+
+// import { SetOrganisationActivitySectionAndOrgIds } from "../Activity/OrganisationActivityActions";
+// import { SetContactSectionAndOrgIds } from "../Contact/OrganisationContactActions";
+// import { SetOrganisationContractSectionAndOrgIds } from "../Contract/OrganisationContractActions";
+// import { SetGeneralSectionAndOrgIds } from "../General/OrganisationGeneralActions";
+// import { SetPreContractSectionAndOrgIds } from "../PreContract/OrganisationPreContractActions";
+// import { SetProfileSectionAndOrgIds } from "../Profile/OrganisationProfileActions";
+
 import {
   UpdateOrganisationDetails,
   SetOrganisationDetailsError,
+  ResetOrganisationDetails
 } from "../Create/OrganisationDetails/OrganisationDetailsActions";
 import {
   UpdateOrganisationProfile,
@@ -46,6 +57,10 @@ import {
   UpdateOrganisationGeneral,
   UpdateOrganisationIdGeneral,
 } from "../Create/General/OrganisationGeneralActions";
+import {
+  UpdateOrganisationBusinessDev,
+  UpdateOrganisationIdBusinessDev,
+} from "../Create/OrganisationBusinessDevelopment/OrganisationBusinessDevelopmentActions";
 import { useSelector, useDispatch } from "react-redux";
 import DataService from "../../../../../Service";
 import { ObjectToFormdata } from "../../../../../Common/Utils/common_utils";
@@ -131,6 +146,23 @@ export default function OrganisationLinearStepper(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
 
+//   useEffect(() => {
+//     setLoading(true);
+//     DataService.getDirectData(`/organisations/${id}`)
+//     .then((response) => {
+//       dispatch(UpdateOrganisationDetailsSectionId(id));
+//       dispatch(SetOrganisationDetails(response.data));
+//       dispatch(SetContactSectionAndOrgIds({sectionId: response.organisation_contact_info_id, organisationId: id}));
+//       dispatch(SetProfileSectionAndOrgIds({sectionId: response.organisation_profile_id, organisationId: id}));
+//       dispatch(SetGeneralSectionAndOrgIds({sectionId: response.organisation_general_detail_id, organisationId: id}));
+//       dispatch(SetPreContractSectionAndOrgIds({sectionId: response.organisation_pre_contract_id, organisationId: id}));
+//       dispatch(SetOrganisationContractSectionAndOrgIds({sectionId: response.organisation_contract_phase_id, organisationId: id}));
+//       dispatch(SetOrganisationActivitySectionAndOrgIds({sectionId: response.organisation_activity_field_id, organisationId: id}));
+//       setLoading(false);
+//     })
+//     .catch((err) => {});
+//  }, [errors]);
+
   function getSteps() {
     return [
       "Organisation Details",
@@ -140,6 +172,7 @@ export default function OrganisationLinearStepper(props) {
       "Contract",
       "Activity",
       "General",
+      "Organisation Business Development"
       // "General",
 //       "Contact Area",
 // "Employee CUrrent Work Information And History",
@@ -181,6 +214,9 @@ export default function OrganisationLinearStepper(props) {
   const OrganisationGeneral = useSelector(
     (state) => state.organisationGeneralReducer
   );
+  const organisationBusinessDevelopment = useSelector(
+    (state) => state.organisationBusinessDevelopmentReducer
+  );
 
   function getStepContent(step) {
     switch (step) {
@@ -198,6 +234,8 @@ export default function OrganisationLinearStepper(props) {
         return <Activity />;
       case 6:
         return <General />;
+      case 7:
+        return <OrganisationBusinessDevelopment />;
       default:
         return "Not available";
     }
@@ -224,7 +262,12 @@ export default function OrganisationLinearStepper(props) {
         setLoading(false);
         dispatch(showSnackbar("success",["Success!"]));
         setActiveStep((prevActiveStep) => prevActiveStep + 1);
+
+        if(activeStep === steps.length - 1){
+          dispatch(ResetOrganisationDetails())
+        }
       }).catch((err) => {
+        dispatch(ResetOrganisationDetails());
         dispatch(showSnackbar("error",err.errors));
       });
     } else {
@@ -249,6 +292,7 @@ export default function OrganisationLinearStepper(props) {
           setActiveStep((prevActiveStep) => prevActiveStep + 1);
         })
         .catch((err) => {
+          dispatch(ResetOrganisationDetails());
           setLoading(false);
           dispatch(showSnackbar("error",err.errors));
         });
@@ -365,11 +409,9 @@ export default function OrganisationLinearStepper(props) {
         country_list_id: false,
         county: false,
         zipcode: false,
+        business_telephone: false
       };
-      if (
-        !OrganisationContact.data.primary_email ||
-        !OrganisationContact.data.primary_email.length
-      ) {
+      if(ValidateEmail(OrganisationContact.data.primary_email)){
         errors.primary_email = true;
         valid = false;
       }
@@ -406,6 +448,10 @@ export default function OrganisationLinearStepper(props) {
         !OrganisationContact.data.branches[0].zipcode.length
       ) {
         errors.zipcode = true;
+        valid = false;
+      }
+      if (!OrganisationContact.data.branches[0].business_telephone || !OrganisationContact.data.branches[0].business_telephone.length) {
+        errors.business_telephone = true;
         valid = false;
       }
       if (!valid) {
@@ -505,6 +551,14 @@ export default function OrganisationLinearStepper(props) {
         OrganisationGeneral.section_id
       );
     }
+    else if (activeStep === 7) {
+      handleSubmit(
+        organisationBusinessDevelopment.data,
+        "organisation_business_developments",
+        UpdateOrganisationBusinessDev,
+        organisationBusinessDevelopment.section_id
+      );
+    } 
 
     // setActiveStep((prevActiveStep) => prevActiveStep + 1);
     // let newSkipped = skipped;
@@ -542,8 +596,11 @@ export default function OrganisationLinearStepper(props) {
     setActiveStep(index);
   };
 
+
   return (
     <ThemeProvider theme={theme}>
+
+
       <div className={classes.root}>
         {loading && <Loader/>}
         {/* <Snackbar/> */}

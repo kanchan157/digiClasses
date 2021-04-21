@@ -17,12 +17,19 @@ import WorkingWithAcuity from '../../StepperComponent/WorkingWithAcuity';
 import ContractDocumentation from '../../StepperComponent/ContractDocumentition';
 import Ranking from '../../StepperComponent/Ranking';
 import Review from '../../StepperComponent/Review';
+import WorkInfo from '../../StepperComponent/WorkInfo';
+import QualityAssurance from '../../StepperComponent/QualityAssurance';
+import CoachingProfileField from '../../StepperComponent/CoachingProfileField';
+import CommisionInfoAdmin from '../../StepperComponent/CommisionInfoAdmin';
+import AssessmentProfile from '../../StepperComponent/AssessmentProfile';
+import AssociateCoaches from '../../StepperComponent/Associate_Coaches';
+import FacilitationProfile from '../../StepperComponent/FacilititationProfile';
+import MentoringProfile from '../../StepperComponent/MentoringProfile';
 import HeaderMenu from '../../../../Components/HeaderMenu';
 import clsx from 'clsx';
 import { Check } from '@material-ui/icons';
 import OtherQuestions from '../../StepperComponent/OtherQuestions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
-import QualityAssurance from '../../StepperComponent/QualityAssurance';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -118,7 +125,10 @@ function QontoStepIcon(props: any) {
 
 
 function getSteps() {
-    return ['Basic Info', 'Share login credentials', 'NDA', 'Due Diligence call', 'Questionnaire', 'Reference Questionnaire', 'Working with acuity', 'Contract Documentation', 'Other Questions', 'Ranking', 'Review'];
+    return ['Basic Info', 'Share login credentials', 'NDA', 'WorkInfo', 'QualityAssurance', 'Due Diligence call',
+     'CoachingProfileField', 'CommisionInfoAdmin', 
+     'AssessmentProfile','AssociateCoaches','FacilitationProfile','MentoringProfile',
+     'Questionnaire', 'Reference Questionnaire', 'Working with acuity', 'Contract Documentation', 'Other Questions', 'Ranking', 'Review'];
 }
 
 function OnboardingPartnerAdmin() {
@@ -132,30 +142,46 @@ function OnboardingPartnerAdmin() {
     }
 
     function getStepContent(step: any) {
+        console.log(step)
         switch (step) {
             case 0:
-                // return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step}/>;
-                return <QualityAssurance />;
+                return <BasicInfo parentSetProfileId={updateProfileId} parentHandleNext={handleNext} activeIndex={step} />;
             case 1:
-                return <Share_Login_Credentials profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <Share_Login_Credentials profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 2:
-                return <NDA profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <NDA profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 3:
-                return <DueDiligenceCall profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <WorkInfo profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 4:
-                return <Questionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <QualityAssurance profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 5:
-                return <ReferenceQuestionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <DueDiligenceCall profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 6:
-                return <WorkingWithAcuity profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <CoachingProfileField profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 7:
-                return <ContractDocumentation profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <CommisionInfoAdmin profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 8:
-                return <OtherQuestions profileId={profileID} parentHandleNext={handleNext } activeIndex={step}/>;
+                return <AssessmentProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 9:
-                return <Ranking profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <AssociateCoaches profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 10:
-                return <Review profileId={profileID} parentHandleNext={handleNext} activeIndex={step}/>;
+                return <FacilitationProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 11:
+                return <MentoringProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 12:
+                return <Questionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 13:
+                return <ReferenceQuestionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 14:
+                return <WorkingWithAcuity profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 15:
+                return <ContractDocumentation profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 16:
+                return <OtherQuestions profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 17:
+                return <Ranking profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+            case 18:
+                return <Review profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             default:
                 return "Not available"
         }
@@ -187,19 +213,19 @@ function OnboardingPartnerAdmin() {
                 </Grid>
             </Grid> */}
             <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE",height: "calc(100vh - 64px)"   }}>
-                <Typography  style={{ paddingBlock:25,textAlign: "center",alignSelf:"center",fontSize:26,color:"#4A4A4A",fontWeight:"bold" }}>        
-                    <ArrowBackIosIcon style={{fontSize:16,color:"#4A4A4A"}}/> Partner Onboarding</Typography>
-                    <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE",paddingLeft:55 }}>
+                <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 64px)" }}>
+                    <Typography style={{ paddingBlock: 25, textAlign: "center", alignSelf: "center", fontSize: 26, color: "#4A4A4A", fontWeight: "bold" }}>
+                        <ArrowBackIosIcon style={{ fontSize: 16, color: "#4A4A4A" }} /> Partner Onboarding</Typography>
+                    <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE", paddingLeft: 55 }}>
                         {steps.map((label, index) => (
                             <Step key={label}>
-                                <StepLabel style={{cursor:"pointer"}} StepIconComponent={QontoStepIcon} onClick={() => { handleNext(index) }}>{label}</StepLabel>
+                                <StepLabel style={{ cursor: "pointer" }} StepIconComponent={QontoStepIcon} onClick={() => { handleNext(index) }}>{label}</StepLabel>
                             </Step>
                         ))}
                     </Stepper>
 
                 </Grid>
-                <Grid item xs={9} style={{ height: "calc(100vh - 64px)",overflow:"auto" }}>
+                <Grid item xs={9} style={{ height: "calc(100vh - 64px)", overflow: "auto" }}>
                     {getStepContent(activeStep)}
                     {activeStep === steps.length && (
                         <Paper square elevation={0} className={classes.resetContainer}>

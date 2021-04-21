@@ -4,6 +4,8 @@ import {
   UPDATE_ORGANISATION_ID_CONTACT,
   SET_ORGANISATION_CONTACT_ERROR,
   UPDATE_ORGANISATION_CONTACT_ERROR,
+  SET_CONTACT_SECTION_AND_ORG_IDS,
+  RESET_CONTACT
 } from "./OrganisationContactActions";
 
 export const INITIAL_STATE = {
@@ -31,6 +33,7 @@ export const INITIAL_STATE = {
     country_list_id: false,
     county: false,
     zipcode: false,
+    business_telephone: false
   },
 };
 
@@ -53,6 +56,10 @@ const OrganisationContactReducer = (state = INITIAL_STATE, action) => {
       return { ...state, errors: action.payload };
     case UPDATE_ORGANISATION_CONTACT_ERROR:
       return { ...state, errors: { ...state.errors, [action.payload]: false } };
+    case SET_CONTACT_SECTION_AND_ORG_IDS:
+      return {...state, section_id: action.payload.sectionId, organisation_id: action.payload.organisationId};
+    case RESET_CONTACT:
+      return INITIAL_STATE;
   }
   return state;
 };

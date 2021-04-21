@@ -13,9 +13,10 @@ function CustomInput(props: any) {
                 // label:"asdasd"
             }}
             className="h5"
-            inputProps={{style:{padding:10,}}}
-            label="Search input"
-            
+            {...props}
+            fullWidth
+            margin="8px"
+
             onChange={(e: any) => {
                 var  dataIndex= props.dataIndex == undefined ? 0 : props.dataIndex
 

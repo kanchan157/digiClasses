@@ -1,8 +1,7 @@
 import { Grid, InputLabel, makeStyles, TextField } from '@material-ui/core';
 import React, { useState } from 'react'
-import CustomInput from '../../../../Components/CustomInput';
-import CustomSelect from '../../../../Components/CustomSelect';
-import CustomMultiSelectOrganization from './CustomMultiSelectOrganization';
+
+// import CustomMultiSelectOrganization from './CustomMultiSelectOrganization';
 
 function OrganizationContent() {
     const classes = useStyles();
@@ -68,7 +67,7 @@ function OrganizationContent() {
                             value={orgName}
                              />
                         </Grid>
-                        {serviceType.map((e) => <Grid item xs={2}>
+                        {/* {serviceType.map((e) => <Grid item xs={2}>
                             <CustomMultiSelectOrganization id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
                         </Grid>)}
                         {status.map((e) =><Grid item xs={2}>
@@ -76,7 +75,7 @@ function OrganizationContent() {
                         </Grid>)}
                         {activity.map((e) =><Grid item xs={2}>
                             <CustomMultiSelectOrganization id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
-                        </Grid>)}
+                        </Grid>)} */}
                         <Grid item xs={3}>
 
                         </Grid>
