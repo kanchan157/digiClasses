@@ -29,6 +29,7 @@ import ModelCardSelectedCoach from './Pages/CoachSearch/CustomMultiSelectCoach';
 import SearchResult from './Pages/CoachSearch/SearchResult';
 import CustomMultiSelectCoach from './Pages/CoachSearch/CustomMultiSelectCoach';
 import HomeHeaderMenu from './Pages/AcuityOrganizationHome/HomeHeaderMenu';
+import FooterCoachSearch from './Pages/CoachSearch/FooterCoachSearch';
 
 // import ContractDocumentition from './Pages/Roles/Partner/ContractDocumentition';
 
@@ -70,6 +71,7 @@ export const App = () => {
         <Route exact path="/searchResult"><SearchResult /></Route>
         <Route exact path="/customMultiSelectCoach"><CustomMultiSelectCoach /></Route>
         <Route exact path="/homeHeaderMenu"><HomeHeaderMenu /></Route>
+        <Route exact path="/footerCoachSearch"><FooterCoachSearch /></Route>
 
 {/* admin/org/emp/view/list
 admin/org/edit */}

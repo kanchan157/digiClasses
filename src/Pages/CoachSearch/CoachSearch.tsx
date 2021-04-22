@@ -1,5 +1,5 @@
 import { Button, Divider, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputBase, InputLabel, makeStyles, NativeSelect, Paper, RadioGroup, Select, TextField, withStyles, Radio, Slider, Card } from '@material-ui/core'
-import { ArrowDropDown, Close, Search } from '@material-ui/icons'
+import { ArrowDropDown, Close, PersonAddDisabled, Search } from '@material-ui/icons'
 import React, { useMemo, useState } from 'react'
 import CustomMultiSelectAutoComplete from '../../Components/CustomMultiSelectAutoComplete';
 import CustomSelect from '../../Components/CustomSelect'
@@ -7,6 +7,7 @@ import HomeHeaderMenu from '../AcuityOrganizationHome/HomeHeaderMenu';
 import CustomMultiSelectCoach from './CustomMultiSelectCoach';
 import SearchResult from './SearchResult';
 import { useHistory } from 'react-router';
+import FooterCoachSearch from './FooterCoachSearch';
 
 function CoachSearch() {
 
@@ -225,7 +226,7 @@ function CoachSearch() {
 
                     <Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 20 }}>
                         <Grid item xs={7}>
-                            <Paper className={classes.root}>
+                            <Paper component="form" className={classes.root}>
                                 <Grid container direction="row" >
                                     <Grid item xs={1}>
                                         <IconButton type="submit" className={classes.iconButton} aria-label="search">
@@ -233,11 +234,16 @@ function CoachSearch() {
                                         </IconButton>
                                     </Grid>
                                     <Grid item xs={11} >
-                                        {filterData}
+                                        <InputBase
+                                            className={classes.input}
+                                            placeholder="Search Google Maps"
+                                            inputProps={{ 'aria-label': 'search google maps' }}
+                                        />
                                     </Grid>
                                 </Grid>
                             </Paper>
                         </Grid>
+
                         <Grid item xs={5}>
                             <Grid container direction="row" alignItems="center" style={{ marginLeft: 20, }}>
                                 <Grid item xs={12}>
@@ -249,15 +255,26 @@ function CoachSearch() {
                                         {additionalFilter ? 'Hide' : 'Show'} Additional Filters
                                     </Button>
                                 </Grid>
-                                {Object.keys(selectedFilter).length > 0 && <Grid item xs={12} style={{ marginTop: 10 }}>
-                                    <label style={{ color: '#981B1E', fontSize: 12, paddingLeft: 10, textDecoration: 'underline' }}
-                                        onClick={() => setSelectedFilter([])}
-                                    >Clear all filters</label>
-                                </Grid>}
+                               
                             </Grid>
                         </Grid>
                     </Grid>
-
+                    {Object.keys(selectedFilter).length > 0 &&<Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 20 }}>
+                        <Grid item xs={12}>
+                            <Paper className={classes.root} style={{ border: 0 }}>
+                                <Grid container direction="row" >
+                                    <Grid item xs={10} >
+                                        {filterData}
+                                    </Grid>
+                                    <Grid item xs={2}>
+                                    <label style={{ color: '#981B1E', fontSize: 12, paddingLeft: 10, textDecoration: 'underline' }}
+                                        onClick={() => setSelectedFilter([])}
+                                    >Clear all filters</label>
+                                </Grid>
+                                </Grid>
+                            </Paper>
+                        </Grid>
+                    </Grid>}
                     <Grid container direction="row" alignItems="center" style={{ marginTop: 10, }}>
                         {filterOption.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
                             <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
@@ -289,62 +306,62 @@ function CoachSearch() {
                                         <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
                                     </Grid>)}
                                     <Grid item xs={3}>
-                                    <Card variant="outlined" style={{ padding: 10 , margin: 10}}>
+                                        <Card variant="outlined" style={{ padding: 10, margin: 10 }}>
 
 
-                                        <Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 20}}>
+                                            <Grid container direction="row" alignItems="flex-start" style={{ marginBottom: 20 }}>
 
-                                            <Grid item xs={12} >
-                                                <div>
-                                                    <label className={classes.locationTitle}>Location/Radius</label>
-                                                    <div style={{ float: 'right' }}>
-                                                        <ArrowDropDown />
+                                                <Grid item xs={12} >
+                                                    <div>
+                                                        <label className={classes.locationTitle}>Location/Radius</label>
+                                                        <div style={{ float: 'right' }}>
+                                                            <ArrowDropDown />
+                                                        </div>
                                                     </div>
-                                                </div>
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                    <Paper component="form" className={classes.rootPop}>
+                                                        <IconButton className={classes.iconButtonPop} aria-label="menu">
+                                                            <Search />
+                                                        </IconButton>
+                                                        <InputBase
+                                                            className={classes.inputPop}
+                                                            placeholder="Search Google Maps"
+                                                            inputProps={{ 'aria-label': 'search google maps' }}
+                                                        />
+                                                    </Paper>
+                                                </Grid>
+                                                <Grid item xs={12} style={{ marginTop: 10, marginBottom: 10 }}>
+                                                    <label className={classes.locationTitle2}>Location in CRF</label>
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                    <FormControl component="fieldset">
+                                                        <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
+                                                            <FormControlLabel value="female" control={<Radio />} label="Location 1" className={classes.radioLocationTitle} />
+                                                            <FormControlLabel value="male" control={<Radio />} label="Location 2" className={classes.radioLocationTitle} />
+                                                        </RadioGroup>
+                                                    </FormControl>
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                    <label className={classes.locationTitle2}>Choose Radius</label>
+                                                </Grid>
+                                                <Grid item xs={12} >
+                                                    {/* <Slider
+                                                        defaultValue={30}
+                                                        getAriaValueText={valuetext}
+                                                        aria-labelledby="discrete-slider"
+                                                        valueLabelDisplay="auto"
+                                                        step={10}
+                                                        marks
+                                                        min={10}
+                                                        max={110}
+                                                        className={classes.sliderRadius}
+                                                        /> */}
+                                                    <PrettoSlider valueLabelDisplay="auto" aria-label="pretto slider" defaultValue={20} />
+                                                </Grid>
                                             </Grid>
-                                            <Grid item xs={12} >
-                                                <Paper component="form" className={classes.rootPop}>
-                                                    <IconButton className={classes.iconButtonPop} aria-label="menu">
-                                                        <Search />
-                                                    </IconButton>
-                                                    <InputBase
-                                                        className={classes.inputPop}
-                                                        placeholder="Search Google Maps"
-                                                        inputProps={{ 'aria-label': 'search google maps' }}
-                                                    />
-                                                </Paper>
-                                            </Grid>
-                                            <Grid item xs={12} style={{ marginTop: 10, marginBottom: 10 }}>
-                                                <label className={classes.locationTitle2}>Location in CRF</label>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                <FormControl component="fieldset">
-                                                    <RadioGroup aria-label="gender" name="gender1" value={value} onChange={handleChange}>
-                                                        <FormControlLabel value="female" control={<Radio />} label="Location 1" className={classes.radioLocationTitle} />
-                                                        <FormControlLabel value="male" control={<Radio />} label="Location 2" className={classes.radioLocationTitle} />
-                                                    </RadioGroup>
-                                                </FormControl>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                <label className={classes.locationTitle2}>Choose Radius</label>
-                                            </Grid>
-                                            <Grid item xs={12} >
-                                                {/* <Slider
-defaultValue={30}
-getAriaValueText={valuetext}
-aria-labelledby="discrete-slider"
-valueLabelDisplay="auto"
-step={10}
-marks
-min={10}
-max={110}
-className={classes.sliderRadius}
-/> */}
-                                                <PrettoSlider valueLabelDisplay="auto" aria-label="pretto slider" defaultValue={20} />
-                                            </Grid>
-                                        </Grid>
                                         </Card>
-                                        </Grid>
+                                    </Grid>
                                 </Grid>
                             </Grid>
                         </Grid>
@@ -370,6 +387,8 @@ className={classes.sliderRadius}
 
                             </Grid>
                         </Grid>
+
+
                     </>}
 
 
@@ -378,9 +397,16 @@ className={classes.sliderRadius}
                 <Grid item xs={8} alignItems="center" style={{ padding: 0, }}>
                     <SearchResult />
                 </Grid>
+                <Grid item xs={8} alignItems="center" >
+                    <Grid container direction="row" alignItems="center">
+                        <Grid item xs={12} style={{ marginTop: 50 }}>
+                            <FooterCoachSearch />
+                        </Grid>
+                    </Grid>
+                </Grid>
             </Grid>
 
-        </div>
+        </div >
     )
 }
 
@@ -472,8 +498,6 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 'bold',
         marginBottom: 20,
     },
-
-
     menuTitle: {
         marginLeft: 30, color: "#fff", cursor: 'pointer', fontSize: 14,
         '&:hover': {
@@ -518,6 +542,14 @@ const useStyles = makeStyles((theme) => ({
     radioLocationTitle: {
         color: '#303030',
         fontSize: 13
+    },
+    noUserIcon: {
+        fontSize: 35,
+        color: '#40C9FC',
+        width: '100%'
+    },
+    noUserTitle: {
+        fontSize: 14
     },
 
 }))

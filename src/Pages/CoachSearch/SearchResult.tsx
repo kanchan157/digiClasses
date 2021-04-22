@@ -1,5 +1,5 @@
-import { Avatar, Button, Card, Grid,makeStyles } from '@material-ui/core';
-import {  PersonAdd, } from '@material-ui/icons';
+import { Avatar, Button, Card, Grid, makeStyles } from '@material-ui/core';
+import { PersonAdd, PersonAddDisabled, } from '@material-ui/icons';
 import React, { useState } from 'react';
 import ModelCardSelectedCoach from './modelCardUsers';
 
@@ -9,7 +9,7 @@ const SearchResult = () => {
     const [coaches, setCoaches] = useState('');
     const [menuType, setMenuType] = useState('organization');
     const [coachesCount, setCoachesCount] = useState(0)
-    const [coachesList, setCoachesList] = useState([{ name: 'David James' },{ name: 'David James2' }])
+    const [coachesList, setCoachesList] = useState<any>([{ name: 'David James' }, { name: 'David James2' }])
     const [selectedCoachesList, setSelectedCoachesList] = useState<any>([])
     return (
         <>
@@ -17,18 +17,18 @@ const SearchResult = () => {
                 <Grid item xs={10} alignItems="flex-start">
                     <label className={classes.headingTitle}>Search Results</label>
                 </Grid>
-                <Grid item xs={2} alignItems="flex-end" style={{ border: '0px solid red', position: 'relative' }}>
+                <Grid item xs={2} alignItems="flex-end" style={{ border: '0px solid red', position: 'fixed',bottom:10,right:'16%',zIndex:9 }}>
                     <div style={{ position: 'relative' }}>
                         <Avatar onClick={() => (console.log('click'), coaches == 'active' ? setCoaches('') : setCoaches('active'))}
                             style={{ marginTop: 2, float: 'right', backgroundColor: '#077F83', }} alt="" src="/static/images/avatar/1.jpg" />
                         <div className={classes.couchCounts}>{selectedCoachesList.length}</div>
                     </div>
 
-                    {coaches == 'active' && <ModelCardSelectedCoach data={selectedCoachesList}/>}
+                    {coaches == 'active' && <ModelCardSelectedCoach data={selectedCoachesList} />}
                 </Grid>
             </Grid>
 
-            {coachesList.map((e) => <Grid container direction="row" justify="center" style={{ border: '0px solid red', }}>
+            {coachesList.length > 0 && coachesList.map((e:any) => <Grid container direction="row" justify="center" style={{ border: '0px solid red', }}>
                 <Grid item xs={12} style={{}}>
                     <Card variant="outlined" style={{ padding: "20px", marginTop: 30, borderRadius: 0, }}>
                         <Grid container direction="row" justify="center" className={classes.deviderLine} >
@@ -103,6 +103,12 @@ const SearchResult = () => {
                 </Grid>
             </Grid>)}
 
+            {coachesList.length == 0 && <Grid container direction="row" alignItems="center">
+                <Grid item xs={12} style={{ textAlign: 'center' }}>
+                    <PersonAddDisabled className={classes.noUserIcon} />
+                    <label className={classes.noUserTitle}>No results found</label>
+                </Grid>
+            </Grid>}
 
         </>
     )
@@ -207,5 +213,12 @@ const useStyles = makeStyles((theme) => ({
         // minWidth: 330,
         top: 52,
     },
-
+    noUserIcon: {
+        fontSize: 35,
+        color: '#40C9FC',
+        width: '100%'
+    },
+    noUserTitle: {
+        fontSize: 14
+    },
 }))
