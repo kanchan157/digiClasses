@@ -32,10 +32,10 @@ function CustomMultiSelectCoach(props: any) {
                 ))
             }
             getOptionLabel={(option) => option.title}
-            style={{ width: "100%",borderWidth:0  }}
+            style={{ width: "100%",  }}
             renderInput={(params) =>
                 <TextField {...params} className="h5"
-                    style={{ marginBlock: 10,backgroundColor:'#fff', borderRadius:9,borderWidth:0}}
+                    style={{ marginBlock: 10,backgroundColor:'white', }}
                     fullWidth
                     label={props?.values.name}
                     variant="outlined"

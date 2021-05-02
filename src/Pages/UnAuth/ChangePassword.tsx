@@ -6,6 +6,8 @@ import Backdrop from '@material-ui/core/Backdrop';
 import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import { green } from '@material-ui/core/colors';
 import { useHistory } from 'react-router'
+import AuthClient from "../../Service/auth_services";
+import { useDispatch } from "react-redux";
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -26,8 +28,10 @@ const useStyles = makeStyles((theme: Theme) =>
 const ChangePassword = () => {
     const classes = useStyles();
     const history = useHistory();
-    const [, setPassword] = useState("")
-    const [, setNPassword] = useState("")
+    const dispatch = useDispatch();
+
+    const [password, setPassword] = useState("")
+    const [nPassword, setNPassword] = useState("")
     const [open, setOpen] = React.useState(false);
 
     const setInputState = (inputStateValue: any, inputId: any) => {
@@ -35,11 +39,18 @@ const ChangePassword = () => {
         inputId == 'nPassword' && setNPassword(inputStateValue);
     }
     const forgotPasswordLogic = () => {
-        setOpen(true);
-
+        AuthClient.updatePassword({ password: password, password_confirmation: nPassword }).then((response: any) => {
+            forgotPasswordLogicSuccess(response)
+        }).catch(error => {
+            alert("Something went wrong, please try again !!!")
+        });
         // Post_API({ email: username }, api_url.login, forgotPasswordLogicSuccess)
     }
 
+    const forgotPasswordLogicSuccess = (response:any)=>{
+        setOpen(true);
+        console.log(response)
+    }
     const handleClose = () => {
         setOpen(false);
         history.push('/auth/login', { subPage: "login" })
@@ -53,7 +64,7 @@ const ChangePassword = () => {
                     <img src="../../../assets/images/logo.png" alt="dsd" />
                 </Grid>
                 <Grid item xs={12} style={{ textAlign: "center" }}  >
-                    <Typography variant="h3" style={{ marginTop: 20, color: "#4D4F5C" }}>Reset Password</Typography>
+                    <Typography variant="h3" style={{ marginTop: 20, color: "#4D4F5C" }}>Set Password</Typography>
                 </Grid>
                 <Grid item xs={12} style={{ marginTop: 20 }}>
                     <CustomInput id="password" placeholder="Password" parentcall={setInputState} />
@@ -64,7 +75,7 @@ const ChangePassword = () => {
 
 
                 <Grid item xs={6} justify="center" alignContent="center" style={{ marginTop: 20, textAlign: "center" }}>
-                    <Button variant="contained" color="primary" onClick={forgotPasswordLogic}>Done</Button>
+                    <Button variant="contained" color="primary" onClick={forgotPasswordLogic}>Submit</Button>
                 </Grid>
             </Grid>
 

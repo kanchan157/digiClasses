@@ -46,8 +46,8 @@ function requestReset(formData) {
 
 function updatePassword(formData) {
     return request({
-        url: '/users/change_password',
-        method: 'POST',
+        url: '/auth/password',
+        method: 'Put',
         data: formData
     })
 }

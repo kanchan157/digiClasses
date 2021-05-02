@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { makeStyles } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
@@ -69,6 +69,18 @@ export default function General(props) {
 
   const dispatch = useDispatch();
 
+  const { 
+    record_owner_id, 
+    has_admin_access,
+    do_not_contact,
+    do_not_mailshot,
+    main_access_people_names,
+    total_no_of_assignments,
+    client_panel_area
+  } = useSelector((state) => state.organisationGeneralReducer.data);
+
+  const { record_owners } = useSelector((state) => state.commonReducer.organisationDropdowns);
+
   const handleInputChange = (value, index) => {
     const updatedForm = formInput;
     updatedForm[index]['value'] = value;
@@ -86,18 +98,67 @@ export default function General(props) {
     {
       componentType: "select",
       label: "Record Owner",
-      name: "record_owner",
+      name: "record_owner_id",
       placeholder: "Record Owner",
-      selectOptions: [{id: 0, value: 'KB', name: 'KB'},{id: 1, value: 'SJ', name: 'SJ'},{id: 2, value: 'LD', name: 'LD'},{id: 3, value: 'CP', name:'CP'},{id: 4, value: 'AS', name: 'AS'},{id: 5, value: 'SC', name: 'SC'}],
+      selectOptions: record_owners,
+      // selectOptions: [{id: 0, value: 'KB', name: 'KB'},{id: 1, value: 'SJ', name: 'SJ'},{id: 2, value: 'LD', name: 'LD'},{id: 3, value: 'CP', name:'CP'},{id: 4, value: 'AS', name: 'AS'},{id: 5, value: 'SC', name: 'SC'}],
+      value: record_owner_id,
       handleChange: handleInputChange
     },
     {
       componentType: "select",
       label: "Admin Access",
       name: "has_admin_access",
-      placeholder: "Name",
+      placeholder: "Select Admin Access",
+      selectOptions: [{id: 0, value: 'True', name: 'True'},{id: 1, value: 'False', name: 'False'}],
+      value: has_admin_access,
       apiVariable: "has_admin_access_values",
       handleChange: handleInputChange
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Do Not Contact",
+      name: "do_not_contact",
+      placeholder: "Do Not Contact",
+      handleChange: handleInputChange,
+      value: do_not_contact
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Do Not Mailshot",
+      name: "do_not_mailshot",
+      placeholder: "Do Not Mailshot",
+      handleChange: handleInputChange,
+      value: do_not_mailshot
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Main Access People Names",
+      name: "main_access_people_names",
+      placeholder: "Main Access People Names",
+      handleChange: handleInputChange,
+      value: main_access_people_names
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Total No of Assignments",
+      name: "total_no_of_assignments",
+      placeholder: "Total No of Assignments",
+      handleChange: handleInputChange,
+      value: total_no_of_assignments
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Client Panel Area",
+      name: "client_panel_area",
+      placeholder: "Client Panel Area",
+      handleChange: handleInputChange,
+      value: client_panel_area
     },
   ];
 

@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Avatar, Backdrop, Button, Card, Dialog, DialogTitle, Divider, Fade, InputLabel, List, ListItem, ListItemAvatar, ListItemIcon, ListItemText, makeStyles, Modal, Typography } from '@material-ui/core';
 import { AddCircleOutlined, Delete, Label, SupervisorAccount } from '@material-ui/icons';
 
-const ModelCardSelectedCoach = (props:any) => {
+const InternalModelCardSelectedCoach = (props:any) => {
     const {data} = props
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
@@ -76,7 +76,7 @@ const ModelCardSelectedCoach = (props:any) => {
         </>
     )
 }
-export default ModelCardSelectedCoach
+export default InternalModelCardSelectedCoach
 
 const useStyles = makeStyles((theme) => ({
 
@@ -85,7 +85,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'absolute',
         zIndex: 1,
         // maxWidth: 360,
-        minWidth: 330,
+        minWidth: 187,
         bottom: 0,
         right:40
     },

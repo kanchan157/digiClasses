@@ -154,7 +154,7 @@ export const SimpleSelect = (props: any) => {
       <Select name={selectName} style={{ color: !selectValue ? '#a9a9a9' : '' }} className={classes.selectArea} displayEmpty value={selectValue} onChange={(e) => handleSelectChange(e.target.value, index, 'selectValue')}>
         <MenuItem>{selectPlaceholder}</MenuItem>
         {(selectOptions || listOptions).map((option: any, index: any) => {
-          return <MenuItem key={option.id} value={option.value}>{option.name}</MenuItem>;
+          return <MenuItem key={option.id} value={option.id}>{option.value}</MenuItem>;
         })}
       </Select>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}

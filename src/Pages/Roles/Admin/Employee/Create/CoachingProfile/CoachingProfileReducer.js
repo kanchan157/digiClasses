@@ -3,7 +3,8 @@ import {
     UPDATE_COACHING_PROFILE, 
     UPDATE_EMPLOYEE_ID_COACHING_PROFILE,
     SET_COACHING_PROFILE_ERROR,
-    UPDATE_COACHING_PROFILE_ERROR 
+    UPDATE_COACHING_PROFILE_ERROR,
+    RESET_COACHING_PROFILE
 } from "./CoachingProfileActions"
 
 
@@ -42,11 +43,13 @@ const CoachingProfileReducer = (state = INITIAL_STATE, action) => {
             action.payload['role'] = 'Coaching';
             return {...state, section_id: action.payload.id, data: action.payload};
         case UPDATE_EMPLOYEE_ID_COACHING_PROFILE:
-            return {...state, employee_id: action.payload.id};
+            return {...state, employee_id: action.payload.id, section_id: action.payload.section_id};
         case SET_COACHING_PROFILE_ERROR:
             return {...state, errors: action.payload}
         case UPDATE_COACHING_PROFILE_ERROR:
             return {...state, errors: {...state.errors, [action.payload] : false}}
+        case RESET_COACHING_PROFILE:
+            return INITIAL_STATE
     }
     return state;
 };

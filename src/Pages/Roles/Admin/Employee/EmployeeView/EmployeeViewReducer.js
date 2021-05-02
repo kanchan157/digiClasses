@@ -1,6 +1,6 @@
 import { 
     SET_EMPLOYEE_LIST, 
-} from "./ListActions"
+} from "./EmployeeViewAction"
 
 
 export const INITIAL_STATE = {

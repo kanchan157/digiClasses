@@ -401,7 +401,7 @@ export default function Profile(props) {
       errors && errors.job_role_lists && "*Please select the Job Role",
     },
     {
-      componentType: "select",
+      componentType: "MultipleSelect",
       label: "Past Organisation*",
       name: "past_organisation",
       value: past_organisation,
@@ -414,7 +414,7 @@ export default function Profile(props) {
     {
       componentType: "input",
       type: "text",
-      label: "Left Organisation Follow up Action",
+      label: "Left Organisation Follow up Action*",
       name: "left_organisation_follow_up_action",
       placeholder: "Left Organisation Follow up Action",
       handleChange: handleInputChange,

@@ -5,6 +5,7 @@ export const UPDATE_COACHING_CAPACITY = "UPDATE_COACHING_CAPACITY";
 export const UPDATE_EMPLOYEE_ID_COACHING_CAPACITY = "UPDATE_EMPLOYEE_ID_COACHING_CAPACITY";
 export const SET_COACHING_CAPACITY_ERROR = "SET_COACHING_CAPACITY_ERROR";
 export const UPDATE_COACHING_CAPACITY_ERROR = "UPDATE_COACHING_CAPACITY_ERROR";
+export const RESET_COACHING_CAPACITY = "RESET_COACHING_CAPACITY";
 
 export const SetCoachingCapacity = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateCoachingCapacityError(data){
     payload: data
   }
 }
+
+export function ResetCoachingCapacity() {
+  return {
+    type: RESET_COACHING_CAPACITY
+  }
+};

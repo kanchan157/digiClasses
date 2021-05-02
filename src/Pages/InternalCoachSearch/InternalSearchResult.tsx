@@ -1,12 +1,11 @@
 import { Avatar, Button, Card, Grid, makeStyles } from '@material-ui/core';
 import { PersonAdd, PersonAddDisabled, } from '@material-ui/icons';
 import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import ModelCardSelectedCoach from './modelCardUsers';
+import InternalModelCardSelectedCoach from './InternalmodelCardUsers';
+import ModelCardSelectedCoach from './InternalmodelCardUsers';
 
-const SearchResult = () => {
+const InternalSearchResult = () => {
     const classes = useStyles();
-    const history = useHistory();
 
     const [coaches, setCoaches] = useState('');
     const [menuType, setMenuType] = useState('organization');
@@ -19,14 +18,14 @@ const SearchResult = () => {
                 <Grid item xs={12} alignItems="flex-start">
                     <label className={classes.headingTitle}>Search Results</label>
                 </Grid>
-                <Grid item xs={2} alignItems="flex-end" style={{ border: '0px solid red', position: 'fixed',bottom:30,right:'16%',zIndex:9 }}>
+                <Grid item xs={2} alignItems="flex-end" style={{ border: '0px solid red', position: 'fixed',bottom:10,right:'16%',zIndex:9 }}>
                     <div style={{ position: 'relative' }}>
-                        <Avatar className={classes.large}  onClick={() => (console.log('click'), coaches == 'active' ? setCoaches('') : setCoaches('active'))}
+                        <Avatar onClick={() => (console.log('click'), coaches == 'active' ? setCoaches('') : setCoaches('active'))}
                             style={{ marginTop: 2, float: 'right', backgroundColor: '#077F83', }} alt="" src="/static/images/avatar/1.jpg" />
                         <div className={classes.couchCounts}>{selectedCoachesList.length}</div>
                     </div>
 
-                    {coaches == 'active' && <ModelCardSelectedCoach data={selectedCoachesList} />}
+                    {coaches == 'active' && <InternalModelCardSelectedCoach data={selectedCoachesList} />}
                 </Grid>
             </Grid>
 
@@ -63,7 +62,7 @@ const SearchResult = () => {
                                 </Grid>
                             </Grid>
                             <Grid item xs={2} style={{ border: '0px solid red', }}>
-                                <Button variant="contained" color="primary" className={classes.btnSearch} onClick={() => {history.push("CoachDetail")}}>
+                                <Button variant="contained" color="primary" className={classes.btnSearch}>
                                     View Profile
                                 </Button>
                             </Grid>
@@ -115,17 +114,12 @@ const SearchResult = () => {
         </>
     )
 }
-export default SearchResult
+export default InternalSearchResult
 
 const useStyles = makeStyles((theme) => ({
-    large: {
-        width: theme.spacing(7),
-        height: theme.spacing(7),
-      },
     headingTitle: {
         fontSize: 18,
-        fontWeight: 'bold',
-        marginLeft: 20,
+        fontWeight: 'bold'
     },
     userTitle: {
         fontSize: 18,
@@ -186,7 +180,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#40C9FC',
         fontSize: 11,
         marginRight: 20,
-        boxShadow: 'none',
     },
     btnOrange: {
         borderRadius: 50,
@@ -194,7 +187,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#FFCC53',
         fontSize: 11,
         marginRight: 20,
-        boxShadow: 'none',
     },
     btnGreen: {
         borderRadius: 50,
@@ -202,7 +194,6 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#4AD991',
         fontSize: 11,
         marginRight: 20,
-        boxShadow: 'none',
     },
     addCoachBtn: {
         border: '1px solid #981B1E',
@@ -212,7 +203,6 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: 4,
         float: 'right',
         padding: '5px 5px',
-        
         textTransform: 'capitalize'
     },
     menuOption: {

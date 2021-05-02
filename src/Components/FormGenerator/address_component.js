@@ -147,8 +147,8 @@ export const SimpleSelect = (props) => {
         </span>
         {(selectOptions || listOptions).map((option, index) => {
           return (
-            <MenuItem key={option.id} value={option.value}>
-              {option.name}
+            <MenuItem key={option.id} value={option.id}>
+              {option.value}
             </MenuItem>
           );
         })}

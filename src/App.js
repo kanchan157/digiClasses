@@ -23,15 +23,17 @@ import OrganisationList from './Pages/Roles/Admin/Organisation/List/index';
 import EmployeeView from './Pages/Roles/Admin/Employee/EmployeeView/index';
 import EmployeeList from './Pages/Roles/Admin/Employee/List/index';
 import CoachList from './Pages/AcuityOrganizationHome/CoachList';
-import Location from './Components/location';
 import CoachSearch from './Pages/CoachSearch/CoachSearch';
-import ModelCardSelectedCoach from './Pages/CoachSearch/CustomMultiSelectCoach';
-import SearchResult from './Pages/CoachSearch/SearchResult';
-import CustomMultiSelectCoach from './Pages/CoachSearch/CustomMultiSelectCoach';
-import HomeHeaderMenu from './Pages/AcuityOrganizationHome/HomeHeaderMenu';
-import FooterCoachSearch from './Pages/CoachSearch/FooterCoachSearch';
-
+import CoachDetail from './Pages/CoachSearch/CoachDetail';
 // import ContractDocumentition from './Pages/Roles/Partner/ContractDocumentition';
+
+import InternalCoachSearch from './Pages/InternalCoachSearch/InternalCoachSearch';
+import InternalSearchResult from './Pages/InternalCoachSearch/InternalSearchResult';
+import InternalCoachList from './Pages/InternalCoachSearch/InternalCoachList';
+import BasicInfo from './Pages/Roles/StepperComponent/BasicInfo';
+import QucikStatastics from './Pages/QuickStatastices/QuickStatastics';
+
+
 
 export const App = () => {
   const global_data = useSelector((state) => state.commonReducer);
@@ -54,6 +56,7 @@ export const App = () => {
         <Route exact path="/auth/:path"><CommonUnAuth /></Route>
         <Route exact path="/admin/organisation/create"><OrganisationCreate /></Route>
         <Route exact path="/admin/organisation/:id/employee/create"><EmployeeCreate /></Route>
+        <Route exact path="/admin/organisation/:id/employee/:employeeid/edit"><EmployeeCreate /></Route>
         <Route exact path="/admin/organisation/:id/edit"><OrganisationCreate /></Route>
         <Route exact path="/admin/organisation/:id/employee/list"><EmployeeList /></Route>
         <Route exact path="/admin/partner/list"><PartnerList /></Route>
@@ -65,13 +68,15 @@ export const App = () => {
         <Route exact path="/custom"><CustomUploadFiles /></Route>
         <Route exact path="/ManageInfo"><ManageInfo /></Route>
         <Route exact path="/CoachList"><CoachList /></Route>
-        <Route exact path="/location"><Location /></Route>
-        <Route exact path="/coachSearch"><CoachSearch /></Route>
-        <Route exact path="/modelCardSelectedCoach"><ModelCardSelectedCoach /></Route>
-        <Route exact path="/searchResult"><SearchResult /></Route>
-        <Route exact path="/customMultiSelectCoach"><CustomMultiSelectCoach /></Route>
-        <Route exact path="/homeHeaderMenu"><HomeHeaderMenu /></Route>
-        <Route exact path="/footerCoachSearch"><FooterCoachSearch /></Route>
+        <Route exact path="/CoachSearch"><CoachSearch /></Route>
+        <Route exact path="/CoachDetail"><CoachDetail /></Route>
+
+        <Route exact path="/internalCoachSearch"><InternalCoachSearch /></Route>
+        <Route exact path="/internalSearchResult"><InternalSearchResult /></Route>
+        <Route exact path="/internalCoachList"><InternalCoachList /></Route>
+        <Route exact path="/basicInfo"><BasicInfo /></Route>
+
+        <Route exact path="/qucikStatastics"><QucikStatastics /></Route>
 
 {/* admin/org/emp/view/list
 admin/org/edit */}

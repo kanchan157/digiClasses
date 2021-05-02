@@ -37,9 +37,81 @@ import Loader from "../../../../../Components/Loader";
 import Divider from "@material-ui/core/Divider";
 import PersonIcon from '@material-ui/icons/Person';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { useDispatch } from "react-redux";
+
+// Reset organisation stepper data
+import { ResetOrganisationDetails } from "../../Organisation/Create/OrganisationDetails/OrganisationDetailsActions";
+import { ResetActivity } from "../../Organisation/Create/Activity/OrganisationActivityActions";
+import { ResetContact } from "../../Organisation/Create/Contact/OrganisationContactActions";
+import { ResetContract } from "../../Organisation/Create/Contract/OrganisationContractActions";
+import { ResetGeneral } from "../../Organisation/Create/General/OrganisationGeneralActions";
+import { ResetBusinessDevelopment } from "../../Organisation/Create/OrganisationBusinessDevelopment/OrganisationBusinessDevelopmentActions";
+import { ResetPreContract } from "../../Organisation/Create/PreContract/OrganisationPreContractActions";
+import { ResetProfile } from "../../Organisation/Create/Profile/OrganisationProfileActions";
+
+// Reset employee stepper data
+import { ResetContactArea } from "../Create/ContactArea/ContactAreaActions";
+import { ResetWorkInformation } from "../Create/WorkInformation/WorkInformationActions";
+import { ResetTrainingAndDevelopment } from "../Create/TrainingAndDevelopment/TrainingAndDevelopmentActions";
+import { ResetCoachingCapacity } from "../Create/CoachingCapacity/CoachingCapatityActions";
+import { ResetMentoringCapacity } from "../Create/MentoringCapacity/MentoringCapatityActions";
+import { ResetCoachingProfile } from "../Create/CoachingProfile/CoachingProfileActions";
+import { ResetMentorProfile } from "../Create/MentorProfile/MentorProfileActions";
+import { ResetFacilitation } from "../Create/Facilitation/FacilitationActions";
+import { ResetAccessment } from "../Create/Accessment/AccessmentActions";
+import { ResetGdpr } from "../Create/Gdpr/GdprActions";
+
+import {
+  UpdateOrganisationDetails,
+  SetOrganisationDetailsError,
+  UpdateOrganisationDetailsSectionId,
+  SetOrganisationDetails
+} from "../../Organisation/Create/OrganisationDetails/OrganisationDetailsActions";
+import {
+  UpdateOrganisationProfile,
+  UpdateOrganisationIdProfile,
+  SetOrganisationProfileError,
+  SetProfileSectionAndOrgIds,
+  SetOrganisationProfile
+} from "../../Organisation/Create/Profile/OrganisationProfileActions";
+import {
+  UpdateOrganisationContact,
+  UpdateOrganisationIdContact,
+  SetOrganisationContactError,
+  SetContactSectionAndOrgIds
+} from "../../Organisation/Create/Contact/OrganisationContactActions";
+import {
+  UpdateOrganisationPreContract,
+  UpdateOrganisationIdPreContract,
+  SetPreContractSectionAndOrgIds
+} from "../../Organisation/Create/PreContract/OrganisationPreContractActions";
+import {
+  UpdateOrganisationContract,
+  UpdateOrganisationIdContract,
+  SetOrganisationContractError,
+  SetOrganisationContractSectionAndOrgIds
+} from "../../Organisation/Create/Contract/OrganisationContractActions";
+import {
+  UpdateOrganisationActivity,
+  UpdateOrganisationIdActivity,
+  SetOrganisationActivityError,
+  SetOrganisationActivitySectionAndOrgIds
+} from "../../Organisation/Create/Activity/OrganisationActivityActions";
+import {
+  UpdateOrganisationGeneral,
+  UpdateOrganisationIdGeneral,
+  SetGeneralSectionAndOrgIds
+} from "../../Organisation/Create/General/OrganisationGeneralActions";
+import {
+  UpdateOrganisationBusinessDev,
+  UpdateOrganisationIdBusinessDev,
+  SetOrganisationBusinessDevSectionAndOrgIds
+} from "../../Organisation/Create/OrganisationBusinessDevelopment/OrganisationBusinessDevelopmentActions";
+
 
 export default function EmployeeList() {
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const createEmployeeListLayout = {
     width: "90%",
@@ -69,8 +141,63 @@ export default function EmployeeList() {
   const [loading, setLoading] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
   let { id } = useParams();
+
   useEffect(() => {
+    dispatch(ResetContactArea());
+    dispatch(ResetWorkInformation());
+    dispatch(ResetTrainingAndDevelopment());
+    dispatch(ResetCoachingCapacity());
+    dispatch(ResetMentoringCapacity());
+    dispatch(ResetCoachingProfile());
+    dispatch(ResetMentorProfile());
+    dispatch(ResetFacilitation());
+    dispatch(ResetAccessment());
+    dispatch(ResetGdpr());
     getData();
+    setLoading(true);
+    // DataService.getDirectData(`/organisations/${id}`)
+    // .then((response) => {
+    //   dispatch(UpdateOrganisationDetailsSectionId(id));
+    //   dispatch(SetOrganisationDetails(response.data));
+    //   dispatch(SetContactSectionAndOrgIds({sectionId: response.organisation_contact_info_id, organisationId: id}));
+    //   dispatch(SetProfileSectionAndOrgIds({sectionId: response.organisation_profile_id, organisationId: id}));
+    //   dispatch(SetGeneralSectionAndOrgIds({sectionId: response.organisation_general_detail_id, organisationId: id}));
+    //   dispatch(SetPreContractSectionAndOrgIds({sectionId: response.organisation_pre_contract_id, organisationId: id}));
+    //   dispatch(SetOrganisationContractSectionAndOrgIds({sectionId: response.organisation_contract_phase_id, organisationId: id}));
+    //   dispatch(SetOrganisationActivitySectionAndOrgIds({sectionId: response.organisation_activity_field_id, organisationId: id}));
+    //   dispatch(SetOrganisationBusinessDevSectionAndOrgIds({sectionId: response.organisation_business_development_id}));
+
+    //   DataService.getDirectData(`/organisation_profiles/${response.organisation_profile_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   DataService.getDirectData(`/organisation_contact_infos/${response.organisation_contact_info_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   DataService.getDirectData(`/organisation_pre_contracts/${response.organisation_pre_contract_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   DataService.getDirectData(`/organisation_contract_phases/${response.organisation_contract_phase_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   DataService.getDirectData(`/organisation_activity_fields/${response.organisation_activity_field_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   DataService.getDirectData(`/organisation_general_details/${response.organisation_general_detail_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   DataService.getDirectData(`/organisation_business_developments/${response.organisation_business_development_id}`).then((res) => {
+    //     dispatch(SetOrganisationProfile(res.data));
+    //   }).catch(() => {});
+
+    //   setLoading(false);
+    // })
+    // .catch((err) => {});
   }, []);
 
   const getData = () => {
@@ -143,7 +270,6 @@ export default function EmployeeList() {
     rowsPerPageOptions: [10, 20, 30, 40, 50],
     responsive: "scroll",
   };
-  console.log(`imageUrl.url`, imageUrl.url)
   return (
     <React.Fragment>
       <Grid direction="row">
@@ -157,18 +283,26 @@ export default function EmployeeList() {
           xs={3}
           style={{ backgroundColor: "#E8E8E8", height: "750px" }}
         >
-          <div style={{padding:'30px'}}> 
+          <div style={ {
+  maxWidth: '76%',
+  margin: '0 auto',
+  height:'40px',
+  position:'relative'
+}}> 
            {/* <img alt={imageUrl.url} src={imageUrl.url} /> */}
           {/* <AccountCircleIcon /> */}
-          <ListItemIcon style={{ minWidth: 0,color:'red' }}>
-                  <AccountCircleIcon />
+          <ListItemIcon style={{position:'absolute',left:'-28px' }}>
+                  <AccountCircleIcon style={{fontSize:'30px'}} />
                 </ListItemIcon>
-          <span style={{ fontSize: "18px" }}>
-            {apiData.organisation_name}</span> <span  style={{ fontSize: "12px" }}> ID: {apiData.org_id}
+          <span style={{ fontSize: "18px",position:'absolute',left:'11px', top:'4px' }}>
+            {apiData.organisation_name}</span> <span  style={{ fontSize: "12px",position:'absolute',left:'98px',top:'9px' }}> ID: {apiData.org_id}
           </span></div>
         
 
-          <Grid container direction="row">
+          <Grid container style={ {
+  maxWidth: '90%',
+  margin: '0 auto'
+}} direction="row">
             <Grid item xs={3}>
               <Typography style={{ paddingTop: "10px" }}>Admin</Typography>
               <Typography style={{ paddingTop: "10px" }}>Contact</Typography>
@@ -196,24 +330,33 @@ export default function EmployeeList() {
                 {apiData.address_line1}, {apiData.address_line2} {apiData.city},{" "}
                 {apiData.country}
               </Typography>
-
-            </Grid>
-          </Grid>
-
-          <Button
+              <Button
                   variant="contained"
                   color="primary"
                   onClick={() => {
+                    dispatch(ResetOrganisationDetails());
+                    dispatch(ResetActivity());
+                    dispatch(ResetBusinessDevelopment());
+                    dispatch(ResetContact());
+                    dispatch(ResetContract());
+                    dispatch(ResetGeneral());
+                    dispatch(ResetPreContract());
+                    dispatch(ResetProfile());
                     history.push(`/admin/organisation/${id}/edit`);
                   }}
-                  style={{ borderRadius: 50, textTransform: "none",marginLeft:'110px', marginBottom:'20px' }}
+                  style={{ borderRadius: 50, textTransform: "none", marginBottom:'20px',width: '70px',
+                  height: '24px' }}
                 >
                   <EditIcon
                     style={{ marginRight: 10, fontSize: 15 }}
                   />
                   Edit
                 </Button>
+            </Grid>
+          </Grid>
+
             <Divider  />
+       
           <List style={{backgroundColor:'#F8F8F8',paddingTop:'10px'}} component="nav" aria-label="main mailbox folders">
             {[
               {
@@ -223,6 +366,7 @@ export default function EmployeeList() {
                 listRoute: `/admin/organisation/${id}/employee/list`,
               },
             ].map((e) => (
+              
               <ListItem style={{ paddingBottom: 0, paddingTop: 0 }}>
                 <ListItemIcon style={{ minWidth: 0,color:'blue' }}>
                   <PersonIcon />
@@ -242,7 +386,8 @@ export default function EmployeeList() {
                   onClick={() => {
                     history.push(`/admin/organisation/${id}/employee/create`);
                   }}
-                  style={{ borderRadius: 50, textTransform: "none" }}
+                  style={{ borderRadius: 50, textTransform: "none",width: '87px',
+                  height: '25px', marginLeft:'75px'  }}
                 >
                   <AddCircleOutlined
                     style={{ marginRight: 10, fontSize: 15 }}

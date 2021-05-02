@@ -63,6 +63,7 @@ function LoginPage() {
         inputId === 'Username' && setUserName(inputStateValue);
         inputId === 'Password' && setPassword(inputStateValue);
     }
+
     const login = () => {
         var flag = true;
         if (username == "") {
@@ -71,6 +72,7 @@ function LoginPage() {
         else if (password == "") {
             flag = false;
         }
+      
         if (flag) {
             setSubmitClickFlag(false)
             var cryptoPassword = CryptoJS.AES.encrypt(password, 'acuity').toString()
@@ -108,17 +110,17 @@ function LoginPage() {
     };
 
     return (
-        <form noValidate autoComplete="off">
+        <form noValidate autoComplete="off" onKeyPress={(e) => {e.key === "Enter" && login()}}>
             <Grid container direction="row" justify="center">
                 <Grid item xs={12} style={{ textAlign: "center" }}>
                     <img src="../../../assets/images/logo.png" alt="dsd" />
                 </Grid>
-                <Grid item xs={12} style={{ marginTop: 30, marginBottom: 20 }}>
+                <Grid item xs={12} style={{ marginTop: 30, marginBottom: 20 }} >
                     <CustomInput id="Username" placeholder="Username"
                         helperText={(submitClickFlag && username == "") ? "Please enter username." : ""} error={(submitClickFlag && username == "") ? true : false} parentcall={setInputState} />
                 </Grid>
                 <Grid item xs={12} style={{ marginBottom: 20 }}>
-                    <CustomInput id="Password" placeholder="Password" helperText={(submitClickFlag && password == "") ? "Please enter password." : ""} error={(submitClickFlag && password == "") ? true : false} parentcall={setInputState} />
+                    <CustomInput id="Password" placeholder="Password" type="password" helperText={(submitClickFlag && password == "") ? "Please enter password." : ""} error={(submitClickFlag && password == "") ? true : false} parentcall={setInputState} />
                 </Grid>
                 <Grid item xs={12} sm={8}  >
                     <FormControlLabel
@@ -149,7 +151,7 @@ function LoginPage() {
                     </Typography>
                 </Grid>
                 <Grid item xs={3} justify="center" style={{ marginTop: 20, textAlign: "center" }}>
-                    <Button variant="contained" color="primary" onClick={login}> Login</Button>
+                    <Button variant="contained" id="myBtn" color="primary" onClick={login}> Login</Button>
                 </Grid>
                 <Grid item xs={12} >
                     <Typography variant="h6" style={{ textAlign: "center", marginTop: 20 }}>

@@ -3,7 +3,8 @@ import {
     UPDATE_GDPR, 
     UPDATE_EMPLOYEE_ID_GDPR,
     SET_GDPR_ERROR,
-    UPDATE_GDPR_ERROR 
+    UPDATE_GDPR_ERROR ,
+    RESET_GDPR
 } from "./GdprActions"
 
 
@@ -33,11 +34,13 @@ const GdprReducer = (state = INITIAL_STATE, action) => {
             action.payload['employee_id'] = state.employee_id
             return {...state, section_id: action.payload.id, data: action.payload};
         case UPDATE_EMPLOYEE_ID_GDPR:
-            return {...state, employee_id: action.payload.id};
+            return {...state, employee_id: action.payload.id, section_id: action.payload.section_id};
         case SET_GDPR_ERROR:
             return {...state, errors: action.payload}
         case UPDATE_GDPR_ERROR:
             return {...state, errors: {...state.errors, [action.payload] : false}}
+        case RESET_GDPR:
+            return INITIAL_STATE
     }
     return state;
 };

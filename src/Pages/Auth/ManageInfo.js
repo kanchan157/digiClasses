@@ -18,9 +18,9 @@ function ManageInfo() {
     return (
         <div className={classes.root}>
             <Grid direction="row" >
-                <Grid xs={12}>
+                {/* <Grid xs={12}>
                     <HeaderMenu />
-                </Grid>
+                </Grid> */}
                 <Grid xs={12}>
                     <Home />
                 </Grid>

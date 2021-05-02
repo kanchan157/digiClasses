@@ -5,7 +5,10 @@ import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { api_url } from "../../../../../../constants";
 import FormGenerator from "../../../../../../Components/FormGenerator";
-import { SetOrganisationProfile, UpdateOrganisationProfileError } from "./OrganisationProfileActions";
+import {
+  SetOrganisationProfile,
+  UpdateOrganisationProfileError,
+} from "./OrganisationProfileActions";
 
 const theme = createMuiTheme({
   overrides: {
@@ -18,7 +21,6 @@ const theme = createMuiTheme({
 });
 
 export default function Profile(props) {
-
   const dispatch = useDispatch();
 
   const {
@@ -35,44 +37,66 @@ export default function Profile(props) {
     accounts_documents,
     account_telephone,
     account_contact,
-    internal_notes
+    internal_notes,
+    criteria,
+    recognised_brand,
+    engaged_stackholder,
+    multiple_service_line_opportunity,
+    master_vendor_opportunity,
   } = useSelector((state) => state.organisationProfileReducer.data);
 
-  const errors = useSelector(state => state.organisationProfileReducer.errors);
-  const organisation_id = useSelector(state => state.organisationProfileReducer.organisation_id);
-  
-  const userDetails = JSON.parse(sessionStorage.getItem('user') || '{}');
+  const {
+    currencies,
+    country_lists,
+    criterias,
+    high_growth_sectors,
+    knowledge_workers,
+    globals,
+    wealth_mindsets,
+    number_of_assignments,
+    centralised_hrs,
+  } = useSelector((state) => state.commonReducer.organisationDropdowns);
+
+  const errors = useSelector(
+    (state) => state.organisationProfileReducer.errors
+  );
+  const organisation_id = useSelector(
+    (state) => state.organisationProfileReducer.organisation_id
+  );
+
+  const userDetails = JSON.parse(sessionStorage.getItem("user") || "{}");
 
   const handleInputChange = (value, index, type) => {
     const updatedForm = formInput;
     if (!type) {
-      updatedForm[index]['value'] = value;
+      updatedForm[index]["value"] = value;
     } else {
       updatedForm[index][type] = value;
     }
     setFormInput(updatedForm);
     const formData = {};
     formInput.forEach((item) => {
-      if(item.value || item.inputValue || item.selectValue) {
+      if (item.value || item.inputValue || item.selectValue) {
         item.value && (formData[item.name] = item.value);
-        item.inputValue && (formData[item.inputName] = item.inputValue)
-        item.selectValue && (formData[item.selectName] = item.selectValue)
+        item.inputValue && (formData[item.inputName] = item.inputValue);
+        item.selectValue && (formData[item.selectName] = item.selectValue);
         dispatch(SetOrganisationProfile(formData));
       }
     });
     dispatch(UpdateOrganisationProfileError(updatedForm[index].name));
-  }
+  };
 
   const formArray = [
     {
       componentType: "input",
       type: "text",
       label: "Account Director*",
-      helperText: errors.account_director && "*Please enter account director name",
+      helperText:
+        errors.account_director && "*Please enter account director name",
       name: "account_director",
       placeholder: "Name",
       handleChange: handleInputChange,
-      value: account_director
+      value: account_director,
     },
     {
       componentType: "inputWithDropdown",
@@ -81,12 +105,13 @@ export default function Profile(props) {
       inputName: "market_cap",
       selectName: "market_cap_currency",
       inputPlaceholder: "$00,000,000",
-      selectPlaceholder: "USD",
-      apiVariable: "currencies",
+      // selectPlaceholder: "USD",
+      // apiVariable: "currencies",
+      selectOptions: currencies,
       handleInputChange: handleInputChange,
       handleSelectChange: handleInputChange,
       inputValue: market_cap,
-      selectValue: market_cap_currency
+      selectValue: market_cap_currency || 2,
     },
     {
       componentType: "input",
@@ -96,7 +121,7 @@ export default function Profile(props) {
       required: true,
       placeholder: "Registration Number",
       handleChange: handleInputChange,
-      value: company_registration_number
+      value: company_registration_number,
     },
     // {
     //   componentType: "MultipleSelect",
@@ -112,7 +137,7 @@ export default function Profile(props) {
       name: "key_stakeholders",
       placeholder: "Multi select Dropdown",
       apiVariable: "employee_list",
-      params: {organisation_id: organisation_id},
+      params: { organisation_id: organisation_id },
       handleChange: handleInputChange,
       value: key_stakeholders,
     },
@@ -121,8 +146,9 @@ export default function Profile(props) {
       label: "Delivery Locations",
       name: "delivery_locations",
       placeholder: "Countries",
-      apiVariable: "countries",
-      params: {organisation_id: organisation_id},
+      // apiVariable: "countries",
+      // params: {organisation_id: organisation_id},
+      selectOptions: country_lists,
       handleChange: handleInputChange,
       value: delivery_locations,
     },
@@ -131,9 +157,17 @@ export default function Profile(props) {
       label: "Number of Employees",
       name: "number_of_employees",
       placeholder: "Employees",
-      selectOptions: [{id: 0, name: '0-50', value: 'Range 0-50' }, {id: 1, name: 'Range 50-100', value: 'Range 50-100'},{id: 2, name: '100-500', value: 'Range 100-500'},{id: 3, name: '500-1000', value: 'Range 500-1000'},{id: 4, name: '1000-5000', value: 'Range 1000-5000'},{id: 5, name: '5000-10000', value: 'Range 5000-10000'},{id: 6, name: '10000+', value: 'Range 10000+'}],
+      selectOptions: [
+        { id: 0, name: "0-50", value: "Range 0-50" },
+        { id: 1, name: "Range 50-100", value: "Range 50-100" },
+        { id: 2, name: "100-500", value: "Range 100-500" },
+        { id: 3, name: "500-1000", value: "Range 500-1000" },
+        { id: 4, name: "1000-5000", value: "Range 1000-5000" },
+        { id: 5, name: "5000-10000", value: "Range 5000-10000" },
+        { id: 6, name: "10000+", value: "Range 10000+" },
+      ],
       handleChange: handleInputChange,
-      value: number_of_employees
+      value: number_of_employees,
     },
     {
       componentType: "inputWithDropdown",
@@ -142,26 +176,27 @@ export default function Profile(props) {
       inputName: "revenue",
       selectName: "revenue_currency",
       inputPlaceholder: "$00,000,000",
-      selectPlaceholder: "USD",
-      apiVariable: "currencies",
+      // selectPlaceholder: "USD",
+      // apiVariable: "currencies",
+      selectOptions: currencies,
       handleInputChange: handleInputChange,
       handleSelectChange: handleInputChange,
       inputValue: revenue,
-      selectValue: revenue_currency
+      selectValue: revenue_currency || 2,
     },
     {
       componentType: "uploadFiles",
       name: "general_documents",
       label: "General Documentation",
       handleChange: handleInputChange,
-      value: general_documents
+      value: general_documents,
     },
     {
       componentType: "uploadFiles",
       name: "accounts_documents",
       label: "Accounts Documentation",
       handleChange: handleInputChange,
-      value: accounts_documents
+      value: accounts_documents,
     },
     {
       componentType: "input",
@@ -171,18 +206,18 @@ export default function Profile(props) {
       required: true,
       placeholder: "Accounts telephone number",
       handleChange: handleInputChange,
-      value: account_telephone
+      value: account_telephone,
     },
     {
       componentType: "input",
-      type: "text",
+      type: "number",
       label: "Account Contact*",
       name: "account_contact",
       helperText: errors.account_contact && "*Please enter account contact",
       required: true,
       placeholder: "Accounts Contact",
       handleChange: handleInputChange,
-      value: account_contact
+      value: account_contact,
     },
     {
       componentType: "input",
@@ -194,15 +229,61 @@ export default function Profile(props) {
       placeholder: "Notes",
       handleChange: handleInputChange,
       value: internal_notes,
-    }
+    },
+    {
+      componentType: "select",
+      label: "Criteria",
+      name: "criteria",
+      placeholder: "Criteria",
+      // selectOptions: [{id: 0, name: 'Low', value: 'Low' }, {id: 1, name: 'Medium', value: 'Medium'},{id: 2, name: 'High', value: 'High'},],
+      selectOptions: criterias,
+      handleChange: handleInputChange,
+      value: criteria,
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Recognised Brand",
+      name: "recognised_brand",
+      placeholder: "Recognised Brand",
+      handleChange: handleInputChange,
+      value: recognised_brand,
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Engaged Stackholder",
+      name: "engaged_stackholder",
+      placeholder: "Engaged Stackholder",
+      handleChange: handleInputChange,
+      value: engaged_stackholder,
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Multiple Service Line Opportunity",
+      name: "multiple_service_line_opportunity",
+      placeholder: "Multiple Service Line Opportunity",
+      handleChange: handleInputChange,
+      value: multiple_service_line_opportunity,
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Master Vendor Opportunity",
+      name: "master_vendor_opportunity",
+      placeholder: "Master Vendor Opportunity",
+      handleChange: handleInputChange,
+      value: master_vendor_opportunity,
+    },
   ];
 
   const [formInput, setFormInput] = useState(formArray);
 
   useEffect(() => {
-    setFormInput(formArray)
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[errors]);
+    setFormInput(formArray);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [errors]);
 
   return (
     <ThemeProvider theme={theme}>

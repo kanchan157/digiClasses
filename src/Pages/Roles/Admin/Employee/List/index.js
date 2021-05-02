@@ -47,6 +47,7 @@ export default function EmployeeList() {
 
   const getData = () => {
     setLoading(true);
+    //dispatch action store into reducer
     DataService.getData({ organisation_id: id }, "employees")
       .then((response) => {
         let listData = response["employees"];
@@ -86,8 +87,8 @@ export default function EmployeeList() {
               size="small"
               style={{ textTransform: "none" }}
               onClick={() => {
-                history.push("/admin/organisation/create");
-                console.log(tableMeta.rowData[1]);
+                history.push(`/admin/organisation/${id}/employee/${tableMeta.rowData[1]}/edit`);
+                console.log(tableMeta.rowData[1], 'rowww');
               }}
             >
               View
@@ -149,7 +150,7 @@ export default function EmployeeList() {
             variant="contained"
             color="primary"
             onClick={() => {
-              history.push("/admin/organisation/employee/create");
+              history.push(`/admin/organisation/${id}/employee/create`);
             }}
             style={{ borderRadius: 50, textTransform: "none" }}
           >
@@ -162,7 +163,7 @@ export default function EmployeeList() {
         <ThemeProvider theme={theme}>
           <Grid xs={12} sm={8}>
             {loading && <Loader />}
-            
+            <MUIDataTable
               title={"Employee List"}
               data={apiData && apiData}
               columns={columns}

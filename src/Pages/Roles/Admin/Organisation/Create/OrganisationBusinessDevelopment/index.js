@@ -37,8 +37,9 @@ export default function OrganisationBusinessDevelopment(props) {
     cam_call_date
   } = useSelector((state) => state.organisationBusinessDevelopmentReducer.data);
 
-  const errors = useSelector(state => state.organisationBusinessDevelopmentReducer.errors)
-  
+  const errors = useSelector(state => state.organisationBusinessDevelopmentReducer.errors);
+
+  const { account_managers, coach_coordis, type_of_works, bd_statuses, cam_statuses } = useSelector((state) => state.commonReducer.organisationDropdowns);
 
   const handleInputChange = (value, index, type) => {
     const updatedForm = formInput;
@@ -74,7 +75,8 @@ export default function OrganisationBusinessDevelopment(props) {
       name: "account_manager",
       value: account_manager,
       placeholder: "Account Manager",
-      selectOptions: [{id: 1, value: 'Karen Blake', name: 'Karen Blake'},{id: 2, value: 'Sally Johansson', name: 'Sally Johansson'},],
+      selectOptions: account_managers,
+      // selectOptions: [{id: 1, value: 'Karen Blake', name: 'Karen Blake'},{id: 2, value: 'Sally Johansson', name: 'Sally Johansson'},],
       handleChange: handleInputChange
     },
     {
@@ -83,7 +85,8 @@ export default function OrganisationBusinessDevelopment(props) {
       name: "coaching_coordinator",
       value: coaching_coordinator,
       placeholder: "Coaching Coordinator",
-      selectOptions: [{id: 1, value: 'Andrea Jackson', name: 'Andrea Jackson'},{id: 2, value: 'Cal Rodgers', name: 'Cal Rodgers'},{id: 3, value: 'Cal Rodgers', name: 'Cal Rodgers'},{id: 4, value: 'Lindsay Dunn', name: 'Lindsay Dunn'},],
+      selectOptions: coach_coordis,
+      // selectOptions: [{id: 1, value: 'Andrea Jackson', name: 'Andrea Jackson'},{id: 2, value: 'Cal Rodgers', name: 'Cal Rodgers'},{id: 3, value: 'Cal Rodgers', name: 'Cal Rodgers'},{id: 4, value: 'Lindsay Dunn', name: 'Lindsay Dunn'},],
       handleChange: handleInputChange
     },
     {
@@ -99,7 +102,8 @@ export default function OrganisationBusinessDevelopment(props) {
       name: "type_of_work",
       value: type_of_work,
       placeholder: "Type of Work",
-      selectOptions: [{id: 1, value: 'Assignment', name: 'Assignment'},{id: 2, value: 'General enquiry', name: 'General enquiry'},{id: 3, value: 'Proposal', name: 'Proposal'}],
+      selectOptions: type_of_works,
+      // selectOptions: [{id: 1, value: 'Assignment', name: 'Assignment'},{id: 2, value: 'General enquiry', name: 'General enquiry'},{id: 3, value: 'Proposal', name: 'Proposal'}],
       handleChange: handleInputChange
     },
     {
@@ -136,7 +140,8 @@ export default function OrganisationBusinessDevelopment(props) {
       name: "activity_bd_status",
       value: activity_bd_status,
       placeholder: "Activity Bd Status",
-      selectOptions: [{id: 1, value: 'Action needed', name: 'Action needed'},{id: 2, value: 'Completed', name: 'Completed'},{id: 3, value: 'Follow-up', name: 'Follow-up'},{id: 4, value: 'No further action', name: 'No further action'},{id: 5, value: 'Setting up a call', name: 'Setting up a call'}],
+      selectOptions: bd_statuses,
+      // selectOptions: [{id: 1, value: 'Action needed', name: 'Action needed'},{id: 2, value: 'Completed', name: 'Completed'},{id: 3, value: 'Follow-up', name: 'Follow-up'},{id: 4, value: 'No further action', name: 'No further action'},{id: 5, value: 'Setting up a call', name: 'Setting up a call'}],
       handleChange: handleInputChange
     },
     {
@@ -170,7 +175,8 @@ export default function OrganisationBusinessDevelopment(props) {
       name: "cam_status",
       value: cam_status,
       placeholder: "Cam Status",
-      selectOptions: [{id: 1, value: 'Completed', name: 'Completed'},{id: 2, value: 'In process', name: 'In process'},{id: 3, value: 'No further action', name: 'No further action'},{id: 4, value: 'On hold', name: 'On hold'},{id: 5, value: 'Sent information', name: 'Sent information'}],
+      selectOptions: cam_statuses,
+      // selectOptions: [{id: 1, value: 'Completed', name: 'Completed'},{id: 2, value: 'In process', name: 'In process'},{id: 3, value: 'No further action', name: 'No further action'},{id: 4, value: 'On hold', name: 'On hold'},{id: 5, value: 'Sent information', name: 'Sent information'}],
       handleChange: handleInputChange
     },
     {

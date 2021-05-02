@@ -3,7 +3,8 @@ import {
     UPDATE_ACCESSMENT, 
     UPDATE_EMPLOYEE_ID_ACCESSMENT,
     SET_ACCESSMENT_ERROR,
-    UPDATE_ACCESSMENT_ERROR 
+    UPDATE_ACCESSMENT_ERROR,
+    RESET_ACCESSMENT
 } from "./AccessmentActions"
 
 
@@ -28,11 +29,13 @@ const AccessmentReducer = (state = INITIAL_STATE, action) => {
             action.payload['employee_id'] = state.employee_id
             return {...state, section_id: action.payload.id, data: action.payload};
         case UPDATE_EMPLOYEE_ID_ACCESSMENT:
-            return {...state, employee_id: action.payload.id};
+            return {...state, employee_id: action.payload.id, section_id: action.payload.section_id};
         case SET_ACCESSMENT_ERROR:
             return {...state, errors: action.payload}
         case UPDATE_ACCESSMENT_ERROR:
             return {...state, errors: {...state.errors, [action.payload] : false}}
+        case RESET_ACCESSMENT:
+            return INITIAL_STATE
     }
     return state;
 };

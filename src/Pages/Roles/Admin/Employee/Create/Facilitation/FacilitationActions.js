@@ -5,6 +5,7 @@ export const UPDATE_FACILITATION = "UPDATE_FACILITATION";
 export const UPDATE_EMPLOYEE_ID_FACILITATION = "UPDATE_EMPLOYEE_ID_FACILITATION";
 export const SET_FACILITATION_ERROR = "SET_FACILITATION_ERROR";
 export const UPDATE_FACILITATION_ERROR = "UPDATE_FACILITATION_ERROR";
+export const RESET_FACILITATION_AREA = "RESET_FACILITATION_AREA";
 
 export const SetFacilitation = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateFacilitationError(data){
     payload: data
   }
 }
+
+export function ResetFacilitation() {
+  return {
+    type: RESET_FACILITATION_AREA
+  }
+};

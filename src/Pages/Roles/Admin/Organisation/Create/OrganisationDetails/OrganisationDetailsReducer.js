@@ -12,12 +12,13 @@ export const INITIAL_STATE = {
   data: {},
   errors: {
     organisation_name: false,
-    individual_type: false,
-    internal_status: false,
-    territory: false,
+    individual_type_id: false,
+    internal_status_id: false,
+    territory_id: false,
     industry_sector_list_id: false,
-    type_of_service: false,
-    type_of_organisation: false,
+    type_of_service_id: false,
+    type_of_organisation_id: false,
+    level_structure: false
   },
 };
 

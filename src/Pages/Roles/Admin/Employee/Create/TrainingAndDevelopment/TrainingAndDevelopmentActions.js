@@ -5,6 +5,7 @@ export const UPDATE_TRAINING_AND_DEVELOPMENT = "UPDATE_TRAINING_AND_DEVELOPMENT"
 export const UPDATE_EMPLOYEE_ID_TRAINING_AND_DEVELOPMENT = "UPDATE_EMPLOYEE_ID_TRAINING_AND_DEVELOPMENT";
 export const SET_TRAINING_AND_DEVELOPMENT_ERROR = "SET_TRAINING_AND_DEVELOPMENT_ERROR";
 export const UPDATE_TRAINING_AND_DEVELOPMENT_ERROR = "UPDATE_TRAINING_AND_DEVELOPMENT_ERROR";
+export const RESET_TRAINING_AND_DEVELOPMENT = "RESET_TRAINING_AND_DEVELOPMENT";
 
 export const SetTrainingAndDevelopment = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateTrainingAndDevelopmentError(data){
     payload: data
   }
 }
+
+export function ResetTrainingAndDevelopment() {
+  return {
+    type: RESET_TRAINING_AND_DEVELOPMENT
+  }
+};

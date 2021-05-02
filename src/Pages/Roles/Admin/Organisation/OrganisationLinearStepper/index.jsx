@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -16,57 +16,79 @@ import Activity from "../Create/Activity";
 import General from "../Create/General";
 import OrganisationBusinessDevelopment from "../Create/OrganisationBusinessDevelopment";
 import { ValidateEmail } from "../../../../../Common/Utils/common_utils";
+import {
+  useParams
+} from "react-router-dom";
 
-// import { SetOrganisationActivitySectionAndOrgIds } from "../Activity/OrganisationActivityActions";
-// import { SetContactSectionAndOrgIds } from "../Contact/OrganisationContactActions";
-// import { SetOrganisationContractSectionAndOrgIds } from "../Contract/OrganisationContractActions";
-// import { SetGeneralSectionAndOrgIds } from "../General/OrganisationGeneralActions";
-// import { SetPreContractSectionAndOrgIds } from "../PreContract/OrganisationPreContractActions";
-// import { SetProfileSectionAndOrgIds } from "../Profile/OrganisationProfileActions";
+// import { UpdateOrganisationDetailsSectionId } from "../Create/OrganisationDetails/OrganisationDetailsActions"
+// import { SetOrganisationActivitySectionAndOrgIds } from "../Create/Activity/OrganisationActivityActions";
+// import { SetContactSectionAndOrgIds } from "../Create/Contact/OrganisationContactActions";
+// import { SetOrganisationContractSectionAndOrgIds } from "../Create/Contract/OrganisationContractActions";
+// import { SetGeneralSectionAndOrgIds } from "../Create/General/OrganisationGeneralActions";
+// import { SetPreContractSectionAndOrgIds } from "../Create/PreContract/OrganisationPreContractActions";
+// import { SetProfileSectionAndOrgIds } from "../Create/Profile/OrganisationProfileActions";
 
 import {
   UpdateOrganisationDetails,
   SetOrganisationDetailsError,
-  ResetOrganisationDetails
+  ResetOrganisationDetails,
+  UpdateOrganisationDetailsSectionId,
+  SetOrganisationDetails
 } from "../Create/OrganisationDetails/OrganisationDetailsActions";
 import {
   UpdateOrganisationProfile,
   UpdateOrganisationIdProfile,
   SetOrganisationProfileError,
+  SetProfileSectionAndOrgIds,
+  SetOrganisationProfile
 } from "../Create/Profile/OrganisationProfileActions";
 import {
   UpdateOrganisationContact,
   UpdateOrganisationIdContact,
-  SetOrganisationContactError
+  SetOrganisationContactError,
+  SetContactSectionAndOrgIds,
+  SetOrganisationContact
 } from "../Create/Contact/OrganisationContactActions";
 import {
   UpdateOrganisationPreContract,
   UpdateOrganisationIdPreContract,
+  SetPreContractSectionAndOrgIds,
+  SetOrganisationPreContract
 } from "../Create/PreContract/OrganisationPreContractActions";
 import {
   UpdateOrganisationContract,
   UpdateOrganisationIdContract,
   SetOrganisationContractError,
+  SetOrganisationContractSectionAndOrgIds,
+  SetOrganisationContract
 } from "../Create/Contract/OrganisationContractActions";
 import {
   UpdateOrganisationActivity,
   UpdateOrganisationIdActivity,
   SetOrganisationActivityError,
+  SetOrganisationActivitySectionAndOrgIds,
+  SetOrganisationActivity
 } from "../Create/Activity/OrganisationActivityActions";
 import {
   UpdateOrganisationGeneral,
   UpdateOrganisationIdGeneral,
+  SetGeneralSectionAndOrgIds,
+  SetOrganisationGeneral
 } from "../Create/General/OrganisationGeneralActions";
 import {
   UpdateOrganisationBusinessDev,
   UpdateOrganisationIdBusinessDev,
+  SetOrganisationBusinessDevSectionAndOrgIds,
+  SetOrganisationBusinessDev
 } from "../Create/OrganisationBusinessDevelopment/OrganisationBusinessDevelopmentActions";
+
 import { useSelector, useDispatch } from "react-redux";
 import DataService from "../../../../../Service";
 import { ObjectToFormdata } from "../../../../../Common/Utils/common_utils";
 import Loader from "../../../../../Components/Loader";
 import Snackbar from "../../../../../Components/Snackbar";
 import { showSnackbar } from "../../../../../Components/Snackbar/SnackbarActions";
+import{ SET_ORGANISATION_DROPDOWN_VALUES } from "../../../../../Redux/actions";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -145,23 +167,65 @@ const theme = createMuiTheme({
 export default function OrganisationLinearStepper(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  let { id } = useParams();
 
-//   useEffect(() => {
-//     setLoading(true);
-//     DataService.getDirectData(`/organisations/${id}`)
-//     .then((response) => {
-//       dispatch(UpdateOrganisationDetailsSectionId(id));
-//       dispatch(SetOrganisationDetails(response.data));
-//       dispatch(SetContactSectionAndOrgIds({sectionId: response.organisation_contact_info_id, organisationId: id}));
-//       dispatch(SetProfileSectionAndOrgIds({sectionId: response.organisation_profile_id, organisationId: id}));
-//       dispatch(SetGeneralSectionAndOrgIds({sectionId: response.organisation_general_detail_id, organisationId: id}));
-//       dispatch(SetPreContractSectionAndOrgIds({sectionId: response.organisation_pre_contract_id, organisationId: id}));
-//       dispatch(SetOrganisationContractSectionAndOrgIds({sectionId: response.organisation_contract_phase_id, organisationId: id}));
-//       dispatch(SetOrganisationActivitySectionAndOrgIds({sectionId: response.organisation_activity_field_id, organisationId: id}));
-//       setLoading(false);
-//     })
-//     .catch((err) => {});
-//  }, [errors]);
+  useEffect(() => {
+    setLoading(true);
+    DataService.getData({}, "all_organisation_dropdowns")
+    .then((response) => {
+      dispatch({ type: SET_ORGANISATION_DROPDOWN_VALUES, payload: response})
+      !id && setLoading(false);
+    })
+    .catch((err) => {});
+
+    if(id){
+    setLoading(true);
+    DataService.getDirectData(`/organisations/${id}`)
+    .then((response) => {
+      dispatch(UpdateOrganisationDetailsSectionId(id));
+      dispatch(SetOrganisationDetails(response.data));
+      dispatch(SetContactSectionAndOrgIds({sectionId: response.organisation_contact_info_id, organisationId: id}));
+      dispatch(SetProfileSectionAndOrgIds({sectionId: response.organisation_profile_id, organisationId: id}));
+      dispatch(SetGeneralSectionAndOrgIds({sectionId: response.organisation_general_detail_id, organisationId: id}));
+      dispatch(SetPreContractSectionAndOrgIds({sectionId: response.organisation_pre_contract_id, organisationId: id}));
+      dispatch(SetOrganisationContractSectionAndOrgIds({sectionId: response.organisation_contract_phase_id, organisationId: id}));
+      dispatch(SetOrganisationActivitySectionAndOrgIds({sectionId: response.organisation_activity_field_id, organisationId: id}));
+      dispatch(SetOrganisationBusinessDevSectionAndOrgIds({sectionId: response.organisation_business_development_id}));
+
+      DataService.getDirectData(`/organisation_profiles/${response.organisation_profile_id}`).then((res) => {
+        dispatch(SetOrganisationProfile(res.data));
+      }).catch(() => {});
+
+      DataService.getDirectData(`/organisation_contact_infos/${response.organisation_contact_info_id}`).then((res) => {
+        dispatch(SetOrganisationContact(res.data));
+      }).catch(() => {});
+
+      DataService.getDirectData(`/organisation_pre_contracts/${response.organisation_pre_contract_id}`).then((res) => {
+        dispatch(SetOrganisationPreContract(res.data));
+      }).catch(() => {});
+
+      DataService.getDirectData(`/organisation_contract_phases/${response.organisation_contract_phase_id}`).then((res) => {
+        dispatch(SetOrganisationContract(res.data));
+      }).catch(() => {});
+
+      DataService.getDirectData(`/organisation_activity_fields/${response.organisation_activity_field_id}`).then((res) => {
+        dispatch(SetOrganisationActivity(res.data));
+      }).catch(() => {});
+
+      DataService.getDirectData(`/organisation_general_details/${response.organisation_general_detail_id}`).then((res) => {
+        dispatch(SetOrganisationGeneral(res.data));
+      }).catch(() => {});
+
+      DataService.getDirectData(`/organisation_business_developments/${response.organisation_business_development_id}`).then((res) => {
+        dispatch(SetOrganisationBusinessDev(res.data));
+      }).catch(() => {});
+
+      setLoading(false);
+    })
+    .catch((err) => {
+      setLoading(false);
+    });
+  }}, []);
 
   function getSteps() {
     return [
@@ -218,10 +282,11 @@ export default function OrganisationLinearStepper(props) {
     (state) => state.organisationBusinessDevelopmentReducer
   );
 
+  const [orgUpload, setOrgUpload] = React.useState([]);
   function getStepContent(step) {
     switch (step) {
       case 0:
-        return <OrganisationDetails />;
+        return id ? OrganisationDetail.data.organisation_name?.length && <OrganisationDetails orgUpload={orgUpload} setOrgUpload={setOrgUpload} /> : <OrganisationDetails orgUpload={orgUpload} setOrgUpload={setOrgUpload} />;
       case 1:
         return <Profile />;
       case 2:
@@ -304,12 +369,13 @@ export default function OrganisationLinearStepper(props) {
       let valid = true;
       let errors = {
         organisation_name: false,
-        individual_type: false,
-        internal_status: false,
-        territory: false,
+        individual_type_id: false,
+        internal_status_id: false,
+        territory_id: false,
         industry_sector_list_id: false,
-        type_of_organisation: false,
-        type_of_service: false
+        type_of_organisation_id: false,
+        type_of_service_id: false,
+        level_structure: false
       };
       if (
         !OrganisationDetail.data.organisation_name ||
@@ -319,38 +385,38 @@ export default function OrganisationLinearStepper(props) {
         valid = false;
       }
       if (
-        !OrganisationDetail.data.individual_type ||
-        !OrganisationDetail.data.individual_type.length
+        !OrganisationDetail.data.individual_type_id ||
+        !OrganisationDetail.data.individual_type_id.length
       ) {
-        errors.individual_type = true;
+        errors.individual_type_id = true;
         valid = false;
       }
       if (
-        !OrganisationDetail.data.internal_status ||
-        !OrganisationDetail.data.internal_status.length
+        !OrganisationDetail.data.internal_status_id ||
+        typeof(OrganisationDetail.data.internal_status_id) !== "number"
       ) {
-        errors.internal_status = true;
+        errors.internal_status_id = true;
         valid = false;
       }
       if (
-        !OrganisationDetail.data.territory ||
-        !OrganisationDetail.data.territory.length
+        !OrganisationDetail.data.territory_id ||
+        typeof(OrganisationDetail.data.territory_id) !== "number"
       ) {
-        errors.territory = true;
+        errors.territory_id = true;
         valid = false;
       }
       if (
-        !OrganisationDetail.data.type_of_organisation ||
-        !OrganisationDetail.data.type_of_organisation.length
+        !OrganisationDetail.data.type_of_organisation_id ||
+        typeof(OrganisationDetail.data.type_of_organisation_id) !== "number"
       ) {
-        errors.type_of_organisation = true;
+        errors.type_of_organisation_id = true;
         valid = false;
       }
       if (
-        !OrganisationDetail.data.type_of_service ||
-        !OrganisationDetail.data.type_of_service.length
+        !OrganisationDetail.data.type_of_service_id ||
+        typeof(OrganisationDetail.data.type_of_service_id) !== "number"
       ) {
-        errors.type_of_service = true;
+        errors.type_of_service_id = true;
         valid = false;
       }
       if (
@@ -358,6 +424,13 @@ export default function OrganisationLinearStepper(props) {
         typeof(OrganisationDetail.data.industry_sector_list_id) !== "number"
         ) {
         errors.industry_sector_list_id = true;
+        valid = false;
+      }
+      if (
+        !OrganisationDetail.data.level_structure ||
+        !OrganisationDetail.data.level_structure.length
+      ) {
+        errors.level_structure = true;
         valid = false;
       }
       if (!valid) {
@@ -505,7 +578,7 @@ export default function OrganisationLinearStepper(props) {
         review_date: false,
         meeting_date: false,
         who: false,
-        priority: false,
+        priority_id: false,
       };
       if (
         !OrganisationActivity.data.review_date
@@ -527,10 +600,10 @@ export default function OrganisationLinearStepper(props) {
         valid = false;
       }
       if (
-        !OrganisationActivity.data.priority ||
-        !OrganisationActivity.data.priority.length
+        !OrganisationActivity.data.priority_id ||
+        !OrganisationActivity.data.priority_id.length
       ) {
-        errors.priority = true;
+        errors.priority_id = true;
         valid = false;
       }
       if (!valid) {
@@ -599,8 +672,6 @@ export default function OrganisationLinearStepper(props) {
 
   return (
     <ThemeProvider theme={theme}>
-
-
       <div className={classes.root}>
         {loading && <Loader/>}
         {/* <Snackbar/> */}

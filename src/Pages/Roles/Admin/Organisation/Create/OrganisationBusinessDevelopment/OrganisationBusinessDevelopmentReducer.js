@@ -38,7 +38,7 @@ const OrganisationActivityReducer = (state = INITIAL_STATE, action) => {
         case UPDATE_ORGANISATION_ACTIVITY_ERROR:
             return {...state, errors: {...state.errors, [action.payload] : false}};
         case SET_ORGANISATION_ACTIVITY_SECTION_AND_ORG_IDS:
-            return {section_id: action.payload.sectionId, organisation_id: action.payload.organisationId};
+            return {...state, section_id: action.payload.sectionId, organisation_id: action.payload.organisationId};
         case RESET_BUSINESS_DEVELOPMENT:
             return INITIAL_STATE;
     }

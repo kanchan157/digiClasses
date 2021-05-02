@@ -31,10 +31,12 @@ export default function Activity(props) {
     next_meeting_date,
     action_required,
     who,
-    priority
+    priority_id
   } = useSelector((state) => state.organisationActivityReducer.data);
 
-  const errors = useSelector(state => state.organisationActivityReducer.errors)
+  const errors = useSelector(state => state.organisationActivityReducer.errors);
+
+  const { priorities } = useSelector((state) => state.commonReducer.organisationDropdowns);
   
 
   const handleInputChange = (value, index, type) => {
@@ -145,11 +147,12 @@ export default function Activity(props) {
     {
       componentType: "select",
       label: "Priority*",
-      helperText: errors.priority && "Please select a priority",
-      name: "priority",
-      value: priority,
+      helperText: errors.priority_id && "Please select a priority",
+      name: "priority_id",
+      value: priority_id,
       placeholder: "Priority",
-      selectOptions: [{id: 1, value: '1', name: '1'},{id: 2, value: '2', name: '2'},{id: 3, value: '3', name: '3'},{id: 4, value: '4', name: '4'}],
+      selectOptions: priorities,
+      // selectOptions: [{id: 1, value: '1', name: '1'},{id: 2, value: '2', name: '2'},{id: 3, value: '3', name: '3'},{id: 4, value: '4', name: '4'}],
       handleChange: handleInputChange
     }
   ];

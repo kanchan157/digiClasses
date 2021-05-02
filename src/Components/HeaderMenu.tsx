@@ -98,7 +98,7 @@ const HeaderMenu = () => {
                     <Grid item xs={5} alignItems="center" justify="center">
                         <Toolbar style={{ float: 'right', }} >
                             <div>
-                                <Link className={classes.menuTitle}>
+                                <Link onClick={() => {history.push('/ManageInfo')}} className={classes.menuTitle}>
                                     Home
                                 </Link>
                             </div>
@@ -126,15 +126,16 @@ const HeaderMenu = () => {
                                                         </Link>
                                                         <Button variant="contained" color="primary"
                                                             onClick={() => { 
-                                                                dispatch(ResetOrganisationDetails());
-                                                                dispatch(ResetActivity());
-                                                                dispatch(ResetBusinessDevelopment());
-                                                                dispatch(ResetContact());
-                                                                dispatch(ResetContract());
-                                                                dispatch(ResetGeneral());
-                                                                dispatch(ResetPreContract());
-                                                                dispatch(ResetProfile());
-                                                                history.push(e.route)
+                                                                // dispatch(ResetOrganisationDetails());
+                                                                // dispatch(ResetActivity());
+                                                                // dispatch(ResetBusinessDevelopment());
+                                                                // dispatch(ResetContact());
+                                                                // dispatch(ResetContract());
+                                                                // dispatch(ResetGeneral());
+                                                                // dispatch(ResetPreContract());
+                                                                // dispatch(ResetProfile());
+                                                                history.push(e.route);
+                                                                window.location.reload();
                                                              }}
                                                             style={{ borderRadius: 50, textTransform: 'none', }}>
                                                             <AddCircleOutlined style={{ marginRight: 10, fontSize: 15 }} />
@@ -164,13 +165,17 @@ const HeaderMenu = () => {
                                 {menu == 'user' && <Card className={classes.menuOption}>
                                     <List component="nav" aria-label="main mailbox folders">
                                         {
-                                            [{ name: "Profile", },
-                                            { name: "Settings" },
-                                            { name: "Sign Out", }]
+                                            [{ name: "Profile",route: "/", listRoute: "/"  },
+                                            { name: "Settings",route: "/", listRoute: "/"  },
+                                            { name: "Sign Out",route: "/", listRoute: "/"  }]
                                                 .map((e: any) => (
+                                                    <Link onClick={() => {
+                                                        history.push(e.listRoute)
+                                                    }}>
                                                     <ListItem style={{ paddingBottom: 0, paddingTop: 0, }} >
                                                         <InputLabel style={{ marginLeft: 20, minWidth: 100, }}><h4>{e.name}</h4></InputLabel>
-                                                    </ListItem>))
+                                                    </ListItem></Link>
+                                                    ))
                                         }
 
                                     </List>

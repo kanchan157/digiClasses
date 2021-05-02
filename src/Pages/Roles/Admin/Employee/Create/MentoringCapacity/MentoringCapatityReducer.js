@@ -3,7 +3,8 @@ import {
     UPDATE_MENTORING_CAPACITY, 
     UPDATE_EMPLOYEE_ID_MENTORING_CAPACITY,
     SET_MENTORING_CAPACITY_ERROR,
-    UPDATE_MENTORING_CAPACITY_ERROR 
+    UPDATE_MENTORING_CAPACITY_ERROR,
+    RESET_MENTORING_CAPACITY
 } from "./MentoringCapatityActions"
 
 
@@ -30,11 +31,13 @@ const MentoringCapacityReducer = (state = INITIAL_STATE, action) => {
             action.payload['role'] = 'Mentoring';
             return {...state, section_id: action.payload.id, data: action.payload};
         case UPDATE_EMPLOYEE_ID_MENTORING_CAPACITY:
-            return {...state, employee_id: action.payload.id};
+            return {...state, employee_id: action.payload.id, section_id: action.payload.section_id};
         case SET_MENTORING_CAPACITY_ERROR:
             return {...state, errors: action.payload}
         case UPDATE_MENTORING_CAPACITY_ERROR:
             return {...state, errors: {...state.errors, [action.payload] : false}}
+        case RESET_MENTORING_CAPACITY:
+            return INITIAL_STATE
     }
     return state;
 };

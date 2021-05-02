@@ -5,6 +5,7 @@ export const UPDATE_COACHING_PROFILE = "UPDATE_COACHING_PROFILE";
 export const UPDATE_EMPLOYEE_ID_COACHING_PROFILE = "UPDATE_EMPLOYEE_ID_COACHING_PROFILE";
 export const SET_COACHING_PROFILE_ERROR = "SET_COACHING_PROFILE_ERROR";
 export const UPDATE_COACHING_PROFILE_ERROR = "UPDATE_COACHING_PROFILE_ERROR";
+export const RESET_COACHING_PROFILE = "RESET_COACHING_PROFILE";
 
 export const SetCoachingProfile = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateCoachingProfileError(data){
     payload: data
   }
 }
+
+export function ResetCoachingProfile() {
+  return {
+    type: RESET_COACHING_PROFILE
+  }
+};

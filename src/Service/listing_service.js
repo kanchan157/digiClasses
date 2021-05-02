@@ -1,6 +1,9 @@
 import request from "./api_client";
 
 const dataUrl = {
+    // GET ALL DROP DOWN VALUES OF ORGANISATION STEPPER
+    all_organisation_dropdowns: '/organisations/listing_dropdowns',
+
     // ORGANISATION LISTING
     organisations: '/organisations',
     employees:'/employees',
@@ -50,7 +53,8 @@ const dataUrl = {
      areas_of_expertise:'/areas_of_expertise',
 
     // EMPLOYEE - GDPR
-    purposes:'/purposes'
+    purposes:'/purposes',
+
 }
 
 export function getData(params, section, url) {

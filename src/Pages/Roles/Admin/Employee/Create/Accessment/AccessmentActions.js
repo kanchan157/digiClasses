@@ -5,6 +5,7 @@ export const UPDATE_ACCESSMENT = "UPDATE_ACCESSMENT";
 export const UPDATE_EMPLOYEE_ID_ACCESSMENT = "UPDATE_EMPLOYEE_ID_ACCESSMENT";
 export const SET_ACCESSMENT_ERROR = "SET_ACCESSMENT_ERROR";
 export const UPDATE_ACCESSMENT_ERROR = "UPDATE_ACCESSMENT_ERROR";
+export const RESET_ACCESSMENT = "RESET_ACCESSMENT";
 
 export const SetAccessment = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateAccessmentError(data){
     payload: data
   }
 }
+
+export function ResetAccessment() {
+  return {
+    type: RESET_ACCESSMENT
+  }
+};

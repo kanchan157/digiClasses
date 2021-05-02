@@ -3,7 +3,8 @@ import {
     UPDATE_MENTOR_PROFILE, 
     UPDATE_EMPLOYEE_ID_MENTOR_PROFILE,
     SET_MENTOR_PROFILE_ERROR,
-    UPDATE_MENTOR_PROFILE_ERROR 
+    UPDATE_MENTOR_PROFILE_ERROR,
+    RESET_MENTOR_PROFILE
 } from "./MentorProfileActions"
 
 
@@ -42,11 +43,13 @@ const MentorProfileReducer = (state = INITIAL_STATE, action) => {
             action.payload['role'] = 'Mentoring';
             return {...state, section_id: action.payload.id, data: action.payload};
         case UPDATE_EMPLOYEE_ID_MENTOR_PROFILE:
-            return {...state, employee_id: action.payload.id};
+            return {...state, employee_id: action.payload.id, section_id: action.payload.section_id};
         case SET_MENTOR_PROFILE_ERROR:
             return {...state, errors: action.payload}
         case UPDATE_MENTOR_PROFILE_ERROR:
             return {...state, errors: {...state.errors, [action.payload] : false}}
+        case RESET_MENTOR_PROFILE:
+            return INITIAL_STATE
     }
     return state;
 };

@@ -37,8 +37,7 @@ function Share_Login_Credentials(props: any) {
         AdminPartnerClient.share_login_credentials({partner_profile_id: global_data.partner_profile}).then((response: any) => {
             props.parentSetProfileId(response.data.id, response.data.attributes.acuity_people_profile_id);
             props.parentHandleNext(props.activeIndex + 1)
-        }).catch(error => alert(JSON.stringify(error.errors)));
-        props.parentHandleNext(props.activeIndex + 1)
+        }).catch(error => alert("Something went wrong, please try again !!!"));
         setOpen(false);
     }
     

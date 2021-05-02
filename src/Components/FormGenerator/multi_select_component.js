@@ -174,10 +174,10 @@ export const MultipleSelect = ({componentObject}) => {
           {(selectOptions || listOptions).map((option) => (
             <MenuItem
             key={option.id} 
-            value={option.value}
+            value={option.id}
               style={getStyles(name, personName, theme)}
             >
-              {option.name}
+              {option.value}
             </MenuItem>
           ))}
         </Select>

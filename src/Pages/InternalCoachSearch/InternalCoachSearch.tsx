@@ -5,11 +5,12 @@ import CustomMultiSelectAutoComplete from '../../Components/CustomMultiSelectAut
 import CustomSelect from '../../Components/CustomSelect'
 import HomeHeaderMenu from '../AcuityOrganizationHome/HomeHeaderMenu';
 import CustomMultiSelectCoach from './CustomMultiSelectCoach';
-import SearchResult from './SearchResult';
+import SearchResult from './InternalSearchResult';
 import { useHistory } from 'react-router';
 import FooterCoachSearch from './FooterCoachSearch';
+import InternalSearchResult from './InternalSearchResult';
 
-function CoachSearch() {
+function InternalCoachSearch() {
 
     const history = useHistory();
     const classes = useStyles();
@@ -222,16 +223,15 @@ function CoachSearch() {
                     <HomeHeaderMenu />
                 </Grid>
             </Grid>
-            <Grid container direction="row" alignItems="center" justify="center" style={{backgroundColor:"#B4B4B440"}}>
-                <Grid item xs={12} style={{ padding: '20px 0',margin: "25px",backgroundColor: "#fff" }}>
+            <Grid container direction="row" alignItems="center" justify="center">
+                <Grid item xs={12} style={{ padding: '20px 0' }}>
                     <Grid container direction="row" justify="center" alignItems="center">
                         <Grid item xs={8} style={{ marginBottom: 10, }}>
-                            
-                            <ArrowBackRounded onClick={() => {history.goBack() }}/><span className={classes.titleInternalCoach}>Search External Coach</span>
+                            <ArrowBackRounded /><span className={classes.titleInternalCoach} >Search Internal Coach</span>
                         </Grid>
                         <Grid item className={classes.message} xs={8} style={{ marginBottom: 10, }}>
                             <ul style={{ margin: 0 }}>
-                                <li><Typography>All the coaches searched here will be <span className={classes.messageText} > external </span>to SKY Corporation</Typography>
+                                <li><Typography>All the coaches searched here will be <span className={classes.messageText} > internal </span>to SKY Corporation</Typography>
                                 </li>
                             </ul>
                         </Grid>
@@ -298,6 +298,20 @@ function CoachSearch() {
                             </Grid>
 
                             {additionalFilter && <>
+
+                                <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                                    <Grid item xs={12} style={{ marginBottom: 10, }}>
+                                        <label className={classes.headingTitle}>Experience</label>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                            {corporate.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                                <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
+                                            </Grid>)}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+
                                 <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
                                     <Grid item xs={12} style={{ marginBottom: 10, }}>
                                         <label className={classes.headingTitle}>Background/corporate</label>
@@ -311,10 +325,23 @@ function CoachSearch() {
                                     </Grid>
                                 </Grid>
 
+                                <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                                    <Grid item xs={12} style={{ marginBottom: 10, }}>
+                                        <label className={classes.headingTitle}>Admin</label>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                            {corporate.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                                <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
+                                            </Grid>)}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
 
+                               
                                 <Grid container direction="row" alignItems="center" style={{ marginTop: 30, position: 'relative' }}>
                                     <Grid item xs={12} style={{ marginBottom: 10, }}>
-                                        <label className={classes.headingTitle}>Internal coach filters</label>
+                                        <label className={classes.headingTitle}>Location</label>
                                     </Grid>
                                     <Grid item xs={12}>
                                         <Grid container direction="row" style={{ marginTop: '10', }}>
@@ -381,16 +408,28 @@ function CoachSearch() {
                                         </Grid>
                                     </Grid>
                                 </Grid>
-                                {/* <Grid container direction="row" alignItems="center" style={{ padding: 30, marginBottom: 20, position: 'absolute', right: 0, width: 250, zIndex: 1 }}>
+                                <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                                    <Grid item xs={12} style={{ marginBottom: 10, }}>
+                                        <label className={classes.headingTitle}>Name</label>
+                                    </Grid>
+                                    <Grid item xs={12}>
+                                        <Grid container direction="row" alignItems="center" style={{ marginTop: '10', }}>
+                                            {corporate.map((e) => <Grid item xs={3} style={{ paddingLeft: '10px', paddingRight: '10px', }}>
+                                                <CustomMultiSelectCoach id="partnerRolesArr" values={e} parentcall={onChangeMultipleItem} />
+                                            </Grid>)}
+                                        </Grid>
+                                    </Grid>
+                                </Grid>
+                                <Grid container direction="row" alignItems="center" style={{ padding: 30, marginBottom: 20, position: 'absolute', right: 0, width: 250, zIndex: 1 }}>
                                     <Grid item xs={12}>
                                         <Card variant="outlined" style={{ padding: 10 }}>
 
                                         </Card>
                                     </Grid>
-                                </Grid> */}
+                                </Grid>
 
 
-                                <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
+                                {/* <Grid container direction="row" alignItems="center" style={{ marginTop: 30, }}>
                                     <Grid item xs={12} style={{ marginBottom: 10, }}>
                                         <label className={classes.headingTitle}>External coach filters</label>
                                     </Grid>
@@ -402,7 +441,7 @@ function CoachSearch() {
                                         </Grid>
 
                                     </Grid>
-                                </Grid>
+                                </Grid> */}
 
 
                             </>}
@@ -411,7 +450,7 @@ function CoachSearch() {
                         </Grid>
 
                         <Grid item xs={8} alignItems="center" style={{ padding: 0, }}>
-                            <SearchResult />
+                            <InternalSearchResult />
                         </Grid>
                         <Grid item xs={8} alignItems="center" >
                             <Grid container direction="row" alignItems="center">
@@ -427,7 +466,7 @@ function CoachSearch() {
     )
 }
 
-export default CoachSearch
+export default InternalCoachSearch
 
 const useStyles = makeStyles((theme) => ({
     bgContainer: {

@@ -5,6 +5,7 @@ export const UPDATE_MENTOR_PROFILE = "UPDATE_MENTOR_PROFILE";
 export const UPDATE_EMPLOYEE_ID_MENTOR_PROFILE = "UPDATE_EMPLOYEE_ID_MENTOR_PROFILE";
 export const SET_MENTOR_PROFILE_ERROR = "SET_MENTOR_PROFILE_ERROR";
 export const UPDATE_MENTOR_PROFILE_ERROR = "UPDATE_MENTOR_PROFILE_ERROR";
+export const RESET_MENTOR_PROFILE = "RESET_MENTOR_PROFILE";
 
 export const SetMentorProfile = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateMentorProfileError(data){
     payload: data
   }
 }
+
+export function ResetMentorProfile() {
+  return {
+    type: RESET_MENTOR_PROFILE
+  }
+};

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Stepper from "@material-ui/core/Stepper";
 import Step from "@material-ui/core/Step";
@@ -21,6 +21,7 @@ import GdprSection from "../Create/Gdpr";
 import { ValidateEmail } from "../../../../../Common/Utils/common_utils";
 // Different actions to perform
 import {
+  SetContactAreaOrgId,
   UpdateContactArea,
   SetContactAreaError,
 } from "../Create/ContactArea/ContactAreaActions";
@@ -73,6 +74,7 @@ import { useSelector, useDispatch } from "react-redux";
 import DataService from "../../../../../Service";
 import Loader from "../../../../../Components/Loader";
 import { showSnackbar } from "../../../../../Components/Snackbar/SnackbarActions";
+import { useParams, useLocation } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -151,6 +153,31 @@ const theme = createMuiTheme({
 export default function EmployeeLinearStepper(props) {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  let location = useLocation();
+  let { id, employeeid } = useParams();
+
+  useEffect(() => {
+    dispatch(SetContactAreaOrgId(id));
+    console.log(employeeid)
+    if(employeeid){
+      setLoading(true);
+      DataService.getDirectData(`/employees/${employeeid}`).then((res) => {
+        setLoading(false);
+        dispatch(UpdateContactArea(res.data))
+        dispatch(UpdateEmployeeIdTrainingAndDevelopment({section_id: res.employee_training_development_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdCoachingCapacity({section_id: res.employee_coaching_capacity_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdMentoringCapacity({section_id: res.employee_mentoring_capacity_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdCoachingProfile({section_id: res.employee_coaching_profile_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdMentorProfile({section_id: res.employee_mentoring_profile_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdFacilitation({section_id: res.employee_facilitation_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdAccessment({section_id: res.employee_assessment_id, id: employeeid}));
+        dispatch(UpdateEmployeeIdGdpr({section_id: res.employee_gdpr_id, id: employeeid}));
+      }).catch((err) => {
+        setLoading(false);
+        dispatch(showSnackbar("success", err.errors));
+      })
+    }
+  },[]);
 
   function getSteps() {
     return [
@@ -242,11 +269,14 @@ export default function EmployeeLinearStepper(props) {
           if (dispatchVariable === UpdateContactArea) {
             console.log("then block");
             dispatch(dispatchVariable(res.data));
-            dispatch(UpdateEmployeeIdWorkInformation(res.data));
-            dispatch(UpdateEmployeeIdTrainingAndDevelopment(res.data));
-            dispatch(UpdateEmployeeIdCoachingCapacity(res.data));
-            dispatch(UpdateEmployeeIdMentoringCapacity(res.data));
-            dispatch(UpdateEmployeeIdCoachingProfile(res.data));
+            dispatch(UpdateEmployeeIdTrainingAndDevelopment({section_id: res.employee_training_development_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdCoachingCapacity({section_id: res.employee_coaching_capacity_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdMentoringCapacity({section_id: res.employee_mentoring_capacity_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdCoachingProfile({section_id: res.employee_coaching_profile_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdMentorProfile({section_id: res.employee_mentoring_profile_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdFacilitation({section_id: res.employee_facilitation_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdAccessment({section_id: res.employee_assessment_id, id: employeeid}));
+            dispatch(UpdateEmployeeIdGdpr({section_id: res.employee_gdpr_id, id: employeeid}));
           } else {
             dispatch(dispatchVariable(res.data));
           }
@@ -254,7 +284,7 @@ export default function EmployeeLinearStepper(props) {
         })
         .catch((err) => {
           setLoading(false);
-          dispatch(showSnackbar("error", err.errors));
+          dispatch(showSnackbar("error", ['err.errors']));
         });
     }
   };
@@ -347,7 +377,7 @@ export default function EmployeeLinearStepper(props) {
         errors.phone = true;
         valid = false;
       }
-      if (!ContactArea.data.nationality_list_id || !ContactArea.data.nationality_list_id.length) {
+      if (!ContactArea.data.nationality_list_id || typeof(ContactArea.data.nationality_list_id) !== 'number') {
         errors.nationality_list_id = true;
         valid = false;
       }
@@ -363,7 +393,6 @@ export default function EmployeeLinearStepper(props) {
         UpdateContactArea,
         ContactArea.section_id
       );
-      console.log('ContactArea.data :>> ', ContactArea.data.languages_list);
     } else if (activeStep === 1) {
       let valid = true;
       let errors = {

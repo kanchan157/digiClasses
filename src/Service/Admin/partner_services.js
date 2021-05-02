@@ -1,7 +1,8 @@
 import request from "../api_client";
 
 const serviceUrl = {
-    CoachingProfileField: "partner_commission_informations"
+    CoachingProfileField: "partner_commission_informations",
+    ProfileRole:"profile_roles"
 }
 
 const CommisionInfoAdmin = (id, formData, method) => {
@@ -332,10 +333,18 @@ const list_search = (data) => {
         data: {},
     });
 }
+const dropdown_get = (url) => {
+    return request({
+        url: serviceUrl[url],
+        method: 'GET',
+        data: {},
+    });
+}
 const AdminPartnerClient = {
     BasicInfo, share_login_credentials, Nda, wwa, WorkInfo, CoachingProfileField, FacilitationProfile,MentoringProfile, CommisionInfoAdmin, AssessmentProfile, AssociateCoaches, QualityAssurance, DueDiligenceCall, Questionnaire, ReferenceQuestionnaire, Ranking, OtherQuestions, Review, ContractDocumentition,
     BasicInfo_get, Nda_get, wwa_get, source_get, WorkInfo_get, CoachingProfileField_get, QualityAssurance_get, DueDiligenceCall_get, Questionnaire_get, ReferenceQuestionnaire_get, ContractDocumentition_get, OtherQuestions_get, Review_get, Ranking_get,
     BasicInfo_put, WorkInfo_put, CoachingProfileField_put, QualityAssurance_put, Questionnaire_put, ReferenceQuestionnaire_put, OtherQuestions_put, Review_put, Ranking_put, DueDiligenceCall_put,
-    list_search
+    list_search,
+    dropdown_get
 }
 export default AdminPartnerClient;

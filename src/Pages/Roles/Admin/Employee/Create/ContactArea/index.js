@@ -203,13 +203,14 @@ export default function ContactArea(props) {
     //   helperText: errors && errors.type_of_service && "*Please select a nationality",
     // },
     {
-      componentType: "input",
+      componentType: "select",
       type: "text",
       label: "Nationality*",
       helperText: errors && errors.nationality_list_id && "*Please enter Nationality",
       name: "nationality_list_id",
+      placeholder: "Select Country",
+      apiVariable: "countries",
       value: nationality_list_id,
-      placeholder: "Nationality",
       handleChange: handleInputChange,
     },
     {

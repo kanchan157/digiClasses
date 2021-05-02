@@ -17,7 +17,7 @@ export const INITIAL_STATE = {
         review_date: false,
         meeting_date: false,
         who: false,
-        priority: false,
+        priority_id: false,
     }
 };
 

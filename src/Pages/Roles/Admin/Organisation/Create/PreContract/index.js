@@ -4,7 +4,7 @@ import { ThemeProvider } from "@material-ui/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import { api_url } from "../../../../../../constants";
 import FormGenerator from "../../../../../../Components/FormGenerator";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { SetOrganisationPreContract } from "./OrganisationPreContractActions";
 import DataService from "../../../../../../Service";
 
@@ -39,6 +39,8 @@ const theme = createMuiTheme({
 export default function PreContract(props) {
   const dispatch = useDispatch();
 
+  // const {  } = useSelector((state) => state.commonReducer.organisationDropdowns);
+
   const handleInputChange = (value, index) => {
     const updatedForm = formInput;
     updatedForm[index]["value"] = value;
@@ -69,6 +71,14 @@ export default function PreContract(props) {
       required: true,
       name: "internal_notes",
       placeholder: "Notes",
+      handleChange: handleInputChange,
+    },
+    {
+      componentType: "datePicker",
+      type: "text",
+      label: "Meeting Date",
+      name: "meeting_date",
+      placeholder: "Meeting Date",
       handleChange: handleInputChange,
     },
   ];

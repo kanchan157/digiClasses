@@ -5,6 +5,7 @@ export const UPDATE_GDPR = "UPDATE_GDPR";
 export const UPDATE_EMPLOYEE_ID_GDPR = "UPDATE_EMPLOYEE_ID_GDPR";
 export const SET_GDPR_ERROR = "SET_GDPR_ERROR";
 export const UPDATE_GDPR_ERROR = "UPDATE_GDPR_ERROR";
+export const RESET_GDPR = "RESET_GDPR";
 
 export const SetGdpr = (item) => {
   return {
@@ -40,3 +41,9 @@ export function UpdateGdprError(data){
     payload: data
   }
 }
+
+export function ResetGdpr() {
+  return {
+    type: RESET_GDPR
+  }
+};

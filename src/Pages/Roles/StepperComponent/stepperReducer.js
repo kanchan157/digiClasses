@@ -1,7 +1,7 @@
 import { DELETE_STEPPER_DATA, GLOBAL_STEPPER_DATA } from '../../../Redux/actions';
 
 const intialState = {
-    partner_profile:"63",
+    partner_profile:"",
     due_diligence_id:"",
     work_info_id:"5",
     partner_extra_question_id:"",
@@ -16,6 +16,8 @@ const intialState = {
     associate_coaches_id:"",
     facilitation_profile_id:"",
     mentoring_profile_id:"",
+    facilitation_flag:false,
+    mentoring_flag:true,
     extraQuestion_id:"",
     quality_assurance_id:"",
     referenceDetail:[]

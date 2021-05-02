@@ -25,11 +25,13 @@ import AssessmentProfile from '../../StepperComponent/AssessmentProfile';
 import AssociateCoaches from '../../StepperComponent/Associate_Coaches';
 import FacilitationProfile from '../../StepperComponent/FacilititationProfile';
 import MentoringProfile from '../../StepperComponent/MentoringProfile';
+import NotFound from '../../StepperComponent/NotFound';
 import HeaderMenu from '../../../../Components/HeaderMenu';
 import clsx from 'clsx';
 import { Check } from '@material-ui/icons';
 import OtherQuestions from '../../StepperComponent/OtherQuestions';
 import ArrowBackIosIcon from '@material-ui/icons/ArrowBackIos';
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -126,15 +128,19 @@ function QontoStepIcon(props: any) {
 
 function getSteps() {
     return ['Basic Info', 'Share login credentials', 'NDA', 'WorkInfo', 'QualityAssurance', 'Due Diligence call',
-     'CoachingProfileField', 'CommisionInfoAdmin', 
-     'AssessmentProfile','AssociateCoaches','FacilitationProfile','MentoringProfile',
-     'Questionnaire', 'Reference Questionnaire', 'Working with acuity', 'Contract Documentation', 'Other Questions', 'Ranking', 'Review'];
+        'CoachingProfileField', 'CommisionInfoAdmin',
+        'AssessmentProfile', 'AssociateCoaches', 'FacilitationProfile', 'MentoringProfile',
+        'Questionnaire', 'Reference Questionnaire', 'Working with acuity', 'Contract Documentation', 'Other Questions', 'Ranking', 'Review'];
 }
 
 function OnboardingPartnerAdmin() {
     const classes = useStyles();
+    const global_data = useSelector((state: any) => state.stepperReducer);
+
     const [activeStep, setActiveStep] = React.useState(0);
     const [profileID, setProfileID] = React.useState(0);
+    const [facilitation, setFacilitation] = React.useState(global_data.facilitation_flag);
+    const [Mentoring, setMentoring] = React.useState(global_data.mentoring_flag);
     const steps = getSteps();
 
     const updateProfileId = (value: any) => {
@@ -163,11 +169,11 @@ function OnboardingPartnerAdmin() {
             case 8:
                 return <AssessmentProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 9:
-                return <AssociateCoaches profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+                return <AssociateCoaches profileId={profileID} parentHandleNext={handleNext} activeIndex={!facilitation && !Mentoring ? step + 2 : facilitation ? step : Mentoring ? step + 1 : step + 2} />;
             case 10:
-                return <FacilitationProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+                return facilitation ? <FacilitationProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={!Mentoring ? step + 1 : step} /> : <NotFound />;
             case 11:
-                return <MentoringProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
+                return Mentoring ? <MentoringProfile profileId={profileID} parentHandleNext={handleNext} activeIndex={step} /> : <NotFound />;
             case 12:
                 return <Questionnaire profileId={profileID} parentHandleNext={handleNext} activeIndex={step} />;
             case 13:
@@ -213,7 +219,7 @@ function OnboardingPartnerAdmin() {
                 </Grid>
             </Grid> */}
             <Grid container direction="row" justify="center" alignItems="center">
-                <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 64px)" }}>
+                <Grid item xs={3} style={{ paddingTop: 18, textAlign: "left", backgroundColor: "#EEEEEE", height: "calc(100vh - 64px)", overflow: "auto" }}>
                     <Typography style={{ paddingBlock: 25, textAlign: "center", alignSelf: "center", fontSize: 26, color: "#4A4A4A", fontWeight: "bold" }}>
                         <ArrowBackIosIcon style={{ fontSize: 16, color: "#4A4A4A" }} /> Partner Onboarding</Typography>
                     <Stepper activeStep={activeStep} orientation="vertical" connector={<QontoConnector />} style={{ backgroundColor: "#EEEEEE", paddingLeft: 55 }}>

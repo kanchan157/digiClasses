@@ -56,7 +56,17 @@ export default function Contact(props) {
     offices,
     functions,
     branches,
+    panel,
   } = useSelector((state) => state.organisationContactReducer.data);
+
+  const {
+    department_lists,
+    business_unit_lists,
+    office_lists,
+    function_lists,
+    country_lists,
+    parent_organisations
+  } = useSelector((state) => state.commonReducer.organisationDropdowns);
 
   const errors = useSelector(
     (state) => state.organisationContactReducer.errors
@@ -70,7 +80,7 @@ export default function Contact(props) {
     formInput.forEach((item) => {
       if (item.value) {
         formData[item.name] = item.value;
-        console.log(formData, 'formData')
+        console.log(formData, "formData");
         dispatch(SetOrganisationContact(formData));
       }
     });
@@ -206,7 +216,8 @@ export default function Contact(props) {
         placeholder: "Country*",
         select: true,
         defaultValue: "Country",
-        apiVariable: "countries",
+        // apiVariable: "countries",
+        selectOptions: country_lists,
         index: "4-country_list_id",
         handleChange: handleAddressChange,
         value: branches[0].country_list_id,
@@ -257,8 +268,9 @@ export default function Contact(props) {
       label: "Parent Organisation",
       name: "parent_organisation",
       placeholder: "Dropdown",
-      apiVariable: "parent_organisations",
-      params: `organisation_id=${userDetails && userDetails.data.id}`,
+      selectOptions: parent_organisations,
+      // apiVariable: "parent_organisations",
+      // params: `organisation_id=${userDetails && userDetails.data.id}`,
       handleChange: handleInputChange,
       value: parent_organisation,
     },
@@ -267,7 +279,8 @@ export default function Contact(props) {
       label: "Departments ",
       name: "departments",
       placeholder: "Departments",
-      apiVariable: "departments",
+      // apiVariable: "departments",
+      selectOptions: department_lists,
       handleChange: handleInputChange,
       value: departments,
     },
@@ -276,7 +289,8 @@ export default function Contact(props) {
       label: "Busniess Unit",
       name: "business_units",
       placeholder: "Unit",
-      apiVariable: "business_units",
+      // apiVariable: "business_units",
+      selectOptions: business_unit_lists,
       handleChange: handleInputChange,
       value: business_units,
     },
@@ -285,7 +299,8 @@ export default function Contact(props) {
       label: "Office",
       name: "offices",
       placeholder: "Office",
-      apiVariable: "offices",
+      // apiVariable: "offices",
+      selectOptions: office_lists,
       handleChange: handleInputChange,
       value: offices,
     },
@@ -294,9 +309,19 @@ export default function Contact(props) {
       label: "Functions",
       name: "functions",
       placeholder: "Functions",
-      apiVariable: "functions",
+      // apiVariable: "functions",
+      selectOptions: function_lists,
       handleChange: handleInputChange,
       value: functions,
+    },
+    {
+      componentType: "input",
+      type: "text",
+      label: "Panel",
+      name: "panel",
+      placeholder: "Panel",
+      handleChange: handleInputChange,
+      value: panel,
     },
   ];
 

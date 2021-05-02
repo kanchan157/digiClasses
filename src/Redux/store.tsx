@@ -29,26 +29,26 @@ import { persistReducer } from "redux-persist";
 const rootReducer = combineReducers({
     commonReducer,
     stepperReducer,
-    organisationDetailsReducer,
-    organisationProfileReducer,
-    organisationContactReducer,
-    organisationPreContractReducer,
-    organisationGeneralReducer,
-    organisationContractReducer,
-    organisationActivityReducer,
+    // organisationDetailsReducer,
+    // organisationProfileReducer,
+    // organisationContactReducer,
+    // organisationPreContractReducer,
+    // organisationGeneralReducer,
+    // organisationContractReducer,
+    // organisationActivityReducer,
     snackbarReducer,
-    contactAreaReducer,
-    workInformationReducer,
-    trainingAndDevelopmentReducer,
-    coachingCapacityReducer,
-    mentoringCapacityReducer,
-    coachingProfileReducer,
-    mentorProfileReducer,
-    facilitationReducer,
-    accessmentReducer,
-    gdprReducer,
-    organisationListReducer,
-    organisationBusinessDevelopmentReducer
+    // contactAreaReducer,
+    // workInformationReducer,
+    // trainingAndDevelopmentReducer,
+    // coachingCapacityReducer,
+    // mentoringCapacityReducer,
+    // coachingProfileReducer,
+    // mentorProfileReducer,
+    // facilitationReducer,
+    // accessmentReducer,
+    // gdprReducer,
+    // organisationListReducer,
+    // organisationBusinessDevelopmentReducer
 });
 
 // Commenting the persist logic as it fails to clear data on browser refresh or session break
@@ -62,7 +62,7 @@ const config = {
 // When storing the data in something similar to local storage is not ideally the best way since the data remains even after the session ends?
 // Why should we use persist when we already have redux for global state management?
 
-// const persistedReducer = persistReducer(config, rootReducer);
-const store = createStore(rootReducer, composeWithDevTools(applyMiddleware(thunk)))
+const persistedReducer = persistReducer(config, rootReducer);
+const store = createStore(persistedReducer, composeWithDevTools(applyMiddleware(thunk)))
 
 export default store

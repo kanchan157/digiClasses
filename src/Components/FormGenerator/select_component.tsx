@@ -81,7 +81,7 @@ export const SimpleSelect = (props: any) => {
         >
           <span style={{paddingLeft: '10px', color: 'gray'}}>{placeholder}</span>
           {(selectOptions || listOptions).map((option: any, index: any) => {
-            return <MenuItem key={option.id} value={option.value}>{option.name}</MenuItem>;
+            return <MenuItem key={option.id} value={option.id}>{option.value}</MenuItem>;
           })}
         </Select>
         <FormHelperText>{helperText}</FormHelperText>

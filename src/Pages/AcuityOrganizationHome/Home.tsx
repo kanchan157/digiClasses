@@ -161,7 +161,7 @@ function Home() {
                                         <Grid item xs={12} justify="center">
                                             <Typography variant="body2" color="textSecondary" component="p">
                                                 Etiam facilisis ligula nec velit posuere egestas. Nunc dictum lectus sem, vel dignissim purus luctus quis. Vestibulum et ligula suscipit, hendrerit erat a, ultricies velit. Praesent convallis in lorem nec blandit. Phasellus a porta tellus. Suspendisse sagittis metus enim. Sed molestie libero id sem pulvinar, quis euismod mauris suscipit.
-                    </Typography>
+                                            </Typography>
                                         </Grid>
                                         <Grid item xs={12} justify="center" style={{ marginTop: 20, }}>
                                             <Button
